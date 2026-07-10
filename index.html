@@ -18,7 +18,7 @@
       <span class="word"><b>KIRPA</b></span>
     </a>
     <nav class="nav-links">
-      <a href="#">Buy</a><a href="#">Rent</a><a href="#offplan">Off-Plan</a><a href="#explore">Communities</a><a href="#sell">Sell</a>
+      <a href="buy/">Buy</a><a href="rent/">Rent</a><a href="off-plan/">Off-Plan</a><a href="communities/">Communities</a><a href="sell/">Sell</a>
     </nav>
     <div class="nav-right">
       <button class="switch">EN ▾</button>
@@ -92,7 +92,7 @@
   <div class="wrap">
     <div class="sec-head rv">
       <div><span class="eyebrow">Selected Residences</span><h2>A small number of homes, presented with care.</h2></div>
-      <a class="link" href="#">View all</a>
+      <a class="link" href="buy/">View all</a>
     </div>
     <div class="res-grid rv" id="resGrid"></div>
   </div>
@@ -103,7 +103,7 @@
   <div class="wrap">
     <div class="sec-head rv">
       <div><span class="eyebrow">Off-Plan</span><h2>Projects worth the wait.</h2></div>
-      <a class="link" href="#">All projects</a>
+      <a class="link" href="off-plan/">All projects</a>
     </div>
     <div class="offplan rv">
       <div class="photo sky-d"></div>
@@ -176,8 +176,8 @@
         <div class="foot-logo">KIRPA</div>
         <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
       </div>
-      <div><h4>Properties</h4><ul><li><a href="#">Buy</a></li><li><a href="#">Rent</a></li><li><a href="#offplan">Off-Plan</a></li><li><a href="#sell">Sell with us</a></li></ul></div>
-      <div><h4>Discover</h4><ul><li><a href="#explore">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
+      <div><h4>Properties</h4><ul><li><a href="buy/">Buy</a></li><li><a href="rent/">Rent</a></li><li><a href="off-plan/">Off-Plan</a></li><li><a href="sell/">Sell with us</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="communities/">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
     </div>
     <div class="foot-bottom">
@@ -207,7 +207,10 @@ function renderRes(){
   document.querySelectorAll('#offplan .money').forEach(el=>{el.textContent=fmt(+el.dataset.aed)});
 }
 function renderExplore(lens){
-  $('#exploreGrid').innerHTML=LENSES[lens].map(t=>'<div class="tile"><div class="photo '+t[2]+'"></div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div></div>').join('');
+  $('#exploreGrid').innerHTML=LENSES[lens].map(t=>{
+    const inner='<div class="photo '+t[2]+'"></div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';
+    return t[3]?'<a class="tile" href="communities/guide.html?c='+t[3]+'">'+inner+'</a>':'<div class="tile">'+inner+'</div>';
+  }).join('');
 }
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
