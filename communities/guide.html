@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirpa Properties — Community Guide</title>
+<meta name="description" content="Kirpa Properties community guide — living, investing, and live listings in this Dubai community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/kirpa.css">
+</head>
+<body>
+
+<header id="hdr">
+  <div class="nav">
+    <a class="logo" href="../index.html"><span class="mark"><i>K</i></span><span class="word"><b>KIRPA</b></span></a>
+    <nav class="nav-links">
+      <a href="../buy/">Buy</a><a href="../rent/">Rent</a><a href="../off-plan/">Off-Plan</a><a href="./">Communities</a><a href="../sell/">Sell</a>
+    </nav>
+    <div class="nav-right">
+      <button class="switch">EN ▾</button>
+      <span class="div"></span>
+      <button class="switch" id="curBtn">AED ▾</button>
+      <span class="div"></span>
+      <button class="heart-btn" id="openDrawer">♡ <span class="cnt" id="favCount">0</span></button>
+      <span class="div"></span>
+      <a class="nav-cta" href="https://wa.me/971543673063" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.3 1.3z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="../index.html">Home</a> / <a href="./">Communities</a> / <span id="crumbName"></span></div>
+    <h1 id="gName" style="margin-top:18px"></h1>
+    <div class="g-hero"><div class="photo" id="gPhoto"></div></div>
+    <div class="g-body">
+      <div id="gBlurb"></div>
+      <div class="stat-list"><b>At a glance</b><div id="gStats"></div></div>
+    </div>
+  </div>
+</div>
+
+<section class="similar" style="padding-top:10px">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Live now</span><h2 style="font-family:var(--display);font-size:clamp(26px,3vw,38px);font-weight:400;margin-top:14px" id="liveTitle">Homes in this community</h2></div>
+      <a class="link" href="../buy/">All homes</a>
+    </div>
+    <div class="res-grid" id="gGrid"></div>
+    <div class="empty" id="gEmpty" style="display:none">Nothing listed here right now — <a class="link" id="gAskLink" href="#" target="_blank" rel="noopener">ask an advisor</a> what's coming to market.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">KIRPA</div>
+        <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
+      </div>
+      <div><h4>Properties</h4><ul><li><a href="../buy/">Buy</a></li><li><a href="../rent/">Rent</a></li><li><a href="../off-plan/">Off-Plan</a></li><li><a href="../sell/">Sell with us</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="./">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span>All listings carry a valid Trakheesi advertising permit.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <div class="row">
+    <a href="../index.html" style="text-decoration:none">Home</a>
+    <a class="wa" id="mbarWa" href="https://wa.me/971543673063" target="_blank" rel="noopener">WhatsApp</a>
+    <button id="mbarFav">♡ Shortlist</button>
+  </div>
+</div>
+
+<script>window.BASE='../';window.HEADER_SOLID=true;</script>
+<script src="../assets/listings.js"></script>
+<script src="../assets/kirpa.js"></script>
+<script>
+const slug=(new URLSearchParams(location.search).get('c')||'dubai-hills').toLowerCase();
+const C=COMMUNITIES[slug]||COMMUNITIES['dubai-hills'];
+document.title='Kirpa Properties — Living in '+C.name;
+$('#crumbName').textContent=C.name;
+$('#gName').textContent='Living in '+C.name;
+$('#gPhoto').classList.add(C.sky);
+$('#gBlurb').innerHTML=C.blurb.map(p=>'<p>'+p+'</p>').join('');
+$('#gStats').innerHTML=C.stats.map(s=>'<span>'+s+'</span>').join('');
+const ask='https://wa.me/971543673063?text='+encodeURIComponent("I'm interested in "+C.name+' — what do you have coming to market?');
+$('#gAskLink').href=ask;$('#mbarWa').href=ask;
+function renderLive(){
+  const out=LISTINGS.filter(l=>l.community===C.name);
+  $('#liveTitle').textContent='Homes in '+C.name+' ('+out.length+' live)';
+  $('#gGrid').innerHTML=out.map(cardHTML).join('');
+  bindCards($('#gGrid'));
+  $('#gEmpty').style.display=out.length?'none':'block';
+}
+window.onFavsChanged=renderLive;window.onCurrencyChanged=renderLive;
+renderLive();
+</script>
+</body>
+</html>
