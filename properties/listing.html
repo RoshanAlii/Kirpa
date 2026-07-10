@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirpa Properties — Residence</title>
+<meta name="description" content="A RERA-registered Kirpa Properties residence in Dubai. View details, book a viewing on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/kirpa.css">
+</head>
+<body>
+
+<header id="hdr">
+  <div class="nav">
+    <a class="logo" href="../index.html">
+      <span class="mark"><i>K</i></span>
+      <span class="word"><b>KIRPA</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Buy</a><a href="../index.html">Rent</a><a href="../index.html#offplan">Off-Plan</a><a href="../index.html#explore">Communities</a><a href="../index.html#sell">Sell</a>
+    </nav>
+    <div class="nav-right">
+      <button class="switch">EN ▾</button>
+      <span class="div"></span>
+      <button class="switch" id="curBtn">AED ▾</button>
+      <span class="div"></span>
+      <button class="heart-btn" id="openDrawer">♡ <span class="cnt" id="favCount">0</span></button>
+      <span class="div"></span>
+      <a class="nav-cta" href="https://wa.me/971543673063" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.3 1.3z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<!-- TITLE + GALLERY -->
+<div class="lp-head">
+  <div class="wrap">
+    <div class="crumb"><a href="../index.html">Home</a> / <span id="crumbCommunity">Community</span> / <span id="crumbRef">Ref</span></div>
+    <div class="lp-title-row">
+      <div>
+        <span class="lp-status" id="lpStatus">For Sale</span>
+        <h1 id="lpTitle">Residence</h1>
+        <div class="lp-place" id="lpPlace"></div>
+      </div>
+      <button class="lp-fav" id="lpFav" aria-label="Save to shortlist">♡</button>
+    </div>
+    <div class="gallery">
+      <div class="photo main" id="g0"><span class="credit" id="gCredit">Photography</span></div>
+      <div class="side">
+        <div class="photo" id="g1"></div>
+        <div class="photo" id="g2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="wrap lp-grid">
+  <div>
+    <div class="lp-sec">
+      <h2>About this residence</h2>
+      <div id="lpDesc"></div>
+    </div>
+    <div class="lp-sec">
+      <h2>Key facts</h2>
+      <table class="facts"><tbody id="factsBody"></tbody></table>
+    </div>
+    <div class="lp-sec">
+      <h2>Features</h2>
+      <div class="feat-chips" id="featChips"></div>
+    </div>
+  </div>
+
+  <aside class="side-card">
+    <div class="lp-price"><span id="lpPrice"></span><span class="fx" id="lpFx"></span></div>
+    <div class="lp-specs" id="lpSpecs"></div>
+    <div class="estimate" id="estimate"></div>
+    <div class="agent">
+      <div class="face photo" id="agentFace"></div>
+      <div><b id="agentName"></b><span id="agentRole"></span></div>
+    </div>
+    <button class="btn coral" id="bookBtn">Book a viewing</button>
+    <a class="alt link" id="waBtn" href="#" target="_blank" rel="noopener">Ask a question on WhatsApp</a>
+    <span class="permit" id="lpPermit"></span>
+  </aside>
+</div>
+
+<!-- SIMILAR -->
+<section class="similar">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">More like this</span><h2 style="font-family:var(--display);font-size:clamp(26px,3vw,38px);font-weight:400;margin-top:14px">Other residences to consider</h2></div>
+      <a class="link" href="../index.html">View all</a>
+    </div>
+    <div class="res-grid" id="simGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">KIRPA</div>
+        <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
+      </div>
+      <div><h4>Properties</h4><ul><li><a href="../index.html">Buy</a></li><li><a href="../index.html">Rent</a></li><li><a href="../index.html#offplan">Off-Plan</a></li><li><a href="../index.html#sell">Sell with us</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="../index.html#explore">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span>All listings carry a valid Trakheesi advertising permit.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BAR -->
+<div class="mbar">
+  <div class="row">
+    <a href="../index.html" style="text-decoration:none">Search</a>
+    <a class="wa" id="mbarWa" href="https://wa.me/971543673063" target="_blank" rel="noopener">WhatsApp</a>
+    <button id="mbarFav">♡ Shortlist</button>
+  </div>
+</div>
+
+<script>window.BASE='../';window.HEADER_SOLID=true;</script>
+<script src="../assets/listings.js"></script>
+<script src="../assets/kirpa.js"></script>
+<script>
+/* ---------- resolve listing ---------- */
+const ref=(new URLSearchParams(location.search).get('ref')||'KP-104').toUpperCase();
+const L=LISTINGS.find(x=>x.ref===ref)||LISTINGS[0];
+const A=AGENTS[L.agent];
+
+/* ---------- head / seo ---------- */
+document.title='Kirpa Properties — '+L.title+' · '+L.community;
+const ld={
+  "@context":"https://schema.org","@type":"Residence",
+  "name":L.title,"identifier":L.ref,
+  "address":{"@type":"PostalAddress","addressLocality":L.community+", Dubai","addressCountry":"AE"},
+  "numberOfRooms":L.beds,
+  "floorSize":{"@type":"QuantitativeValue","value":L.sqft,"unitCode":"FTK"},
+  "offers":{"@type":"Offer","price":L.aed,"priceCurrency":"AED"}
+};
+const s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(ld);document.head.appendChild(s);
+
+/* ---------- render ---------- */
+function money(){ 
+  $('#lpPrice').textContent=fmt(L.aed)+L.per;
+  $('#lpFx').textContent=cur==='AED'?(' (≈ '+fmt(L.aed,'USD')+')'):(' ('+fmt(L.aed,'AED')+')');
+  renderEstimate();
+}
+function renderEstimate(){
+  const e=$('#estimate');
+  if(L.status==='sale'){
+    const P=L.aed*0.8,r=0.045/12,n=300;
+    const m=P*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+    e.innerHTML='<b>'+fmt(Math.round(m))+' / month</b>Estimated mortgage — 20% down, 25 years, 4.5% <span class="meth" title="Illustration only, not an offer of finance. Actual rates and eligibility vary by bank and profile.">how we estimate</span>';
+  }else{
+    e.innerHTML='<b>'+fmt(L.aed)+' / year</b>Flexible cheque options — ask your advisor <span class="meth" title="Cheque schedules are agreed with the landlord; 1–4 cheques are typical in this building.">details</span>';
+  }
+}
+function renderPage(){
+  $('#crumbCommunity').textContent=L.community;
+  $('#crumbRef').textContent=L.ref;
+  $('#lpStatus').textContent=L.ref+' · '+(L.status==='rent'?'For Rent':'For Sale');
+  $('#lpTitle').textContent=L.title;
+  $('#lpPlace').textContent=(L.building?L.building+', ':'')+L.community+', Dubai';
+  ['g0','g1','g2'].forEach((id,i)=>{$('#'+id).classList.add(L.skies[i%L.skies.length])});
+  $('#gCredit').textContent='Photography — '+L.ref;
+  $('#lpDesc').innerHTML=L.desc.map(p=>'<p>'+p+'</p>').join('');
+  $('#factsBody').innerHTML=[
+    ['Reference',L.ref],['Status',L.status==='rent'?'For Rent':'For Sale'],
+    ['Community',L.community],['Building',L.building],
+    ['Bedrooms',L.beds],['Bathrooms',L.baths],
+    ['Size',L.sqft.toLocaleString()+' sqft'],['Note',L.extra],
+    ['Trakheesi permit',L.permit]
+  ].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('');
+  $('#featChips').innerHTML=L.features.map(f=>'<span>'+f+'</span>').join('');
+  $('#lpSpecs').textContent=L.beds+' bed · '+L.baths+' bath · '+L.sqft.toLocaleString()+' sqft · '+L.extra;
+  $('#agentFace').classList.add(A.sky);
+  $('#agentName').textContent=A.name;
+  $('#agentRole').textContent=A.role+' · '+A.langs;
+  $('#lpPermit').textContent='Trakheesi '+L.permit+' · ORN 49046';
+  const ask='Hello '+A.name.split(' ')[0]+", I have a question about "+L.ref+' — '+L.title;
+  $('#waBtn').href='https://wa.me/971543673063?text='+encodeURIComponent(ask);
+  $('#mbarWa').href=$('#waBtn').href;
+  money();
+  favState();
+  $('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');
+  bindCards($('#simGrid'));
+}
+function favState(){
+  const on=favs.includes(L.ref);
+  const b=$('#lpFav');b.classList.toggle('on',on);b.textContent=on?'♥':'♡';
+}
+$('#lpFav').onclick=()=>toggleFav(L.ref);
+$('#bookBtn').onclick=()=>openSheet('viewing',L.ref,L.ref+' — '+L.title);
+window.onCurrencyChanged=()=>{money();$('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');bindCards($('#simGrid'))};
+window.onFavsChanged=()=>{favState();$('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');bindCards($('#simGrid'))};
+renderPage();
+</script>
+</body>
+</html>
