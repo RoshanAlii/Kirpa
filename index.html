@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirpa Properties — Dubai Real Estate, Built on Loyalty and Trust</title>
+<meta name="description" content="RERA-registered Dubai brokerage (ORN 49046). Off-plan, sales and rentals across Dubai's finest communities — book a viewing on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kirpa.css">
+</head>
+<body>
+
+<header id="hdr">
+  <div class="nav">
+    <a class="logo" href="#">
+      <span class="mark"><i>K</i></span>
+      <span class="word"><b>KIRPA</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#">Buy</a><a href="#">Rent</a><a href="#offplan">Off-Plan</a><a href="#explore">Communities</a><a href="#sell">Sell</a>
+    </nav>
+    <div class="nav-right">
+      <button class="switch">EN ▾</button>
+      <span class="div"></span>
+      <button class="switch" id="curBtn">AED ▾</button>
+      <span class="div"></span>
+      <button class="heart-btn" id="openDrawer">♡ <span class="cnt" id="favCount">0</span></button>
+      <span class="div"></span>
+      <a class="nav-cta" href="https://wa.me/971543673063" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.3 1.3z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="photo sky-a"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Dubai · Built on Loyalty and Trust</span>
+    <h1>Homes of rare standing in Dubai's finest communities</h1>
+
+    <div class="searchbox" id="searchbox">
+      <div class="barwrap">
+      <div class="sbar">
+        <span class="sel"><select id="intent" aria-label="Intent"><option>Buy</option><option>Rent</option><option>Off-Plan</option></select></span>
+        <input id="q" type="text" placeholder="Community, building, developer, or reference" autocomplete="off">
+        <span class="sel"><select aria-label="Price"><option>Price</option><option>Under 1M</option><option>1–3M</option><option>3–8M</option><option>8M+</option></select></span>
+        <span class="sel"><select aria-label="Beds"><option>Beds</option><option>Studio</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></span>
+        <button class="go">Search</button>
+      </div>
+      <div class="panel">
+        <ul class="sug" id="sug">
+          <li data-v="Dubai Hills Estate">Dubai Hills Estate <span>142 live listings</span></li>
+          <li data-v="Dubai Marina">Dubai Marina <span>218 live listings</span></li>
+          <li data-v="Palm Jumeirah">Palm Jumeirah <span>96 live listings</span></li>
+          <li data-v="Emaar">Emaar — developer <span>37 projects</span></li>
+          <li data-v="KP-104">KP-104 — Sidra garden villa <span>reference</span></li>
+        </ul>
+      </div>
+      </div>
+      <div class="chips" id="budget">
+        <span class="lbl">Or one tap:</span>
+        <button class="chip">Under AED 1M</button><button class="chip">1–3M</button><button class="chip">3–8M</button><button class="chip">8M+</button><button class="chip">Map view</button>
+      </div>
+    </div>
+
+    <div class="hero-foot">
+      <span>Owner? <a href="#sell">What is your property worth?</a></span>
+      <span>RERA-registered · ORN 49046 · Business Bay, Dubai</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore" style="padding-bottom:0">
+  <div class="wrap rv">
+    <span class="eyebrow">Explore Dubai</span>
+    <div class="sec-head" style="margin-bottom:0">
+      <h2>Know the community before the floor plan.</h2>
+      <div class="tabs">
+        <button class="tab on" data-lens="comm">Communities</button>
+        <button class="tab" data-lens="budget">By budget</button>
+        <button class="tab" data-lens="life">By lifestyle</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap"><div class="explore-grid rv" id="exploreGrid"></div></div>
+</section>
+
+<!-- RESIDENCES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Selected Residences</span><h2>A small number of homes, presented with care.</h2></div>
+      <a class="link" href="#">View all</a>
+    </div>
+    <div class="res-grid rv" id="resGrid"></div>
+  </div>
+</section>
+
+<!-- OFF-PLAN -->
+<section id="offplan" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Off-Plan</span><h2>Projects worth the wait.</h2></div>
+      <a class="link" href="#">All projects</a>
+    </div>
+    <div class="offplan rv">
+      <div class="photo sky-d"></div>
+      <div class="op-pad">
+        <span class="eyebrow">Jumeirah Village Circle</span>
+        <h3>The Orchard Place</h3>
+        <table class="op-table">
+          <tr><td>Developer</td><td>Name — track record ↗</td></tr>
+          <tr><td>From</td><td class="money" data-aed="1900000">AED 1,900,000</td></tr>
+          <tr><td>Payment plan</td><td>60 / 40</td></tr>
+          <tr><td>Handover</td><td>Q4 2027</td></tr>
+          <tr><td>Est. gross yield</td><td>7.1% <span class="meth" title="Estimated from current JVC rental comparables against launch pricing. Not a guarantee of future returns.">how we estimate</span></td></tr>
+        </table>
+        <div style="margin-top:32px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+          <a class="btn" href="https://wa.me/971543673063?text=Please%20send%20me%20the%20Orchard%20Place%20brochure" target="_blank" rel="noopener">Get the brochure</a>
+          <button class="link" onclick="openSheet('suite','','The Orchard Place, JVC')">Book a sales-suite visit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELL -->
+<section class="sell" id="sell">
+  <div class="wrap rv">
+    <span class="eyebrow" style="color:#6E645A">For Owners</span>
+    <h2>What is your property worth today?</h2>
+    <p>No forms. One message. A licensed advisor replies with comparable sales and a realistic strategy — usually within minutes.</p>
+    <a class="btn coral" href="https://wa.me/971543673063?text=I'd%20like%20a%20valuation%20for%20my%20property%20in%20" target="_blank" rel="noopener">Get my valuation on WhatsApp</a>
+    <span class="fine">Prefer email? <a href="mailto:info@kirpaproperties.com">Write to us</a> &nbsp;·&nbsp; or <button class="link" style="font-size:12px;letter-spacing:.06em;text-transform:none" onclick="openSheet('valuation','','Valuation visit at your property')">book a valuation visit</button></span>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section>
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Your Advisors</span><h2>The people you'll actually talk to.</h2></div>
+    </div>
+    <div class="advisors rv">
+      <div class="adv"><div class="face photo sky-b"></div><div><b>Kamalpreet Kaur</b><span>Team Leader, Sales · EN, ਪੰਜਾਬੀ, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Kamalpreet (Sales)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-c"></div><div><b>Saloni Bedi</b><span>Team Leader, Sales · EN, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Saloni (Sales)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-d"></div><div><b>Sukhpreet Kaur</b><span>Consultant, Off-Plan · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')">Book a call</button></div></div>
+    </div>
+    <div class="proof-row rv">
+      <div class="proof"><b>★ 5.0</b><span class="sub">Client reviews on Google — external &amp; verifiable ↗</span></div>
+      <div class="proof"><b>12 min</b><span class="sub">Median first-response target, measured continuously</span></div>
+      <div class="proof"><b>96 listings</b><span class="sub">Live on Property Finder · 11 agents, 3 SuperAgents ↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNAL STRIP -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="journal-strip rv">
+      <a class="j" href="#"><span class="eyebrow">Market</span><b>July market update: prices, inventory, meaning</b></a>
+      <a class="j" href="#"><span class="eyebrow">Buying</span><b>Buying in Dubai as a non-resident</b></a>
+      <a class="j" href="#"><span class="eyebrow">Residency</span><b>The Golden Visa through property, 2026</b></a>
+      <a class="link" href="#">All insights</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">KIRPA</div>
+        <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
+      </div>
+      <div><h4>Properties</h4><ul><li><a href="#">Buy</a></li><li><a href="#">Rent</a></li><li><a href="#offplan">Off-Plan</a></li><li><a href="#sell">Sell with us</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="#explore">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span>All listings carry a valid Trakheesi advertising permit.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BAR -->
+<div class="mbar">
+  <div class="row">
+    <button onclick="document.getElementById('q').focus();window.scrollTo({top:0,behavior:'smooth'})">Search</button>
+    <a class="wa" href="https://wa.me/971543673063" target="_blank" rel="noopener">WhatsApp</a>
+    <button id="mbarFav">♡ Shortlist</button>
+  </div>
+</div>
+
+<script>window.BASE='';</script>
+<script src="assets/listings.js"></script>
+<script src="assets/kirpa.js"></script>
+<script>
+/* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
+function renderRes(){
+  $('#resGrid').innerHTML=LISTINGS.map(cardHTML).join('');
+  bindCards($('#resGrid'));
+  document.querySelectorAll('#offplan .money').forEach(el=>{el.textContent=fmt(+el.dataset.aed)});
+}
+function renderExplore(lens){
+  $('#exploreGrid').innerHTML=LENSES[lens].map(t=>'<div class="tile"><div class="photo '+t[2]+'"></div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div></div>').join('');
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');renderExplore(t.dataset.lens);
+}));
+/* search expand */
+const sb=$('#searchbox');
+$('#q').addEventListener('focus',()=>sb.classList.add('open'));
+document.addEventListener('click',e=>{if(!sb.contains(e.target))sb.classList.remove('open')});
+document.querySelectorAll('#sug li').forEach(li=>li.addEventListener('click',()=>{$('#q').value=li.dataset.v;sb.classList.remove('open')}));
+document.querySelectorAll('#budget .chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
+/* re-render hooks */
+window.onFavsChanged=renderRes;
+window.onCurrencyChanged=renderRes;
+/* init */
+renderExplore('comm');renderRes();
+</script>
+</body>
+</html>
