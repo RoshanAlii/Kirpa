@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirpa Properties — Homes for Rent in Dubai</title>
+<meta name="description" content="RERA-registered homes for rent across Dubai's finest communities. Filter by community, budget and bedrooms — book a viewing on WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/kirpa.css">
+</head>
+<body>
+
+<header id="hdr">
+  <div class="nav">
+    <a class="logo" href="../index.html"><span class="mark"><i>K</i></span><span class="word"><b>KIRPA</b></span></a>
+    <nav class="nav-links">
+      <a href="../buy/">Buy</a><a href="./">Rent</a><a href="../off-plan/">Off-Plan</a><a href="../communities/">Communities</a><a href="../sell/">Sell</a>
+    </nav>
+    <div class="nav-right">
+      <button class="switch">EN ▾</button>
+      <span class="div"></span>
+      <button class="switch" id="curBtn">AED ▾</button>
+      <span class="div"></span>
+      <button class="heart-btn" id="openDrawer">♡ <span class="cnt" id="favCount">0</span></button>
+      <span class="div"></span>
+      <a class="nav-cta" href="https://wa.me/971543673063" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.4 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.9-1.1-4.7-4-4.9-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.5.5c-.2.2-.3.4-.1.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.9 1.7.3.2.5.1.7-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.4 0 .1 0 .7-.3 1.3z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">For Rent</span>
+    <h1 style="margin-top:14px">Homes for rent</h1>
+    <div class="sub">Every listing carries a valid Trakheesi permit. Prices shown in <span id="curNote">AED</span> — switch currency in the top bar.</div>
+    <div class="fbar">
+      <span class="fsel"><select id="fCommunity"><option value="">All communities</option></select></span>
+      <span class="fsel"><select id="fBeds"><option value="">Any beds</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option></select></span>
+      <button class="fchip on" data-min="0" data-max="0">Any price</button>
+      <button class="fchip" data-min="0" data-max="100000">Under 100K/yr</button>
+      <button class="fchip" data-min="100000" data-max="200000">100–200K/yr</button>
+      <button class="fchip" data-min="200000" data-max="300000">200–300K/yr</button>
+      <button class="fchip" data-min="300000" data-max="0">300K+/yr</button>
+      <span class="fcount" id="fCount"></span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap idx-grid">
+  <div class="res-grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">No homes match those filters yet — widen the search, or <a class="link" href="https://wa.me/971543673063?text=I'm%20looking%20for%20a%20home%20to%20rent%20in%20Dubai" target="_blank" rel="noopener">tell an advisor what you need</a> and we'll find it off-market.</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-logo">KIRPA</div>
+        <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
+      </div>
+      <div><h4>Properties</h4><ul><li><a href="../buy/">Buy</a></li><li><a href="./">Rent</a></li><li><a href="../off-plan/">Off-Plan</a></li><li><a href="../sell/">Sell with us</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="../communities/">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span>All listings carry a valid Trakheesi advertising permit.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <div class="row">
+    <a href="../index.html" style="text-decoration:none">Home</a>
+    <a class="wa" href="https://wa.me/971543673063" target="_blank" rel="noopener">WhatsApp</a>
+    <button id="mbarFav">♡ Shortlist</button>
+  </div>
+</div>
+
+<script>window.BASE='../';window.HEADER_SOLID=true;window.PAGE_STATUS='rent';</script>
+<script src="../assets/listings.js"></script>
+<script src="../assets/kirpa.js"></script>
+<script>
+const pool=LISTINGS.filter(l=>l.status===window.PAGE_STATUS);
+/* populate community filter from data */
+[...new Set(pool.map(l=>l.community))].sort().forEach(c=>{
+  const o=document.createElement('option');o.value=c;o.textContent=c;$('#fCommunity').appendChild(o);
+});
+let f={community:'',beds:'',min:0,max:0};
+function apply(){
+  const out=pool.filter(l=>
+    (!f.community||l.community===f.community)&&
+    (!f.beds||(f.beds==='4'?l.beds>=4:l.beds===+f.beds))&&
+    (!f.min||l.aed>=f.min)&&(!f.max||l.aed<f.max)
+  );
+  $('#grid').innerHTML=out.map(cardHTML).join('');
+  bindCards($('#grid'));
+  $('#empty').style.display=out.length?'none':'block';
+  $('#fCount').textContent=out.length+' of '+pool.length+' homes';
+  $('#curNote').textContent=cur;
+}
+$('#fCommunity').onchange=e=>{f.community=e.target.value;apply()};
+$('#fBeds').onchange=e=>{f.beds=e.target.value;apply()};
+document.querySelectorAll('.fchip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('.fchip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');f.min=+c.dataset.min;f.max=+c.dataset.max;apply();
+});
+window.onFavsChanged=apply;window.onCurrencyChanged=apply;
+apply();
+</script>
+</body>
+</html>
