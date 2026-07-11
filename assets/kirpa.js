@@ -186,6 +186,26 @@ document.addEventListener('click',e=>{
   track(kind,{context:ctx});
 },true);
 
+/* ---------- global Escape closes any open overlay ---------- */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape')return;
+  ['#drawer','#menu'].forEach(s=>{const el=document.querySelector(s);if(el)el.classList.remove('open')});
+  ['#sheet','#searchSheet'].forEach(s=>{const el=document.querySelector(s);if(el)el.classList.remove('open')});
+  const sc=document.querySelector('#scrim');if(sc)sc.classList.remove('on');
+});
+
+/* ---------- highlight the current page in the nav ---------- */
+(function(){
+  const path=location.pathname.replace(/index\.html$/,'').replace(/\/$/,'/');
+  document.querySelectorAll('.nav-links a, .menu nav a').forEach(a=>{
+    const href=a.getAttribute('href')||'';
+    const target=href.replace('../','/').replace(/index\.html$/,'').replace(/^\.\//,'');
+    if(target && target!=='#' && path.indexOf(target.replace(/\/$/,''))>-1 && target!=='/' && target.length>1){
+      a.classList.add('current');
+    }
+  });
+})();
+
 /* ---------- header states + reveals ---------- */
 const hdr=$('#hdr');
 if(hdr){
