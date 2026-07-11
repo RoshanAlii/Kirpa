@@ -458,3 +458,23 @@
 .menu nav a.current{color:var(--coral)}
 /* keyboard focus visibility (accessibility) */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--coral);outline-offset:3px;border-radius:3px}
+
+/* ================= RTL / Arabic ================= */
+[dir="rtl"]{text-align:right}
+[dir="rtl"] body{font-family:var(--body-ar,var(--body))}
+[dir="rtl"] .serif,[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3,[dir="rtl"] .logo .word b,
+[dir="rtl"] .hero h1,[dir="rtl"] .sec-head h2,[dir="rtl"] .price,[dir="rtl"] .lp-price{font-family:var(--display-ar,var(--display))}
+/* mirror the flex clusters */
+[dir="rtl"] .nav-right{flex-direction:row-reverse}
+[dir="rtl"] .nav-right .div{transform:scaleX(-1)}
+[dir="rtl"] .hero-foot,[dir="rtl"] .lp-title-row,[dir="rtl"] .sec-head,[dir="rtl"] .foot-bottom,[dir="rtl"] .cta-band{flex-direction:row-reverse}
+[dir="rtl"] .crumb{direction:rtl}
+[dir="rtl"] .facts td:last-child,[dir="rtl"] .op-table td:last-child{text-align:left}
+[dir="rtl"] .feature-info{margin-left:0;margin-right:-90px}
+[dir="rtl"] .drawer{left:0;right:auto;border-left:none;border-right:1px solid var(--sand);transform:translateX(-100%)}
+[dir="rtl"] .drawer.open{transform:none}
+[dir="rtl"] .fav,[dir="rtl"] .lp-fav{right:auto;left:14px}
+[dir="rtl"] .heart{right:auto;left:8px}
+[dir="rtl"] .nav-links a::after{transform-origin:center}
+[dir="rtl"] .sbar input{text-align:right}
+[dir="rtl"] .switch,[dir="rtl"] .eyebrow{letter-spacing:normal}
