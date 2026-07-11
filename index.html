@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=7">
+<link rel="stylesheet" href="assets/kirpa.css?v=8">
 </head>
 <body>
 
@@ -228,8 +228,8 @@
 </div>
 
 <script>window.BASE='';</script>
-<script src="assets/listings.js?v=7"></script>
-<script src="assets/kirpa.js?v=7"></script>
+<script src="assets/listings.js?v=8"></script>
+<script src="assets/kirpa.js?v=8"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
@@ -251,7 +251,14 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 const sb=$('#searchbox');
 $('#q').addEventListener('focus',()=>sb.classList.add('open'));
 document.addEventListener('click',e=>{if(!sb.contains(e.target))sb.classList.remove('open')});
+const sugItems=[...document.querySelectorAll('#sug li')];
 document.querySelectorAll('#sug li').forEach(li=>li.addEventListener('click',()=>{$('#q').value=li.dataset.v;sb.classList.remove('open')}));
+$('#q').addEventListener('input',()=>{
+  const q=$('#q').value.trim().toLowerCase();
+  let any=false;
+  sugItems.forEach(li=>{const hit=!q||li.dataset.v.toLowerCase().includes(q);li.style.display=hit?'':'none';if(hit)any=true;});
+  sb.classList.toggle('open',!isMobile());
+});
 document.querySelectorAll('#budget .chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('on')));
 /* re-render hooks */
 window.onFavsChanged=renderRes;
