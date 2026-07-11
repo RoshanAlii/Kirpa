@@ -71,7 +71,7 @@
 <script src="../assets/kirpa.js"></script>
 <script>
 $('#commIndex').innerHTML=Object.entries(COMMUNITIES).map(([slug,c])=>
-  '<a class="tile" href="guide.html?c='+slug+'"><div class="photo '+c.sky+'"></div><div class="tile-name"><b>'+c.name+'</b><span>'+LISTINGS.filter(l=>l.community===c.name).length+' live · Read the guide</span></div></a>'
+  '<a class="tile" href="guide.html?c='+slug+'"><div class="photo '+c.sky+'">'+phImg(c.img,c.name)+'</div><div class="tile-name"><b>'+c.name+'</b><span>'+LISTINGS.filter(l=>l.community===c.name).length+' live · Read the guide</span></div></a>'
 ).join('');
 </script>
 </body>
