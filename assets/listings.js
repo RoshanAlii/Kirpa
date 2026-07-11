@@ -115,16 +115,19 @@ const PROJECTS=[
 
 /* ---------- community guides ---------- */
 const COMMUNITIES={
+  'jvc':{name:'Jumeirah Village Circle',sky:'sky-c',img:'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&h=900&q=70',
+    stats:['Best-value entry point','Typically 7%+ gross yields','Circle Mall & new schools','Strong tenant demand'],
+    blurb:["JVC is where Dubai's rental math works hardest — entry prices among the lowest in new Dubai, tenant demand among the steadiest. It's the default first purchase for yield-focused investors, and increasingly a community families choose on purpose.","Stock quality varies more here than anywhere else in the city, which is exactly why building-level advice matters: the right tower in JVC outperforms; the wrong one disappoints."]},
   'dubai-hills':{name:'Dubai Hills Estate',sky:'sky-b',img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&h=900&q=70',
     stats:['18-hole championship golf','Dubai Hills Mall','GEMS schools in-community','Central park & trails'],
     blurb:["Dubai Hills Estate is the family heart of new Dubai — a masterplanned green district built around an 18-hole course, a regional mall, and schools you can walk to. Villas and townhouses dominate, with apartment districts at the edges.","For investors, Hills offers the steadiest end-user demand in the city: families rent long and buy eventually, which keeps both yields and resale liquidity healthy."]},
-  'dubai-marina':{name:'Dubai Marina',sky:'sky-a',img:'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1400&h=900&q=70&crop=entropy',
+  'dubai-marina':{name:'Dubai Marina',sky:'sky-a',img:'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=1400&h=900&crop=entropy&q=70',
     stats:['Marina promenade','Tram & Metro','JBR beach walkable','Highest rental liquidity'],
     blurb:["The Marina is Dubai's most liquid rental market — high-rise living on the water with the tram, the promenade, and the beach in walking distance.","Units here turn over fast: one-beds and two-beds with a marina view rarely sit vacant, which is why the Marina anchors most income-focused portfolios."]},
   'palm-jumeirah':{name:'Palm Jumeirah',sky:'sky-d',img:'https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1400&h=900&q=70',
     stats:['Private beach access','Trophy-asset market','Hotel-grade services','Strong USD-buyer demand'],
     blurb:["The Palm is Dubai's trophy address — beachfront villas and branded residences that trade in a market of their own, largely driven by international wealth.","Supply is fixed by geography; there is no second Palm. That scarcity underwrites long-term value in a way few Dubai districts can match."]},
-  'downtown':{name:'Downtown Dubai',sky:'sky-c',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&h=900&q=70&crop=entropy',
+  'downtown':{name:'Downtown Dubai',sky:'sky-c',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&h=900&crop=entropy&q=70',
     stats:['Burj Khalifa district','Dubai Mall','Opera & Boulevard','Short-stay friendly'],
     blurb:["Downtown is the postcard — Burj views, the Boulevard, and the strongest short-stay demand in the city, which supports premium rents on well-positioned units.","Buyers here trade some yield for liquidity and prestige: Downtown stock is the easiest in Dubai to exit when you need to."]}
 };
