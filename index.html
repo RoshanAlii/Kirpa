@@ -7,13 +7,13 @@
 <meta name="description" content="RERA-registered Dubai brokerage (ORN 49046). Off-plan, sales and rentals across Dubai's finest communities — book a viewing on WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=5">
+<link rel="stylesheet" href="assets/kirpa.css?v=6">
 </head>
 <body>
 
 <header id="hdr">
   <div class="nav">
-    <a class="logo" href="#">
+    <a class="logo" href="index.html">
       <span class="mark"><i>K</i></span>
       <span class="word"><b>KIRPA</b></span>
     </a>
@@ -60,7 +60,7 @@
       </div>
       <div class="chips" id="budget">
         <span class="lbl">Or one tap:</span>
-        <button class="chip">Under AED 1M</button><button class="chip">1–3M</button><button class="chip">3–8M</button><button class="chip">8M+</button><button class="chip">Map view</button>
+        <button class="chip">Under AED 1M</button><button class="chip">1–3M</button><button class="chip">3–8M</button><button class="chip">8M+</button>
       </div>
     </div>
 
@@ -140,7 +140,7 @@
 <!-- PROOF -->
 <section>
   <div class="wrap">
-    <div class="sec-head rv">
+    <div class="sec-head rv" id="advisors">
       <div><span class="eyebrow">Your Advisors</span><h2>The people you'll actually talk to.</h2></div>
     </div>
     <div class="advisors rv">
@@ -149,9 +149,9 @@
       <div class="adv"><div class="face photo sky-d">S</div><div><b>Sukhpreet Kaur</b><span>Consultant, Off-Plan · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')">Book a call</button></div></div>
     </div>
     <div class="proof-row rv">
-      <div class="proof"><b>★ 5.0</b><span class="sub">Client reviews on Google — external &amp; verifiable ↗</span></div>
-      <div class="proof"><b>12 min</b><span class="sub">Median first-response target, measured continuously</span></div>
-      <div class="proof"><b>96 listings</b><span class="sub">Live on Property Finder · 11 agents, 3 SuperAgents ↗</span></div>
+      <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Dubai+reviews" target="_blank" rel="noopener"><b>★ 5.0</b><span class="sub">Google reviews — see for yourself ↗</span></a>
+      <div class="proof"><b>&lt;15 min</b><span class="sub">First-response target on WhatsApp, business hours</span></div>
+      <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Property+Finder" target="_blank" rel="noopener"><b>96 listings</b><span class="sub">Live on Property Finder · 11 agents ↗</span></a>
     </div>
   </div>
 </section>
@@ -160,10 +160,10 @@
 <section style="padding-top:0">
   <div class="wrap">
     <div class="journal-strip rv">
-      <a class="j" href="#"><span class="eyebrow">Market</span><b>July market update: prices, inventory, meaning</b></a>
-      <a class="j" href="#"><span class="eyebrow">Buying</span><b>Buying in Dubai as a non-resident</b></a>
-      <a class="j" href="#"><span class="eyebrow">Residency</span><b>The Golden Visa through property, 2026</b></a>
-      <a class="link" href="#">All insights</a>
+      <div class="j"><span class="eyebrow">Market</span><b>July market update: prices, inventory, meaning</b></div>
+      <div class="j"><span class="eyebrow">Buying</span><b>Buying in Dubai as a non-resident</b></div>
+      <div class="j"><span class="eyebrow">Residency</span><b>The Golden Visa through property, 2026</b></div>
+      <span class="small" style="color:var(--stone);font-size:12px;align-self:center">The Journal — coming soon</span>
     </div>
   </div>
 </section>
@@ -177,8 +177,8 @@
         <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
       </div>
       <div><h4>Properties</h4><ul><li><a href="buy/">Buy</a></li><li><a href="rent/">Rent</a></li><li><a href="off-plan/">Off-Plan</a></li><li><a href="sell/">Sell with us</a></li></ul></div>
-      <div><h4>Discover</h4><ul><li><a href="communities/">Communities</a></li><li><a href="#">The Journal</a></li><li><a href="#">Mortgage calculator</a></li><li><a href="#">ROI calculator</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Our team</a></li><li><a href="#">Contact</a></li><li><a href="#">العربية</a></li></ul></div>
+      <div><h4>Discover</h4><ul><li><a href="communities/">Communities</a></li><li><a href="tools/mortgage-calculator/">Mortgage calculator</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="index.html#advisors">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener">Contact</a></li><li><span style="opacity:.6">العربية — soon</span></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
@@ -220,8 +220,8 @@
 </div>
 
 <script>window.BASE='';</script>
-<script src="assets/listings.js?v=5"></script>
-<script src="assets/kirpa.js?v=5"></script>
+<script src="assets/listings.js?v=6"></script>
+<script src="assets/kirpa.js?v=6"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
