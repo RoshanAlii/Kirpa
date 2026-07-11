@@ -7,7 +7,7 @@
 <meta name="description" content="RERA-registered Dubai brokerage (ORN 49046). Off-plan, sales and rentals across Dubai's finest communities — book a viewing on WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=2">
+<link rel="stylesheet" href="assets/kirpa.css?v=3">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
       <a href="buy/">Buy</a><a href="rent/">Rent</a><a href="off-plan/">Off-Plan</a><a href="communities/">Communities</a><a href="sell/">Sell</a>
     </nav>
     <div class="nav-right">
-      <button class="switch">EN ▾</button>
+      <button class="switch lang">EN ▾</button>
       <span class="div"></span>
       <button class="switch" id="curBtn">AED ▾</button>
       <span class="div"></span>
@@ -187,6 +187,29 @@
   </div>
 </footer>
 
+
+<!-- MOBILE SEARCH SHEET -->
+<div class="sheet" id="searchSheet" role="dialog" aria-modal="true" aria-label="Search">
+  <div class="sheet-box">
+    <div class="sheet-head"><b>Search</b><button id="closeSearch" aria-label="Close">✕</button></div>
+    <input class="ss-input" id="qm" type="text" placeholder="Community, building, developer, or reference" autocomplete="off">
+    <div class="sheet-lbl">I want to</div>
+    <div class="sheet-chips ssg" id="ssIntent"><button class="schip on">Buy</button><button class="schip">Rent</button><button class="schip">Off-Plan</button></div>
+    <div class="sheet-lbl">Budget</div>
+    <div class="sheet-chips ssg" id="ssBudget"><button class="schip on" data-min="0" data-max="0">Any</button><button class="schip" data-min="0" data-max="1000000">Under 1M</button><button class="schip" data-min="1000000" data-max="3000000">1–3M</button><button class="schip" data-min="3000000" data-max="8000000">3–8M</button><button class="schip" data-min="8000000" data-max="0">8M+</button></div>
+    <div class="sheet-lbl">Bedrooms</div>
+    <div class="sheet-chips ssg" id="ssBeds"><button class="schip on" data-v="">Any</button><button class="schip" data-v="1">1</button><button class="schip" data-v="2">2</button><button class="schip" data-v="3">3</button><button class="schip" data-v="4">4+</button></div>
+    <div class="sheet-lbl">Popular</div>
+    <ul class="sug" id="sugM">
+      <li data-v="Dubai Hills Estate">Dubai Hills Estate</li>
+      <li data-v="Dubai Marina">Dubai Marina</li>
+      <li data-v="Palm Jumeirah">Palm Jumeirah</li>
+      <li data-v="Downtown Dubai">Downtown Dubai</li>
+    </ul>
+    <button class="btn coral" id="ssGo">Search</button>
+  </div>
+</div>
+
 <!-- MOBILE BAR -->
 <div class="mbar">
   <div class="row">
@@ -197,8 +220,8 @@
 </div>
 
 <script>window.BASE='';</script>
-<script src="assets/listings.js?v=2"></script>
-<script src="assets/kirpa.js?v=2"></script>
+<script src="assets/listings.js?v=3"></script>
+<script src="assets/kirpa.js?v=3"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
@@ -226,6 +249,46 @@ document.querySelectorAll('#budget .chip').forEach(c=>c.addEventListener('click'
 window.onFavsChanged=renderRes;
 window.onCurrencyChanged=renderRes;
 /* init */
+
+/* ---------- real search routing (desktop + mobile sheet) ---------- */
+const COMMUNITY_NAMES=[...new Set(LISTINGS.map(l=>l.community))];
+function matchCommunity(t){t=(t||'').trim().toLowerCase();return COMMUNITY_NAMES.find(n=>n.toLowerCase()===t||n.toLowerCase().includes(t)&&t.length>3)||''}
+function route(intent,q,beds,min,max){
+  if(intent==='Off-Plan'){location.href='off-plan/';return}
+  const p=new URLSearchParams();
+  const c=matchCommunity(q);if(c)p.set('community',c);
+  if(beds)p.set('beds',beds);
+  if(min)p.set('min',min);if(max)p.set('max',max);
+  location.href=(intent==='Rent'?'rent/':'buy/')+(p.toString()?'?'+p.toString():'');
+}
+/* desktop bar */
+document.querySelector('#searchbox .go').addEventListener('click',()=>{
+  const intent=document.querySelector('#intent').value;
+  const priceSel=document.querySelectorAll('#searchbox .sel select')[1].value;
+  const bedsSel=document.querySelectorAll('#searchbox .sel select')[2].value;
+  const bands={'Under 1M':[0,1000000],'1–3M':[1000000,3000000],'3–8M':[3000000,8000000],'8M+':[8000000,0]};
+  const b=bands[priceSel]||[0,0];
+  route(intent,$('#q').value,(bedsSel==='Beds'||bedsSel==='Studio')?'':(bedsSel==='4+'?'4':bedsSel),b[0],b[1]);
+});
+/* mobile: focusing the hero field opens the sheet instead */
+const isMobile=()=>matchMedia('(max-width:600px)').matches;
+$('#q').addEventListener('focus',e=>{
+  if(isMobile()){e.target.blur();$('#searchSheet').classList.add('open');setTimeout(()=>$('#qm').focus(),200);}
+});
+$('#closeSearch').onclick=()=>$('#searchSheet').classList.remove('open');
+document.querySelectorAll('.ssg').forEach(g=>g.addEventListener('click',e=>{
+  if(!e.target.classList.contains('schip'))return;
+  g.querySelectorAll('.schip').forEach(x=>x.classList.remove('on'));
+  e.target.classList.add('on');
+}));
+document.querySelectorAll('#sugM li').forEach(li=>li.onclick=()=>{$('#qm').value=li.dataset.v});
+$('#ssGo').onclick=()=>{
+  const intent=document.querySelector('#ssIntent .on').textContent;
+  const bud=document.querySelector('#ssBudget .on');
+  const beds=document.querySelector('#ssBeds .on').dataset.v;
+  route(intent,$('#qm').value,beds,+bud.dataset.min,+bud.dataset.max);
+};
+
 $('#heroImg').src=HERO_IMG;
 renderExplore('comm');renderRes();
 </script>
