@@ -34,7 +34,7 @@
 
 <!-- HERO -->
 <section class="hero" style="padding:0">
-  <div class="photo sky-a"></div>
+  <div class="photo sky-a"><img class="ph-img" id="heroImg" alt="Dubai at dusk" onerror="this.remove()"></div>
   <div class="hero-inner">
     <span class="eyebrow">Dubai · Built on Loyalty and Trust</span>
     <h1>Homes of rare standing in Dubai's finest communities</h1>
@@ -106,7 +106,7 @@
       <a class="link" href="off-plan/">All projects</a>
     </div>
     <div class="offplan rv">
-      <div class="photo sky-d"></div>
+      <div class="photo sky-d"><img class="ph-img" loading="lazy" src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1400&h=900&crop=entropy&q=70" alt="The Orchard Place" onerror="this.remove()"></div>
       <div class="op-pad">
         <span class="eyebrow">Jumeirah Village Circle</span>
         <h3>The Orchard Place</h3>
@@ -144,9 +144,9 @@
       <div><span class="eyebrow">Your Advisors</span><h2>The people you'll actually talk to.</h2></div>
     </div>
     <div class="advisors rv">
-      <div class="adv"><div class="face photo sky-b"></div><div><b>Kamalpreet Kaur</b><span>Team Leader, Sales · EN, ਪੰਜਾਬੀ, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Kamalpreet (Sales)')">Book a call</button></div></div>
-      <div class="adv"><div class="face photo sky-c"></div><div><b>Saloni Bedi</b><span>Team Leader, Sales · EN, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Saloni (Sales)')">Book a call</button></div></div>
-      <div class="adv"><div class="face photo sky-d"></div><div><b>Sukhpreet Kaur</b><span>Consultant, Off-Plan · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-b">K</div><div><b>Kamalpreet Kaur</b><span>Team Leader, Sales · EN, ਪੰਜਾਬੀ, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Kamalpreet (Sales)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-c">S</div><div><b>Saloni Bedi</b><span>Team Leader, Sales · EN, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Saloni (Sales)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-d">S</div><div><b>Sukhpreet Kaur</b><span>Consultant, Off-Plan · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')">Book a call</button></div></div>
     </div>
     <div class="proof-row rv">
       <div class="proof"><b>★ 5.0</b><span class="sub">Client reviews on Google — external &amp; verifiable ↗</span></div>
@@ -182,7 +182,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
-      <span>All listings carry a valid Trakheesi advertising permit.</span>
+      <span>All listings carry a valid Trakheesi advertising permit. Demo imagery: Unsplash.</span>
     </div>
   </div>
 </footer>
@@ -208,7 +208,7 @@ function renderRes(){
 }
 function renderExplore(lens){
   $('#exploreGrid').innerHTML=LENSES[lens].map(t=>{
-    const inner='<div class="photo '+t[2]+'"></div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';
+    const inner='<div class="photo '+t[2]+'">'+phImg(t[4],t[0])+'</div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';
     return t[3]?'<a class="tile" href="communities/guide.html?c='+t[3]+'">'+inner+'</a>':'<div class="tile">'+inner+'</div>';
   }).join('');
 }
@@ -226,6 +226,7 @@ document.querySelectorAll('#budget .chip').forEach(c=>c.addEventListener('click'
 window.onFavsChanged=renderRes;
 window.onCurrencyChanged=renderRes;
 /* init */
+$('#heroImg').src=HERO_IMG;
 renderExplore('comm');renderRes();
 </script>
 </body>
