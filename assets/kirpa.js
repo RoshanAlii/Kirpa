@@ -128,6 +128,7 @@ function updateSheetLink(){
     call:"I'd like to book "+sheetCtx.title+". Preferred: "+slot+"."
   };
   $('#sheetConfirm').href='https://wa.me/'+WA+'?text='+encodeURIComponent(m[sheetCtx.kind]||m.viewing);
+  $('#sheetConfirm').onclick=()=>track('booking_request',{kind:sheetCtx.kind,ref:sheetCtx.ref||''});
 }
 document.querySelectorAll('.sheet-chips').forEach(g=>g.addEventListener('click',e=>{
   if(!e.target.classList.contains('schip'))return;
@@ -159,6 +160,31 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
   if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
   $('#closeMenu').onclick=()=>m.classList.remove('open');
 })();
+
+/* ---------- analytics: track every WhatsApp click with context ---------- */
+window.dataLayer=window.dataLayer||[];
+function track(event,detail){
+  const payload=Object.assign({event:event,page:location.pathname+location.search,ts:Date.now()},detail||{});
+  window.dataLayer.push(payload);
+  if(window.gtag)try{window.gtag('event',event,detail||{})}catch(e){}
+  /* visible in devtools until a real analytics ID is wired in */
+  if(window.KIRPA_DEBUG)console.log('[track]',payload);
+}
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="https://wa.me/"], a[href^="mailto:"]');
+  if(!a)return;
+  const kind=a.href.indexOf('wa.me')>-1?'whatsapp_click':'email_click';
+  /* infer intent from surrounding context */
+  let ctx='generic';
+  if(a.closest('.side-card'))ctx='listing_enquiry';
+  else if(a.closest('.cta-band'))ctx='cta_band';
+  else if(a.closest('.drawer'))ctx='shortlist_send';
+  else if(a.closest('.sheet'))ctx='booking_confirm';
+  else if(a.closest('.mbar'))ctx='mobile_bar';
+  else if(a.closest('header'))ctx='nav';
+  else if(a.closest('.sell'))ctx='valuation';
+  track(kind,{context:ctx});
+},true);
 
 /* ---------- header states + reveals ---------- */
 const hdr=$('#hdr');
