@@ -154,7 +154,7 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
   +'<a href="'+B+'sell/">Sell</a>'
   +'<a href="'+B+'index.html">Home</a>'
   +'</nav>'
-  +'<div class="menu-foot"><span>EN · العربية (soon)</span><span>ORN 49046 · Dubai</span></div>'
+  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN / العربية</button><span>ORN 49046 · Dubai</span></div>'
   +'</div>');
   const m=$('#menu');
   if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
@@ -185,6 +185,26 @@ document.addEventListener('click',e=>{
   else if(a.closest('.sell'))ctx='valuation';
   track(kind,{context:ctx});
 },true);
+
+/* ---------- language (EN / AR) ---------- */
+let lang=localStorage.getItem('kirpa-lang')||'en';
+function applyLang(){
+  const html=document.documentElement;
+  html.setAttribute('lang',lang);
+  html.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+  if(lang==='ar' && window.I18N){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v=I18N.ar[el.getAttribute('data-i18n')];
+      if(v)el.textContent=v;
+      const ph=el.getAttribute('data-i18n-ph');
+      if(ph&&I18N.ar[ph])el.setAttribute('placeholder',I18N.ar[ph]);
+    });
+  }
+  document.querySelectorAll('.switch.lang').forEach(b=>b.textContent=(lang==='ar'?'AR':'EN')+'\u00a0▾');
+}
+function toggleLang(){lang=lang==='ar'?'en':'ar';localStorage.setItem('kirpa-lang',lang);location.reload();}
+document.querySelectorAll('.switch.lang').forEach(b=>b.onclick=toggleLang);
+applyLang();
 
 /* ---------- global Escape closes any open overlay ---------- */
 document.addEventListener('keydown',e=>{
