@@ -7,7 +7,7 @@
 <meta name="description" content="Kirpa Properties community guide — living, investing, and live listings in this Dubai community.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=2">
+<link rel="stylesheet" href="../assets/kirpa.css?v=3">
 </head>
 <body>
 
@@ -18,7 +18,7 @@
       <a href="../buy/">Buy</a><a href="../rent/">Rent</a><a href="../off-plan/">Off-Plan</a><a href="./">Communities</a><a href="../sell/">Sell</a>
     </nav>
     <div class="nav-right">
-      <button class="switch">EN ▾</button>
+      <button class="switch lang">EN ▾</button>
       <span class="div"></span>
       <button class="switch" id="curBtn">AED ▾</button>
       <span class="div"></span>
@@ -67,8 +67,8 @@
 </div>
 
 <script>window.BASE='../';window.HEADER_SOLID=true;</script>
-<script src="../assets/listings.js?v=2"></script>
-<script src="../assets/kirpa.js?v=2"></script>
+<script src="../assets/listings.js?v=3"></script>
+<script src="../assets/kirpa.js?v=3"></script>
 <script>
 $('#commIndex').innerHTML=Object.entries(COMMUNITIES).map(([slug,c])=>
   '<a class="tile" href="guide.html?c='+slug+'"><div class="photo '+c.sky+'">'+phImg(c.img,c.name)+'</div><div class="tile-name"><b>'+c.name+'</b><span>'+LISTINGS.filter(l=>l.community===c.name).length+' live · Read the guide</span></div></a>'
