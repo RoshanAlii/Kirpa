@@ -19,11 +19,12 @@ function fxEcho(aed){
 }
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
+function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
 function cardHTML(l){
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
   return '<article class="res">'
-    +'<a href="'+url+'"><div class="photo '+l.skies[0]+'"><span class="credit">Photography — '+l.ref+'</span></div></a>'
+    +'<a href="'+url+'"><div class="photo '+l.skies[0]+'">'+phImg(l.imgs&&l.imgs[0],l.title)+'<span class="credit">'+l.ref+'</span></div></a>'
     +'<button class="fav '+(on?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.ref+'">'+(on?'♥':'♡')+'</button>'
     +'<div class="res-pad">'
     +'<span class="ref">'+l.ref+' · '+(l.status==='rent'?'For Rent':'For Sale')+'</span>'
