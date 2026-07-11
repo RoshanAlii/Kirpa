@@ -7,7 +7,7 @@
 <meta name="description" content="Kirpa Properties community guide — living, investing, and live listings in this Dubai community.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=4">
+<link rel="stylesheet" href="../assets/kirpa.css?v=5">
 </head>
 <body>
 
@@ -49,6 +49,13 @@
     </div>
     <div class="res-grid" id="gGrid"></div>
     <div class="empty" id="gEmpty" style="display:none">Nothing listed here right now — <a class="link" id="gAskLink" href="#" target="_blank" rel="noopener">ask an advisor</a> what's coming to market.</div>
+    <div class="cta-band">
+      <div><h3 id="ctaTitle">Thinking about this community?</h3><p>Talk to a licensed advisor about living or investing here — realistic comparables, service charges, and what's coming to market before it lists.</p></div>
+      <div class="acts">
+        <a class="btn coral" id="ctaWa" href="#" target="_blank" rel="noopener">WhatsApp an advisor</a>
+        <button class="link" id="ctaCall">Book a call</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -79,8 +86,8 @@
 </div>
 
 <script>window.BASE='../';window.HEADER_SOLID=true;</script>
-<script src="../assets/listings.js?v=4"></script>
-<script src="../assets/kirpa.js?v=4"></script>
+<script src="../assets/listings.js?v=5"></script>
+<script src="../assets/kirpa.js?v=5"></script>
 <script>
 const slug=(new URLSearchParams(location.search).get('c')||'dubai-hills').toLowerCase();
 const C=COMMUNITIES[slug]||COMMUNITIES['dubai-hills'];
@@ -91,7 +98,7 @@ $('#gPhoto').classList.add(C.sky);if(C.img)$('#gPhoto').insertAdjacentHTML('afte
 $('#gBlurb').innerHTML=C.blurb.map(p=>'<p>'+p+'</p>').join('');
 $('#gStats').innerHTML=C.stats.map(s=>'<span>'+s+'</span>').join('');
 const ask='https://wa.me/971543673063?text='+encodeURIComponent("I'm interested in "+C.name+' — what do you have coming to market?');
-$('#gAskLink').href=ask;$('#mbarWa').href=ask;
+$('#gAskLink').href=ask;$('#mbarWa').href=ask;$('#ctaWa').href=ask;$('#ctaTitle').textContent='Thinking about '+C.name+'?';$('#ctaCall').onclick=()=>openSheet('call','','a call about '+C.name);
 function renderLive(){
   const out=LISTINGS.filter(l=>l.community===C.name);
   $('#liveTitle').textContent='Homes in '+C.name+' ('+out.length+' live)';
