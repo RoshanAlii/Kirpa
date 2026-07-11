@@ -87,7 +87,7 @@ const C=COMMUNITIES[slug]||COMMUNITIES['dubai-hills'];
 document.title='Kirpa Properties — Living in '+C.name;
 $('#crumbName').textContent=C.name;
 $('#gName').textContent='Living in '+C.name;
-$('#gPhoto').classList.add(C.sky);
+$('#gPhoto').classList.add(C.sky);if(C.img)$('#gPhoto').insertAdjacentHTML('afterbegin',phImg(C.img,C.name));
 $('#gBlurb').innerHTML=C.blurb.map(p=>'<p>'+p+'</p>').join('');
 $('#gStats').innerHTML=C.stats.map(s=>'<span>'+s+'</span>').join('');
 const ask='https://wa.me/971543673063?text='+encodeURIComponent("I'm interested in "+C.name+' — what do you have coming to market?');
