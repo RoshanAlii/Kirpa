@@ -359,6 +359,7 @@
 /* ================= Mobile polish ================= */
 @media(max-width:960px){
   body{padding-bottom:calc(70px + env(safe-area-inset-bottom))} /* content never hides behind sticky bar */
+  .hero-inner{padding-bottom:calc(110px + env(safe-area-inset-bottom))} /* hero content clears the sticky bar */
   .page-head{padding-top:118px}
   .lp-head{padding-top:112px}
 }
@@ -379,7 +380,7 @@
   /* hero: readable scale, nothing clipped */
   .hero h1{font-size:34px;line-height:1.12}
   .hero .eyebrow{letter-spacing:.2em;font-size:10px}
-  .hero-inner{padding-bottom:36px}
+  .hero-inner{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
   .hero-foot{font-size:9.5px;letter-spacing:.1em;gap:10px;flex-direction:column;align-items:flex-start}
   .searchbox{margin-top:32px}
   .sbar .sel::after{right:10px}
