@@ -137,6 +137,29 @@ document.querySelectorAll('.sheet-chips').forEach(g=>g.addEventListener('click',
 $('#closeSheet').onclick=()=>$('#sheet').classList.remove('open');
 $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').classList.remove('open')});
 
+/* ---------- mobile menu (injected on every page) ---------- */
+(function(){
+  const nr=document.querySelector('.nav-right');
+  if(nr)nr.insertAdjacentHTML('beforeend','<button class="burger" id="burger" aria-label="Menu"><span></span><span></span></button>');
+  const B=window.BASE;
+  document.body.insertAdjacentHTML('beforeend',
+   '<div class="menu" id="menu">'
+  +'<div class="menu-head"><b>KIRPA</b><button id="closeMenu" aria-label="Close">✕</button></div>'
+  +'<nav>'
+  +'<a href="'+B+'buy/">Buy</a>'
+  +'<a href="'+B+'rent/">Rent</a>'
+  +'<a href="'+B+'off-plan/">Off-Plan</a>'
+  +'<a href="'+B+'communities/">Communities</a>'
+  +'<a href="'+B+'sell/">Sell</a>'
+  +'<a href="'+B+'index.html">Home</a>'
+  +'</nav>'
+  +'<div class="menu-foot"><span>EN · العربية (soon)</span><span>ORN 49046 · Dubai</span></div>'
+  +'</div>');
+  const m=$('#menu');
+  if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
+  $('#closeMenu').onclick=()=>m.classList.remove('open');
+})();
+
 /* ---------- header states + reveals ---------- */
 const hdr=$('#hdr');
 if(hdr){
