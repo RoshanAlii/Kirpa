@@ -396,3 +396,29 @@
   .drawer{border-radius:0}
   .lp-title-row h1{font-size:26px}
 }
+
+/* ================= Mobile menu (hamburger) ================= */
+.burger{display:none;background:none;border:none;color:inherit;padding:10px 8px;margin-left:2px;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{display:block;width:20px;height:1.5px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .25s}
+.menu{position:fixed;inset:0;background:var(--ink);color:var(--cream);z-index:80;display:none;flex-direction:column;padding:calc(24px + env(safe-area-inset-top)) 28px 40px}
+.menu.open{display:flex}
+.menu-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:44px}
+.menu-head b{font-family:var(--display);font-weight:400;font-size:18px;letter-spacing:.3em}
+.menu-head button{background:none;border:none;color:var(--cream);font-size:22px;padding:8px}
+.menu nav{display:flex;flex-direction:column;gap:6px}
+.menu nav a{font-family:var(--display);font-size:34px;padding:10px 0;border-bottom:1px solid #2E2A26}
+.menu nav a:active{color:var(--coral)}
+.menu .menu-foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#9B8F82;font-size:12px;letter-spacing:.08em}
+@media(max-width:960px){
+  .burger{display:flex}
+  .switch.lang{display:none}
+}
+
+/* ================= Mobile search sheet ================= */
+#searchSheet{padding:0;align-items:stretch}
+#searchSheet .sheet-box{width:100%;max-width:none;height:100%;border-radius:0;overflow:auto;padding:calc(22px + env(safe-area-inset-top)) 26px 36px}
+.ss-input{width:100%;background:none;border:none;border-bottom:1.5px solid var(--sand);outline:none;font-family:var(--body);font-size:17px;padding:14px 2px;margin-top:16px;color:var(--ink)}
+.ss-input::placeholder{color:var(--stone)}
+#searchSheet .sug{margin:6px -26px 0}
+#searchSheet .sug li{padding:14px 26px}
+#searchSheet .btn{position:sticky;bottom:0}
