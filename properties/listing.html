@@ -167,8 +167,11 @@ function renderPage(){
   $('#lpStatus').textContent=L.ref+' · '+(L.status==='rent'?'For Rent':'For Sale');
   $('#lpTitle').textContent=L.title;
   $('#lpPlace').textContent=(L.building?L.building+', ':'')+L.community+', Dubai';
-  ['g0','g1','g2'].forEach((id,i)=>{$('#'+id).classList.add(L.skies[i%L.skies.length])});
-  $('#gCredit').textContent='Photography — '+L.ref;
+  ['g0','g1','g2'].forEach((id,i)=>{
+    const el=$('#'+id);el.classList.add(L.skies[i%L.skies.length]);
+    if(L.imgs&&L.imgs[i])el.insertAdjacentHTML('afterbegin',phImg(L.imgs[i],L.title));
+  });
+  $('#gCredit').textContent=L.ref;
   $('#lpDesc').innerHTML=L.desc.map(p=>'<p>'+p+'</p>').join('');
   $('#factsBody').innerHTML=[
     ['Reference',L.ref],['Status',L.status==='rent'?'For Rent':'For Sale'],
@@ -179,7 +182,7 @@ function renderPage(){
   ].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('');
   $('#featChips').innerHTML=L.features.map(f=>'<span>'+f+'</span>').join('');
   $('#lpSpecs').textContent=L.beds+' bed · '+L.baths+' bath · '+L.sqft.toLocaleString()+' sqft · '+L.extra;
-  $('#agentFace').classList.add(A.sky);
+  $('#agentFace').classList.add(A.sky);$('#agentFace').textContent=A.name[0];
   $('#agentName').textContent=A.name;
   $('#agentRole').textContent=A.role+' · '+A.langs;
   $('#lpPermit').textContent='Trakheesi '+L.permit+' · ORN 49046';
