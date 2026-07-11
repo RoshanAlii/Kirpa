@@ -355,3 +355,43 @@
 .hero .photo .ph-img{z-index:0}
 .face{font-family:var(--display);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:19px}
 .side-card .agent .face{font-size:17px}
+
+/* ================= Mobile polish ================= */
+@media(max-width:960px){
+  body{padding-bottom:calc(70px + env(safe-area-inset-bottom))} /* content never hides behind sticky bar */
+  .page-head{padding-top:118px}
+  .lp-head{padding-top:112px}
+}
+@media(max-width:600px){
+  /* nav pill: no wrapping, tighter but tappable */
+  .switch,.heart-btn,.nav-cta,.logo{white-space:nowrap}
+  .nav{padding:0 6px 0 14px;height:54px}
+  .logo{gap:10px}
+  .logo .mark{width:30px;height:30px}
+  .logo .mark i{font-size:13px}
+  .logo .word b{font-size:14px;letter-spacing:.2em}
+  .switch{font-size:10px;padding:10px 4px}
+  .heart-btn{font-size:11px;padding:10px 4px;gap:3px}
+  .heart-btn .cnt{min-width:14px;height:14px;font-size:8.5px}
+  .nav-right .div{margin:0 6px;height:12px}
+  .nav-cta{font-size:9.5px;gap:4px;padding:10px 5px;letter-spacing:.04em}
+  .nav-cta svg{width:12px;height:12px}
+  /* hero: readable scale, nothing clipped */
+  .hero h1{font-size:34px;line-height:1.12}
+  .hero .eyebrow{letter-spacing:.2em;font-size:10px}
+  .hero-inner{padding-bottom:36px}
+  .hero-foot{font-size:9.5px;letter-spacing:.1em;gap:10px;flex-direction:column;align-items:flex-start}
+  .searchbox{margin-top:32px}
+  .sbar .sel::after{right:10px}
+  .sbar select{padding:0 26px 0 14px;font-size:12px}
+  .chips{gap:8px}
+  .chip{padding:7px 14px;font-size:11.5px}
+  /* sections & cards breathe on small screens */
+  .sec-head h2{font-size:26px}
+  .res .photo{height:210px}
+  .op-pad{padding:28px 22px}
+  .side-card{padding:24px 20px}
+  .gallery .main{height:240px}
+  .drawer{border-radius:0}
+  .lp-title-row h1{font-size:26px}
+}
