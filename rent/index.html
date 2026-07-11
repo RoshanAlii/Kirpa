@@ -7,7 +7,7 @@
 <meta name="description" content="RERA-registered homes for rent across Dubai's finest communities. Filter by community, budget and bedrooms — book a viewing on WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css">
+<link rel="stylesheet" href="../assets/kirpa.css?v=2">
 </head>
 <body>
 
@@ -18,9 +18,9 @@
       <a href="../buy/">Buy</a><a href="./">Rent</a><a href="../off-plan/">Off-Plan</a><a href="../communities/">Communities</a><a href="../sell/">Sell</a>
     </nav>
     <div class="nav-right">
-      <button class="switch">EN ▾</button>
+      <button class="switch">EN ▾</button>
       <span class="div"></span>
-      <button class="switch" id="curBtn">AED ▾</button>
+      <button class="switch" id="curBtn">AED ▾</button>
       <span class="div"></span>
       <button class="heart-btn" id="openDrawer">♡ <span class="cnt" id="favCount">0</span></button>
       <span class="div"></span>
@@ -79,8 +79,8 @@
 </div>
 
 <script>window.BASE='../';window.HEADER_SOLID=true;window.PAGE_STATUS='rent';</script>
-<script src="../assets/listings.js"></script>
-<script src="../assets/kirpa.js"></script>
+<script src="../assets/listings.js?v=2"></script>
+<script src="../assets/kirpa.js?v=2"></script>
 <script>
 const pool=LISTINGS.filter(l=>l.status===window.PAGE_STATUS);
 /* populate community filter from data */
