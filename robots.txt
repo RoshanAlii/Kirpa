@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://roshanalii.github.io/Kirpa/sitemap.xml
