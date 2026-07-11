@@ -7,7 +7,7 @@
 <meta name="description" content="RERA-registered Dubai brokerage (ORN 49046). Off-plan, sales and rentals across Dubai's finest communities — book a viewing on WhatsApp.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=3">
+<link rel="stylesheet" href="assets/kirpa.css?v=4">
 </head>
 <body>
 
@@ -220,8 +220,8 @@
 </div>
 
 <script>window.BASE='';</script>
-<script src="assets/listings.js?v=3"></script>
-<script src="assets/kirpa.js?v=3"></script>
+<script src="assets/listings.js?v=4"></script>
+<script src="assets/kirpa.js?v=4"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
@@ -263,6 +263,7 @@ function route(intent,q,beds,min,max){
 }
 /* desktop bar */
 document.querySelector('#searchbox .go').addEventListener('click',()=>{
+  if(isMobile()){$('#qm').value=$('#q').value;$('#searchSheet').classList.add('open');return;}
   const intent=document.querySelector('#intent').value;
   const priceSel=document.querySelectorAll('#searchbox .sel select')[1].value;
   const bedsSel=document.querySelectorAll('#searchbox .sel select')[2].value;
@@ -273,7 +274,7 @@ document.querySelector('#searchbox .go').addEventListener('click',()=>{
 /* mobile: focusing the hero field opens the sheet instead */
 const isMobile=()=>matchMedia('(max-width:600px)').matches;
 $('#q').addEventListener('focus',e=>{
-  if(isMobile()){e.target.blur();$('#searchSheet').classList.add('open');setTimeout(()=>$('#qm').focus(),200);}
+  if(isMobile()){e.target.blur();$('#qm').value=$('#q').value;$('#searchSheet').classList.add('open');setTimeout(()=>$('#qm').focus(),200);}
 });
 $('#closeSearch').onclick=()=>$('#searchSheet').classList.remove('open');
 document.querySelectorAll('.ssg').forEach(g=>g.addEventListener('click',e=>{
