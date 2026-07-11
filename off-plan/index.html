@@ -71,7 +71,7 @@
 <script>
 function renderProjects(){
   $('#opList').innerHTML=PROJECTS.map(p=>
-    '<div class="offplan"><div class="photo '+p.sky+'"></div><div class="op-pad">'
+    '<div class="offplan"><div class="photo '+p.sky+'">'+phImg(p.img,p.name)+'</div><div class="op-pad">'
     +'<span class="eyebrow">'+p.community+'</span>'
     +'<h3>'+p.name+'</h3>'
     +'<p style="font-size:14px;color:var(--stone);margin-top:12px">'+p.blurb+'</p>'
