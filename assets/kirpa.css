@@ -422,3 +422,11 @@
 #searchSheet .sug{margin:6px -26px 0}
 #searchSheet .sug li{padding:14px 26px}
 #searchSheet .btn{position:sticky;bottom:0}
+
+/* ================= Mobile hero search: one calm field (sheet holds the controls) ================= */
+@media(max-width:600px){
+  .sbar .sel{display:none}
+  .sbar{flex-wrap:nowrap}
+  .sbar input{order:0;flex:1;border-right:none;border-bottom:none;font-size:16px;padding:19px 18px}
+  .sbar .go{flex:0 0 auto;padding:0 26px;font-size:11px}
+}
