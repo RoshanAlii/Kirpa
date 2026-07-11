@@ -99,11 +99,11 @@ $('#scrim').onclick=closeDrawer;
 
 /* ---------- currency ---------- */
 if($('#curBtn')){
-  $('#curBtn').textContent=cur+' ▾';
+  $('#curBtn').textContent=cur+'\u00a0▾';
   $('#curBtn').onclick=()=>{
     cur=CURS[(CURS.indexOf(cur)+1)%CURS.length];
     localStorage.setItem('kirpa-cur',cur);
-    $('#curBtn').textContent=cur+' ▾';
+    $('#curBtn').textContent=cur+'\u00a0▾';
     if(window.onCurrencyChanged)window.onCurrencyChanged();
   };
 }
