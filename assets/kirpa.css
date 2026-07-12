@@ -55,16 +55,17 @@
   .hero h1{font-family:var(--display);font-size:clamp(42px,6vw,86px);line-height:1.06;font-weight:400;max-width:15ch}
   .hero .eyebrow{color:rgba(251,246,241,.6);display:block;margin-bottom:26px}
   /* structured search bar — always visible */
-  .searchbox{margin-top:48px;max-width:840px}
+  .searchbox{margin:48px auto 0;max-width:860px}
   .barwrap{position:relative}
-  .sbar{display:flex;background:var(--paper);border:1px solid var(--sand);align-items:stretch}
+  .sbar{display:flex;background:var(--paper);border:1px solid var(--sand);align-items:stretch;box-shadow:0 26px 60px -30px rgba(15,13,12,.6);transition:border-color .2s,box-shadow .2s}
+  .sbar:focus-within{border-color:var(--coral);box-shadow:0 26px 60px -26px rgba(255,102,51,.5)}
   .sbar .sel{position:relative;border-right:1px solid var(--sand);display:flex;align-items:center}
   .sbar .sel::after{content:'▾';position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:10px;color:var(--stone);pointer-events:none}
   .sbar select{appearance:none;-webkit-appearance:none;background:none;border:none;outline:none;font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink);padding:0 32px 0 20px;height:100%;cursor:pointer}
   .sbar input{flex:1;background:none;border:none;outline:none;color:var(--ink);font-family:var(--body);font-size:15px;padding:19px 20px;min-width:0;border-right:1px solid var(--sand)}
   .sbar input::placeholder{color:var(--stone)}
-  .sbar .go{background:var(--ink);color:var(--cream);border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:0 32px;transition:background .2s}
-  .sbar .go:hover{background:var(--coral)}
+  .sbar .go{background:var(--coral);color:#fff;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:0 34px;transition:background .2s}
+  .sbar .go:hover{background:var(--ink)}
   .panel{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--paper);color:var(--ink);border:1px solid var(--sand);box-shadow:0 24px 60px rgba(15,13,12,.28);z-index:30}
   .searchbox.open .panel{display:block}
   .chips{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
@@ -352,7 +353,7 @@
 .photo{position:relative}
 .ph-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .photo .credit,.tile-name,.comm-name{z-index:2}
-.hero .photo .ph-img{z-index:0}
+.hero .photo .ph-img{z-index:0;object-position:center top}
 .face{font-family:var(--display);color:var(--cream);display:flex;align-items:center;justify-content:center;font-size:19px}
 .side-card .agent .face{font-size:17px}
 
