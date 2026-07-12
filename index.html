@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=11">
+<link rel="stylesheet" href="assets/kirpa.css?v=13">
 </head>
 <body>
 
@@ -50,31 +50,31 @@
     <div class="searchbox" id="searchbox">
       <div class="barwrap">
       <div class="sbar">
-        <span class="sel"><select id="intent" aria-label="Intent"><option>Buy</option><option>Rent</option><option>Off-Plan</option></select></span>
+        <span class="sel"><select id="intent" aria-label="Intent"><option data-i18n="ss.buy">Buy</option><option data-i18n="ss.rent">Rent</option><option data-i18n="ss.offplan">Off-Plan</option></select></span>
         <input id="q" type="text" placeholder="Community, building, developer, or reference" data-i18n-ph="hero.search" autocomplete="off">
-        <span class="sel"><select aria-label="Price"><option>Price</option><option>Under 1M</option><option>1–3M</option><option>3–8M</option><option>8M+</option></select></span>
-        <span class="sel"><select aria-label="Beds"><option>Beds</option><option>Studio</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></span>
+        <span class="sel"><select aria-label="Price"><option data-i18n="sel.price">Price</option><option>Under 1M</option><option>1–3M</option><option>3–8M</option><option>8M+</option></select></span>
+        <span class="sel"><select aria-label="Beds"><option data-i18n="sel.beds">Beds</option><option data-i18n="sel.studio">Studio</option><option>1</option><option>2</option><option>3</option><option>4+</option></select></span>
         <button class="go">Search</button>
       </div>
       <div class="panel">
         <ul class="sug" id="sug">
-          <li data-v="Dubai Hills Estate">Dubai Hills Estate <span>142 live listings</span></li>
-          <li data-v="Dubai Marina">Dubai Marina <span>218 live listings</span></li>
-          <li data-v="Palm Jumeirah">Palm Jumeirah <span>96 live listings</span></li>
-          <li data-v="Emaar">Emaar — developer <span>37 projects</span></li>
-          <li data-v="KP-104">KP-104 — Sidra garden villa <span>reference</span></li>
+          <li data-v="Dubai Hills Estate">Dubai Hills Estate</li>
+          <li data-v="Dubai Marina">Dubai Marina</li>
+          <li data-v="Palm Jumeirah">Palm Jumeirah</li>
+          
+          
         </ul>
       </div>
       </div>
       <div class="chips" id="budget">
         <span class="lbl" data-i18n="hero.tap">Or one tap:</span>
-        <button class="chip" data-i18n="chip.under1m">Under AED 1M</button><button class="chip">1–3M</button><button class="chip">3–8M</button><button class="chip">8M+</button>
+        <button class="chip" data-i18n="chip.under1m">Under AED 1M</button><button class="chip" data-i18n="chip.1-3m">1–3M</button><button class="chip" data-i18n="chip.3-8m">3–8M</button><button class="chip" data-i18n="chip.8m">8M+</button>
       </div>
     </div>
 
     <div class="hero-foot">
       <span><span data-i18n="hero.owner">Owner? What is your property worth?</span></span>
-      <span>RERA-registered · ORN 49046 · Business Bay, Dubai</span>
+      <span data-i18n="hero.trustline">RERA-registered · ORN 49046 · Business Bay, Dubai</span>
     </div>
   </div>
 </section>
@@ -119,15 +119,15 @@
         <span class="eyebrow">Jumeirah Village Circle</span>
         <h3>The Orchard Place</h3>
         <table class="op-table">
-          <tr><td data-i18n="op.developer">Developer</td><td>Name — track record ↗</td></tr>
+          <tr><td data-i18n="op.developer">Developer</td><td data-i18n="op.track">Name — track record ↗</td></tr>
           <tr><td data-i18n="op.from">From</td><td class="money" data-aed="1900000">AED 1,900,000</td></tr>
           <tr><td data-i18n="op.plan">Payment plan</td><td>60 / 40</td></tr>
           <tr><td data-i18n="op.handover">Handover</td><td>Q4 2027</td></tr>
-          <tr><td data-i18n="op.yield">Est. gross yield</td><td>7.1% <span class="meth" title="Estimated from current JVC rental comparables against launch pricing. Not a guarantee of future returns.">how we estimate</span></td></tr>
+          <tr><td data-i18n="op.yield">Est. gross yield</td><td>7.1% <span class="meth" title="Estimated from current JVC rental comparables against launch pricing. Not a guarantee of future returns." data-i18n="lp.howest">how we estimate</span></td></tr>
         </table>
         <div style="margin-top:32px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
-          <a class="btn" href="https://wa.me/971543673063?text=Please%20send%20me%20the%20Orchard%20Place%20brochure" target="_blank" rel="noopener" data-i18n="op.brochure">Get the brochure</a>
-          <button class="link" onclick="openSheet('suite','','The Orchard Place, JVC')">Book a sales-suite visit</button>
+          <a class="btn" href="https://wa.me/971543673063?text=Please%20send%20me%20the%20Orchard%20Place%20brochure" target="_blank" rel="noopener" data-i18n="op.brochure" data-i18n="op.brochure2">Get the brochure</a>
+          <button class="link" onclick="openSheet('suite','','The Orchard Place, JVC')" data-i18n="op.suite2">Book a sales-suite visit</button>
         </div>
       </div>
     </div>
@@ -140,8 +140,8 @@
     <span class="eyebrow" style="color:#6E645A" data-i18n="sell.eyebrow">For Owners</span>
     <h2 data-i18n="sell.h">What is your property worth today?</h2>
     <p>No forms. One message. A licensed advisor replies with comparable sales and a realistic strategy — usually within minutes.</p>
-    <a class="btn coral" href="https://wa.me/971543673063?text=I'd%20like%20a%20valuation%20for%20my%20property%20in%20" target="_blank" rel="noopener">Get my valuation on WhatsApp</a>
-    <span class="fine">Prefer email? <a href="mailto:info@kirpaproperties.com">Write to us</a> &nbsp;·&nbsp; or <button class="link" style="font-size:12px;letter-spacing:.06em;text-transform:none" onclick="openSheet('valuation','','Valuation visit at your property')">book a valuation visit</button></span>
+    <a class="btn coral" href="https://wa.me/971543673063?text=I'd%20like%20a%20valuation%20for%20my%20property%20in%20" target="_blank" rel="noopener" data-i18n="sell.btn">Get my valuation on WhatsApp</a>
+    <span class="fine"><span data-i18n="sell.writeus">Prefer email? Write to us</span> <a href="mailto:info@kirpaproperties.com" style="display:none"></a> &nbsp;·&nbsp; or <button class="link" style="font-size:12px;letter-spacing:.06em;text-transform:none" onclick="openSheet('valuation','','Valuation visit at your property')">book a valuation visit</button></span>
   </div>
 </section>
 
@@ -152,13 +152,13 @@
       <div><span class="eyebrow" data-i18n="sec.advisors">Your Advisors</span><h2 data-i18n="sec.advisors.h">The people you'll actually talk to.</h2></div>
     </div>
     <div class="advisors rv">
-      <div class="adv"><div class="face photo sky-b">K</div><div><b>Kamalpreet Kaur</b><span>Team Leader, Sales · EN, ਪੰਜਾਬੀ, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Kamalpreet (Sales)')">Book a call</button></div></div>
-      <div class="adv"><div class="face photo sky-c">S</div><div><b>Saloni Bedi</b><span>Team Leader, Sales · EN, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Saloni (Sales)')">Book a call</button></div></div>
-      <div class="adv"><div class="face photo sky-d">S</div><div><b>Sukhpreet Kaur</b><span>Consultant, Off-Plan · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-b">K</div><div><b>Kamalpreet Kaur</b><span><span data-i18n="role.tl">Team Leader, Sales</span> · EN, ਪੰਜਾਬੀ, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Kamalpreet (Sales)')" data-i18n="label.call">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-c">S</div><div><b>Saloni Bedi</b><span><span data-i18n="role.tl">Team Leader, Sales</span> · EN, हिन्दी</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Saloni (Sales)')" data-i18n="label.call">Book a call</button></div></div>
+      <div class="adv"><div class="face photo sky-d">S</div><div><b>Sukhpreet Kaur</b><span><span data-i18n="role.consult">Consultant, Off-Plan</span> · EN, ਪੰਜਾਬੀ</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Sukhpreet (Off-Plan)')" data-i18n="label.call">Book a call</button></div></div>
     </div>
     <div class="proof-row rv">
       <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Dubai+reviews" target="_blank" rel="noopener"><b>★ 5.0</b><span class="sub">Google reviews — see for yourself ↗</span></a>
-      <div class="proof"><b>&lt;15 min</b><span class="sub">First-response target on WhatsApp, business hours</span></div>
+      <div class="proof"><b>&lt;15 min</b><span class="sub" data-i18n="proof.resp">First-response target on WhatsApp, business hours</span></div>
       <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Property+Finder" target="_blank" rel="noopener"><b>96 listings</b><span class="sub">Live on Property Finder · 11 agents ↗</span></a>
     </div>
   </div>
@@ -171,7 +171,7 @@
       <div class="j"><span class="eyebrow" data-i18n="j.market">Market</span><b data-i18n="j.m.t">July market update: prices, inventory, meaning</b></div>
       <div class="j"><span class="eyebrow" data-i18n="j.buying">Buying</span><b data-i18n="j.b.t">Buying in Dubai as a non-resident</b></div>
       <div class="j"><span class="eyebrow" data-i18n="j.residency">Residency</span><b data-i18n="j.r.t">The Golden Visa through property, 2026</b></div>
-      <span class="small" style="color:var(--stone);font-size:12px;align-self:center">The Journal — coming soon</span>
+      <span class="small" style="color:var(--stone);font-size:12px;align-self:center"><span data-i18n="label.comingsoon">The Journal — coming soon</span></span>
     </div>
   </div>
 </section>
@@ -186,10 +186,10 @@
       </div>
       <div><h4 data-i18n="foot.properties">Properties</h4><ul><li><a href="buy/" data-i18n="nav.buy">Buy</a></li><li><a href="rent/" data-i18n="nav.rent">Rent</a></li><li><a href="off-plan/" data-i18n="nav.offplan">Off-Plan</a></li><li><a href="sell/" data-i18n="foot.sellwith">Sell with us</a></li></ul></div>
       <div><h4 data-i18n="foot.discover">Discover</h4><ul><li><a href="communities/" data-i18n="nav.communities">Communities</a></li><li><a href="tools/mortgage-calculator/" data-i18n="foot.mortgage">Mortgage calculator</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="index.html#advisors">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener">Contact</a></li><li><span style="opacity:.6">العربية — soon</span></li></ul></div>
+      <div><h4 data-i18n="foot.company">Company</h4><ul><li><a href="index.html#advisors" data-i18n="foot.team">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener" data-i18n="foot.contact">Contact</a></li><li><span style="opacity:.6">العربية</span></li></ul></div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span data-i18n="foot.copyright">© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
       <span data-i18n="foot.compliance">All listings carry a valid Trakheesi advertising permit.</span>
     </div>
   </div>
@@ -228,9 +228,9 @@
 </div>
 
 <script>window.BASE='';</script>
-<script src="assets/i18n.js?v=11"></script>
-<script src="assets/listings.js?v=11"></script>
-<script src="assets/kirpa.js?v=11"></script>
+<script src="assets/i18n.js?v=13"></script>
+<script src="assets/listings.js?v=13"></script>
+<script src="assets/kirpa.js?v=13"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
@@ -240,7 +240,9 @@ function renderRes(){
 }
 function renderExplore(lens){
   $('#exploreGrid').innerHTML=LENSES[lens].map(row=>{const t=row;
-    const inner='<div class="photo '+t[2]+'">'+phImg(t[4],t[0])+'</div><div class="tile-name"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>';
+    const nm=(window.__lang==='ar'&&window.COMMAR&&COMMAR[t[0]])?COMMAR[t[0]]:t[0];
+    const sub=(window.__lang==='ar')?(t[3]?t('label.readguide','Read the guide'):t[1]):t[1];
+    const inner='<div class="photo '+t[2]+'">'+phImg(t[4],nm)+'</div><div class="tile-name"><b>'+nm+'</b><span>'+sub+'</span></div>';
     return t[3]?'<a class="tile" href="communities/guide.html?c='+t[3]+'">'+inner+'</a>':'<div class="tile">'+inner+'</div>';
   }).join('');
 }
@@ -307,6 +309,7 @@ $('#ssGo').onclick=()=>{
 };
 
 $('#heroImg').src=HERO_IMG;
+window.COMMAR={};Object.values(COMMUNITIES).forEach(c=>{COMMAR[c.name]=c.name_ar||c.name;});
 window.onLangReady=()=>{renderExplore(document.querySelector('.tab.on').dataset.lens);renderRes();};
 renderExplore('comm');renderRes();
 </script>
