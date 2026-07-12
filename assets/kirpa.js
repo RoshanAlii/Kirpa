@@ -269,3 +269,295 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 /* ---------- init ---------- */
 renderDrawer();
+
+
+/* ===================================================================
+   AI CONCIERGE — appended below. Fully static: no backend, no API key.
+   Injects the K icon on every page; matches live listings.js inventory.
+   =================================================================== */
+/* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
+   Load AFTER listings.js and kirpa.js on every page. Uses the site's own
+   globals: LISTINGS, PROJECTS, COMMUNITIES, fmt(), openSheet(), WA, track(), BASE.
+   A guided lead-qualifier that matches live inventory and hands a warm lead to
+   WhatsApp — everything runs in the visitor's browser, hosted entirely on GitHub. */
+(function(){
+  var WA   = (typeof window.WA!=='undefined')?window.WA:'971543673063';
+  var BASE = window.BASE||'';
+  var LANG = document.documentElement.getAttribute('lang')||'en';
+  var RTL  = LANG==='ar';
+  var T = function(en,ar){ return RTL?ar:en; };
+
+  function money(aed){ return (typeof window.fmt==='function')?fmt(aed):('AED '+aed.toLocaleString()); }
+  function book(kind,ref,title){ if(typeof window.openSheet==='function') openSheet(kind,ref,title);
+    else window.open('https://wa.me/'+WA+'?text='+encodeURIComponent("I'd like to book: "+title),'_blank'); }
+  function track(ev,d){ if(typeof window.track==='function'){ try{ window.track(ev,d||{}); }catch(e){} } }
+
+  /* listings.js declares these with const, so they live in the shared script
+     scope, NOT on window. Read them as bare identifiers, guarded. */
+  function _listings(){ return (typeof LISTINGS!=='undefined'&&LISTINGS)?LISTINGS:[]; }
+  function _projects(){ return (typeof PROJECTS!=='undefined'&&PROJECTS)?PROJECTS:[]; }
+  function _agents(){ return (typeof AGENTS!=='undefined'&&AGENTS)?AGENTS:{}; }
+
+  /* ---------- styles (scoped kc-) ---------- */
+  var css=''
+  +'.kc-launch{position:fixed;right:22px;bottom:22px;z-index:9998;width:56px;height:56px;border-radius:50%;background:var(--ink,#171412);color:var(--cream,#FBF6F1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .18s,background .18s;animation:kc-ring 2.6s infinite}'
+  +'.kc-launch:hover{transform:translateY(-2px) scale(1.05);background:var(--coral,#FF6633)}'
+  +'.kc-launch i{font-style:normal;font-family:var(--display,serif);font-size:23px;line-height:1}'
+  +'@keyframes kc-ring{0%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,.45)}70%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 12px rgba(255,102,51,0)}100%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,0)}}'
+  +'.kc-panel{position:fixed;right:22px;bottom:22px;width:384px;height:min(624px,82vh);z-index:9999;background:var(--paper,#FFFDFB);border:1px solid var(--sand,#E5DBD0);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 30px 70px -28px rgba(23,20,18,.5);font-family:var(--body,sans-serif);color:var(--ink,#171412)}'
+  +'.kc-panel.kc-open{display:flex}.kc-panel[dir="rtl"]{text-align:right}'
+  +'.kc-top{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid var(--sand,#E5DBD0);flex:0 0 auto}'
+  +'.kc-mark{width:32px;height:32px;border:1px solid var(--ink,#171412);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}'
+  +'.kc-mark i{font-style:normal;font-family:var(--display,serif);font-size:14px}'
+  +'.kc-top b{font-family:var(--display,serif);font-weight:400;letter-spacing:.26em;font-size:13px;display:block;line-height:1.2}'
+  +'.kc-top small{font-size:10.5px;color:var(--stone,#8F857A);letter-spacing:.03em}'
+  +'.kc-x{margin-inline-start:auto;background:none;border:none;font-size:17px;color:var(--stone,#8F857A);cursor:pointer;line-height:1}'
+  +'.kc-brief{flex:0 0 auto;display:none;gap:6px;flex-wrap:wrap;padding:9px 16px;border-bottom:1px solid var(--sand,#E5DBD0);background:var(--cream,#FBF6F1)}'
+  +'.kc-brief.kc-show{display:flex}'
+  +'.kc-brief .kc-pill{font-size:10.5px;background:var(--paper,#fff);border:1px solid var(--sand,#E5DBD0);border-radius:999px;padding:3px 9px}'
+  +'.kc-brief .kc-pill b{color:var(--coral,#FF6633);font-weight:600}'
+  +'.kc-stream{flex:1 1 auto;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:11px}'
+  +'.kc-msg{max-width:86%;font-size:13.5px;line-height:1.55;padding:10px 13px;border-radius:14px}'
+  +'.kc-bot{background:var(--cream,#FBF6F1);border:1px solid var(--sand,#E5DBD0);align-self:flex-start;border-bottom-left-radius:4px}'
+  +'.kc-me{background:var(--ink,#171412);color:var(--paper,#fff);align-self:flex-end;border-bottom-right-radius:4px}'
+  +'.kc-panel[dir="rtl"] .kc-bot{align-self:flex-end;border-bottom-left-radius:14px;border-bottom-right-radius:4px}'
+  +'.kc-panel[dir="rtl"] .kc-me{align-self:flex-start;border-bottom-right-radius:14px;border-bottom-left-radius:4px}'
+  +'.kc-type{align-self:flex-start;color:var(--stone,#8F857A);padding:2px 4px}'
+  +'.kc-type i{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--stone,#8F857A);margin-right:3px;animation:kc-b 1.2s infinite}'
+  +'.kc-type i:nth-child(2){animation-delay:.15s}.kc-type i:nth-child(3){animation-delay:.3s}'
+  +'@keyframes kc-b{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}'
+  +'.kc-cards{align-self:stretch;display:flex;flex-direction:column;gap:8px}'
+  +'.kc-card{display:flex;align-items:center;gap:10px;border:1px solid var(--sand,#E5DBD0);border-radius:12px;padding:10px 11px;background:var(--paper,#fff)}'
+  +'.kc-card-main{flex:1;min-width:0;text-decoration:none;color:inherit;display:block}'
+  +'.kc-card .kc-cref{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--stone,#8F857A);display:block}'
+  +'.kc-card b{font-size:13px;font-weight:600;display:block;margin:1px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}'
+  +'.kc-card .kc-cplace{font-size:11.5px;color:var(--stone,#8F857A);display:block}'
+  +'.kc-card .kc-cprice{font-size:12.5px;font-weight:600;color:var(--coral,#FF6633);display:block;margin-top:2px}'
+  +'.kc-book{flex:0 0 auto;border:1px solid var(--coral,#FF6633);background:none;color:var(--coral,#FF6633);border-radius:8px;padding:7px 10px;font-size:11.5px;font-family:var(--body,sans-serif);cursor:pointer}'
+  +'.kc-book:hover{background:var(--coral,#FF6633);color:#fff}'
+  +'.kc-seeall{align-self:flex-start;font-size:12px;color:var(--coral,#FF6633);text-decoration:none;border-bottom:1px solid currentColor}'
+  +'.kc-suggest{flex:0 0 auto;display:none;gap:7px;flex-wrap:wrap;padding:0 16px 10px}'
+  +'.kc-chip{font-size:12px;padding:7px 12px;border:1px solid rgba(255,102,51,.35);background:var(--paper,#fff);border-radius:999px;cursor:pointer;color:var(--coral,#FF6633);font-family:var(--body,sans-serif);transition:.15s}'
+  +'.kc-chip:hover{background:rgba(255,102,51,.08)}'
+  +'.kc-chip.kc-plain{border-color:var(--sand,#E5DBD0);color:var(--ink,#171412)}'
+  +'.kc-handoff{flex:0 0 auto;display:none;padding:0 16px 12px}'
+  +'.kc-handoff a{display:block;text-align:center;background:var(--coral,#FF6633);color:#fff;text-decoration:none;border-radius:10px;padding:11px;font-size:13px;font-weight:500}'
+  +'.kc-foot{flex:0 0 auto;padding:9px 16px;border-top:1px solid var(--sand,#E5DBD0);font-size:11px;color:var(--stone,#8F857A);text-align:center}'
+  +'.kc-foot a{color:var(--coral,#FF6633);text-decoration:none}'
+  +'@media(max-width:600px){.kc-launch{bottom:76px;right:16px;width:52px;height:52px}.kc-launch i{font-size:21px}.kc-panel{right:0;left:0;bottom:0;width:100%;height:88vh;border-radius:18px 18px 0 0}}';
+  var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
+
+  /* ---------- markup ---------- */
+  var launchLabel=T('Ask Kirpa','اسأل كِربا');
+  var wrap=document.createElement('div');
+  wrap.innerHTML=
+    '<button class="kc-launch" id="kcLaunch" aria-label="'+launchLabel+'" title="'+launchLabel+'"><i>K</i></button>'
+  + '<section class="kc-panel" id="kcPanel" role="dialog" aria-label="Kirpa Concierge"'+(RTL?' dir="rtl"':'')+'>'
+  +   '<div class="kc-top"><span class="kc-mark"><i>K</i></span><div><b>KIRPA</b><small>'+T('Concierge · here to help','مساعدك العقاري')+'</small></div><button class="kc-x" id="kcClose" aria-label="Close">&times;</button></div>'
+  +   '<div class="kc-brief" id="kcBrief"></div>'
+  +   '<div class="kc-stream" id="kcStream"></div>'
+  +   '<div class="kc-suggest" id="kcSuggest"></div>'
+  +   '<div class="kc-handoff" id="kcHandoff"><a id="kcHandoffLink" href="#" target="_blank" rel="noopener">'+T('Connect me with an advisor','تواصل مع مستشار')+'</a></div>'
+  +   '<div class="kc-foot">'+T('Prefer to talk now? ','تفضل التحدث الآن؟ ')+'<a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">'+T('Message us on WhatsApp','راسلنا على واتساب')+'</a></div>'
+  +  '</section>';
+  document.body.appendChild(wrap);
+
+  var $=function(id){return document.getElementById(id);};
+  var panel=$('kcPanel'),stream=$('kcStream'),suggestEl=$('kcSuggest'),briefEl=$('kcBrief'),
+      handoffEl=$('kcHandoff'),handoffLink=$('kcHandoffLink');
+  var lead={intent:null,budget:null,budgetRange:[0,0],area:null,beds:null,timeline:null,residency:null,refs:[]};
+  var opened=false;
+
+  function addMsg(html,who){var d=document.createElement('div');d.className='kc-msg '+(who==='me'?'kc-me':'kc-bot');d.innerHTML=html;stream.appendChild(d);stream.scrollTop=stream.scrollHeight;return d;}
+  function typing(cb){var t=document.createElement('div');t.className='kc-msg kc-bot kc-type';t.innerHTML='<i></i><i></i><i></i>';stream.appendChild(t);stream.scrollTop=stream.scrollHeight;setTimeout(function(){t.remove();cb();},420);}
+  function botSay(html){ typing(function(){ addMsg(html,'bot'); }); }
+  function options(arr){ // [{label, plain?, fn}]
+    suggestEl.innerHTML='';
+    arr.forEach(function(o){var b=document.createElement('button');b.className='kc-chip'+(o.plain?' kc-plain':'');b.textContent=o.label;b.onclick=function(){pick(o);};suggestEl.appendChild(b);});
+    suggestEl.style.display=arr.length?'flex':'none';
+  }
+  function pick(o){ addMsg(o.label,'me'); suggestEl.style.display='none'; o.fn(); }
+
+  function paintBrief(){
+    var order=['intent','budget','area','beds','timeline','residency'];
+    var pills=order.filter(function(k){return lead[k];}).map(function(k){
+      var v=lead[k]; if(k==='beds')v=(v==='4'?'4+':v)+' bed';
+      return '<span class="kc-pill"><b>'+k.charAt(0).toUpperCase()+k.slice(1)+'</b> '+v+'</span>';});
+    if(pills.length){briefEl.innerHTML=pills.join('');briefEl.classList.add('kc-show');}
+    if(lead.intent&&(lead.budget||lead.area)){
+      var parts=[]; order.forEach(function(k){if(lead[k])parts.push(k.charAt(0).toUpperCase()+k.slice(1)+': '+(k==='beds'?(lead[k]==='4'?'4+':lead[k]):lead[k]));});
+      if(lead.refs.length)parts.push('Interested in: '+lead.refs.join(', '));
+      var msg=T('Hi Kirpa — your concierge qualified me. ','مرحباً كِربا — أكمل مساعدكم بياناتي. ')+parts.join(' · ')+'. '+T('Can an advisor take it from here?','هل يمكن لمستشار المتابعة؟');
+      handoffLink.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+      if(handoffEl.style.display!=='block'){handoffEl.style.display='block';track('concierge_lead_ready',{});}
+      handoffLink.onclick=function(){track('concierge_handoff',{intent:lead.intent,budget:lead.budget,area:lead.area});};
+    }
+  }
+
+  /* ---------- data helpers ---------- */
+  function communities(intent){
+    if(intent==='Off-plan'){ return _projects().map(function(p){return p.community;}).filter(uniq); }
+    var status=intent==='Rent'?'rent':'sale';
+    return _listings().filter(function(l){return l.status===status;}).map(function(l){return l.community;}).filter(uniq);
+  }
+  function uniq(v,i,a){return a.indexOf(v)===i;}
+  function matchListings(){
+    var status=lead.intent==='Rent'?'rent':'sale';
+    return _listings().filter(function(l){
+      if(l.status!==status)return false;
+      if(lead.area&&l.community!==lead.area)return false;
+      if(lead.beds){ if(lead.beds==='4'){ if(l.beds<4)return false; } else if(l.beds==='studio'){ if(l.beds>0)return false; } else if(l.beds!=='any'&&l.beds!==String(l.beds)&&+lead.beds!==l.beds)return false; }
+      var mn=lead.budgetRange[0],mx=lead.budgetRange[1];
+      if(mn&&l.aed<mn)return false; if(mx&&l.aed>=mx)return false;
+      return true;
+    });
+  }
+  function matchProjects(){ return _projects().filter(function(p){ return !lead.area||p.community===lead.area; }); }
+
+  function listingCard(l){
+    var title=(RTL&&l.title_ar)?l.title_ar:l.title;
+    return '<div class="kc-card"><a class="kc-card-main" href="'+BASE+'properties/listing.html?ref='+l.ref+'">'
+      +'<span class="kc-cref">'+l.ref+' · '+(l.status==='rent'?T('For Rent','للإيجار'):T('For Sale','للبيع'))+'</span>'
+      +'<b>'+title+'</b><span class="kc-cplace">'+(l.building?l.building+', ':'')+l.community+'</span>'
+      +'<span class="kc-cprice">'+money(l.aed)+(l.per||'')+'</span></a>'
+      +'<button class="kc-book" data-r="'+l.ref+'" data-t="'+(l.ref+' — '+String(title).replace(/"/g,'&quot;'))+'">'+T('Book','حجز')+'</button></div>';
+  }
+  function projectCard(p){
+    return '<div class="kc-card"><a class="kc-card-main" href="'+BASE+'off-plan/">'
+      +'<span class="kc-cref">'+T('Off-Plan','على الخارطة')+' · '+p.community+'</span>'
+      +'<b>'+p.name+'</b><span class="kc-cplace">'+p.plan+' · '+p.handover+'</span>'
+      +'<span class="kc-cprice">'+T('From ','من ')+money(p.fromAed)+'</span></a>'
+      +'<button class="kc-book" data-suite="'+p.id+'" data-t="'+p.name+', '+p.community+'">'+T('Visit','زيارة')+'</button></div>';
+  }
+  function bindCards(scope){
+    scope.querySelectorAll('.kc-book').forEach(function(b){
+      b.onclick=function(){ if(b.dataset.suite) book('suite',b.dataset.suite,b.dataset.t); else book('viewing',b.dataset.r,b.dataset.t); };
+    });
+  }
+  function seeAllURL(){
+    var p=[]; if(lead.area)p.push('community='+encodeURIComponent(lead.area));
+    if(lead.beds&&lead.beds!=='any')p.push('beds='+(lead.beds==='4'?'4':lead.beds));
+    if(lead.budgetRange[0])p.push('min='+lead.budgetRange[0]); if(lead.budgetRange[1])p.push('max='+lead.budgetRange[1]);
+    return BASE+(lead.intent==='Rent'?'rent/':'buy/')+(p.length?'?'+p.join('&'):'');
+  }
+
+  /* ---------- flow ---------- */
+  function askIntent(){
+    botSay(T("Hello — I'm Kirpa's concierge. What brings you in today?","مرحباً — أنا مساعد كِربا. كيف أساعدك اليوم؟"));
+    options([
+      {label:T('Buy a home','شراء منزل'),fn:function(){setIntent('Buy');}},
+      {label:T('Rent a home','استئجار منزل'),fn:function(){setIntent('Rent');}},
+      {label:T('Off-plan / investment','على الخارطة / استثمار'),fn:function(){setIntent('Off-plan');}},
+      {label:T('Just a question','لدي سؤال'),plain:true,fn:askFaq}
+    ]);
+  }
+  function setIntent(v){ lead.intent=v; paintBrief(); askBudget(); }
+
+  function askBudget(){
+    var bands = lead.intent==='Rent'
+      ? [['Any budget',0,0],['Under 100k',0,100000],['100–200k',100000,200000],['200–300k',200000,300000],['300k+',300000,0]]
+      : [['Any budget',0,0],['Under 1M',0,1000000],['1–3M',1000000,3000000],['3–8M',3000000,8000000],['8M+',8000000,0]];
+    botSay(T('What budget are we working with?','ما الميزانية التقريبية؟')+(lead.intent==='Rent'?T(' (per year)',' (سنوياً)'):''));
+    options(bands.map(function(b){return {label:(b[0]==='Any budget'?T('Any budget','أي ميزانية'):('AED '+b[0])),fn:function(){lead.budget=b[0]==='Any budget'?T('Any','أي'):('AED '+b[0]);lead.budgetRange=[b[1],b[2]];paintBrief();askArea();}};}));
+  }
+
+  function askArea(){
+    var comms=communities(lead.intent).slice(0,6);
+    botSay(T('Any particular area, or shall I show the best across Dubai?','هل لديك منطقة مفضّلة، أم أعرض الأفضل في دبي؟'));
+    var opts=[{label:T('Anywhere in Dubai','أي مكان في دبي'),plain:true,fn:function(){lead.area=null;askBeds();}}];
+    comms.forEach(function(c){opts.push({label:c,fn:function(){lead.area=c;paintBrief();askBeds();}});});
+    options(opts);
+  }
+
+  function askBeds(){
+    if(lead.intent==='Off-plan'){ showResults(); return; }
+    botSay(T('How many bedrooms?','كم عدد غرف النوم؟'));
+    options([['any',T('Any','أي')],['1','1'],['2','2'],['3','3'],['4','4+']].map(function(b){
+      return {label:b[1],fn:function(){lead.beds=b[0];if(b[0]!=='any')paintBrief();showResults();}};
+    }));
+  }
+
+  function showResults(){
+    var isOff=lead.intent==='Off-plan';
+    var matches=isOff?matchProjects():matchListings();
+    if(!matches.length){
+      botSay(T("I don't have a live match for that right now — but a lot of our best stock never hits the portals. Shall I have an advisor find it off-market?","لا يوجد تطابق مباشر الآن — لكن الكثير من أفضل وحداتنا لا يُنشر. هل يبحث لك مستشار خارج المنصات؟"));
+      lead.refs=[]; paintBrief();
+      options([{label:T('Yes, find it for me','نعم، ابحثوا لي'),fn:doneHandoff},{label:T('Start over','ابدأ من جديد'),plain:true,fn:reset}]);
+      return;
+    }
+    var show=matches.slice(0,4);
+    lead.refs=isOff?[]:show.map(function(l){return l.ref;});
+    var line=T('Here'+(show.length>1?' are':"'s")+' '+show.length+' that fit','إليك '+show.length+' وحدة مناسبة')+(lead.area?' '+T('in','في')+' '+lead.area:'')+':';
+    typing(function(){
+      addMsg(line,'bot');
+      var box=document.createElement('div'); box.className='kc-cards';
+      box.innerHTML=show.map(isOff?projectCard:listingCard).join('');
+      if(!isOff&&matches.length>show.length){
+        box.innerHTML+='<a class="kc-seeall" href="'+seeAllURL()+'">'+T('See all '+matches.length+' →','عرض كل '+matches.length+' ←')+'</a>';
+      }
+      stream.appendChild(box); bindCards(box); stream.scrollTop=stream.scrollHeight;
+      paintBrief();
+      askTimeline();
+    });
+  }
+
+  function askTimeline(){
+    botSay(T('When are you hoping to move or buy?','متى تنوي الانتقال أو الشراء؟'));
+    options([
+      {label:T('Ready now','جاهز الآن'),fn:function(){lead.timeline=T('Ready now','جاهز الآن');paintBrief();askResidency();}},
+      {label:T('1–3 months','خلال ١–٣ أشهر'),fn:function(){lead.timeline='1–3 months';paintBrief();askResidency();}},
+      {label:T('Just researching','مجرد اطلاع'),fn:function(){lead.timeline=T('Researching','اطلاع');paintBrief();askResidency();}}
+    ]);
+  }
+  function askResidency(){
+    botSay(T('Last thing — are you a UAE resident?','سؤال أخير — هل أنت مقيم في الإمارات؟'));
+    options([
+      {label:T('UAE resident','مقيم'),fn:function(){lead.residency=T('Resident','مقيم');finish();}},
+      {label:T('Non-resident','غير مقيم'),fn:function(){lead.residency=T('Non-resident','غير مقيم');finish();}}
+    ]);
+  }
+  function finish(){
+    paintBrief();
+    botSay(T("Perfect — I've put your brief together. Tap below and an advisor picks it up on WhatsApp, usually within 15 minutes. Anything else in the meantime?","ممتاز — جهّزت ملخصك. اضغط بالأسفل وسيتابع مستشار عبر واتساب خلال ١٥ دقيقة عادةً. هل من شيء آخر؟"));
+    options([
+      {label:T('Show similar homes','وحدات مشابهة'),plain:true,fn:function(){lead.beds='any';showResults();}},
+      {label:T('Ask about fees','عن الرسوم'),plain:true,fn:function(){faqAnswer('fees');}},
+      {label:T('Start over','ابدأ من جديد'),plain:true,fn:reset}
+    ]);
+  }
+  function doneHandoff(){ paintBrief(); botSay(T('Done — tap below and an advisor will reach out on WhatsApp.','تم — اضغط بالأسفل وسيتواصل مستشار عبر واتساب.')); options([{label:T('Start over','ابدأ من جديد'),plain:true,fn:reset}]); }
+
+  /* ---------- FAQ (honest, defers specifics) ---------- */
+  var FAQ={
+    residency:T("Buying property in Dubai can put you on the path to a renewable investor residence visa, and higher-value purchases can qualify for a long-term Golden Visa. The exact thresholds change from time to time — an advisor will confirm what your budget qualifies for.","قد يفتح شراء عقار في دبي طريقاً لتأشيرة إقامة مستثمر قابلة للتجديد، وقد تؤهّل المشتريات الأعلى قيمة للإقامة الذهبية طويلة الأمد. تتغيّر الحدود أحياناً — وسيؤكد لك المستشار ما يناسب ميزانيتك."),
+    fees:T("Beyond the price, budget for the Dubai Land Department transfer fee, an agency fee, and — if you're financing — bank arrangement fees. Your advisor gives you the exact all-in number for a specific unit.","إلى جانب السعر، احسب رسوم نقل الملكية لدى دائرة الأراضي، وعمولة الوساطة، ورسوم ترتيب البنك عند التمويل. سيعطيك المستشار الرقم الإجمالي الدقيق لوحدة محددة."),
+    process:T("Short version: shortlist and view, agree a price, sign an MOU with a deposit, then transfer at the Land Department. Off-plan runs on a payment plan through handover. An advisor walks you through each step.","باختصار: تختار وتعاين، تتفق على السعر، توقّع مذكرة تفاهم مع دفعة، ثم تنقل الملكية لدى دائرة الأراضي. أما على الخارطة فبخطة سداد حتى التسليم. يرافقك المستشار في كل خطوة.")
+  };
+  function askFaq(){
+    botSay(T('Happy to help — what would you like to know?','بكل سرور — ماذا تود أن تعرف؟'));
+    options([
+      {label:T('Do I get residency if I buy?','هل أحصل على إقامة عند الشراء؟'),fn:function(){faqAnswer('residency');}},
+      {label:T('What are the fees?','ما هي الرسوم؟'),fn:function(){faqAnswer('fees');}},
+      {label:T('How does buying work?','كيف تتم عملية الشراء؟'),fn:function(){faqAnswer('process');}},
+      {label:T('Actually, show me homes','أرني الوحدات'),plain:true,fn:askIntent}
+    ]);
+  }
+  function faqAnswer(k){
+    botSay(FAQ[k]);
+    options([
+      {label:T('Another question','سؤال آخر'),plain:true,fn:askFaq},
+      {label:T('Show me homes','أرني الوحدات'),fn:askIntent},
+      {label:T('Talk to an advisor','تحدث مع مستشار'),fn:function(){window.open('https://wa.me/'+WA,'_blank');}}
+    ]);
+  }
+
+  function reset(){ lead={intent:null,budget:null,budgetRange:[0,0],area:null,beds:null,timeline:null,residency:null,refs:[]};
+    briefEl.className='kc-brief'; briefEl.innerHTML=''; handoffEl.style.display='none'; stream.innerHTML=''; askIntent(); }
+
+  function open(){ panel.classList.add('kc-open'); $('kcLaunch').style.display='none';
+    if(!opened){opened=true; askIntent(); track('concierge_open',{});} }
+  function close(){ panel.classList.remove('kc-open'); $('kcLaunch').style.display='flex'; }
+  $('kcLaunch').onclick=open; $('kcClose').onclick=close;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('kc-open'))close();});
+})();
