@@ -26,9 +26,10 @@
   header.tint .nav{background:rgba(23,20,18,.62);border-color:rgba(251,246,241,.2)}
   header.solid .nav{background:rgba(251,246,241,.92);color:var(--ink);border-color:var(--sand);box-shadow:0 14px 44px rgba(23,20,18,.14)}
   .logo{display:flex;align-items:center;gap:16px}
-  .logo .mark{width:38px;height:38px;border:1px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:border-color .25s,background .25s}
+  .logo .mark{width:38px;height:38px;color:var(--coral);display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:transform .25s}
+  .logo .mark svg{width:33px;height:33px;display:block}
   .logo .mark i{font-style:normal;font-family:var(--display);font-size:16px;line-height:1}
-  .logo:hover .mark{border-color:var(--coral);background:rgba(255,102,51,.12)}
+  .logo:hover .mark{transform:scale(1.06)}
   .logo .word{display:flex;flex-direction:column;line-height:1}
   .logo .word b{font-family:var(--display);font-weight:400;font-size:17px;letter-spacing:.3em}
   .logo .word small{font-family:var(--body);font-size:8px;letter-spacing:.42em;text-transform:uppercase;opacity:.6;margin-top:5px}
@@ -370,6 +371,7 @@
   .nav{padding:0 6px 0 14px;height:54px}
   .logo{gap:10px}
   .logo .mark{width:30px;height:30px}
+  .logo .mark svg{width:26px;height:26px}
   .logo .mark i{font-size:13px}
   .logo .word b{font-size:14px;letter-spacing:.2em}
   .switch{font-size:10px;padding:10px 4px}

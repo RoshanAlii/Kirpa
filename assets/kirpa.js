@@ -272,7 +272,7 @@ renderDrawer();
 
 
 /* ===================================================================
-   AI CONCIERGE + logo — appended. Replaces nav K and adds the chatbot.
+   CONCIERGE + LOGO + SOCIAL/REELS RIBBON — appended.
    =================================================================== */
 /* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
    Load AFTER listings.js and kirpa.js on every page. Uses the site's own
@@ -571,4 +571,104 @@ renderDrawer();
   function close(){ panel.classList.remove('kc-open'); $('kcLaunch').style.display='flex'; }
   $('kcLaunch').onclick=open; $('kcClose').onclick=close;
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('kc-open'))close();});
+})();
+
+
+/* ===================================================================
+   SOCIAL + REELS RIBBON — injected just above the <footer> on every page.
+   Fully static. Hover-to-play works when you supply short muted .mp4 clips.
+   =================================================================== */
+(function(){
+  if(document.getElementById('krBand'))return;
+  var BASE=window.BASE||'';
+  var AR=(document.documentElement.getAttribute('lang')||'en')==='ar';
+  var tt=function(en,ar){return AR?ar:en;};
+
+  var SOCIALS={
+    instagram:'https://www.instagram.com/kirpa.properties/',
+    tiktok:'https://www.tiktok.com/@manpreet.kirpa',
+    linkedin:'https://www.linkedin.com/company/kirpa-properties',
+    facebook:'https://www.facebook.com/p/Kirpa-Properties-61576583315557/',
+    whatsapp:'https://wa.me/971543673063'
+  };
+
+  /* ---- REELS: fill these in ----
+     link  = the Instagram reel URL (opens when the tile is clicked)
+     poster= thumbnail image path in your repo (shown before hover)   [optional]
+     video = short muted .mp4 path in your repo (plays on hover)       [optional]
+     Put media in an assets/reels/ folder. A tile works with just a link
+     (branded placeholder); add poster for a thumbnail; add video for hover-play. */
+  var REELS=[
+    {link:SOCIALS.instagram, poster:'', video:''},
+    {link:SOCIALS.instagram, poster:'', video:''},
+    {link:SOCIALS.instagram, poster:'', video:''},
+    {link:SOCIALS.instagram, poster:'', video:''},
+    {link:SOCIALS.instagram, poster:'', video:''}
+  ];
+
+  var ICON={
+    instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
+    tiktok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3c.3 2.2 1.8 3.9 4 4.2v2.5c-1.5 0-2.9-.5-4-1.3v6a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.6a2.7 2.7 0 1 0 1.9 2.6V3H14z"/></svg>',
+    linkedin:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2.1 3.8-2.1 4 0 4.3 2 4.3 5.5V21h-4v-6c0-1.5 0-3.3-2-3.3s-2.3 1.6-2.3 3.2V21H9z"/></svg>',
+    facebook:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9V7c0-.9.2-1.3 1.3-1.3H17V2.2C16.5 2.1 15.4 2 14.4 2 11.8 2 10 3.6 10 6.5V9H7v3.6h3V22h4v-9.4h2.9l.6-3.6H14z"/></svg>',
+    whatsapp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.7-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.7.9-.3.2-.5.1a6.5 6.5 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5.2-.4v-.4c0-.1-.5-1.3-.7-1.7-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a2.8 2.8 0 0 0-.9 2.1c0 1.2.9 2.4 1 2.6s1.7 2.7 4.2 3.8c1.5.6 2.1.7 2.8.6.5-.1 1.4-.6 1.6-1.1s.2-1 .1-1.1l-.4-.3z"/></svg>'
+  };
+
+  var css=''
+  +'.kr-band{background:var(--cream,#FBF6F1);border-top:1px solid var(--sand,#E5DBD0);padding:56px 0 60px}'
+  +'.kr-wrap{max-width:1240px;margin:0 auto;padding:0 40px}'
+  +'.kr-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:28px}'
+  +'.kr-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--coral,#FF6633);display:block;margin-bottom:10px}'
+  +'.kr-head h3{font-family:var(--display,serif);font-weight:400;font-size:clamp(23px,3vw,33px);margin:0;line-height:1.12;max-width:16ch}'
+  +'.kr-socials{display:flex;gap:11px;align-items:center}'
+  +'.kr-socials a{width:42px;height:42px;border-radius:50%;border:1px solid var(--sand,#E5DBD0);display:flex;align-items:center;justify-content:center;color:var(--ink,#171412);background:var(--paper,#fff);transition:all .2s}'
+  +'.kr-socials a:hover{background:var(--coral,#FF6633);border-color:var(--coral,#FF6633);color:#fff;transform:translateY(-2px)}'
+  +'.kr-socials svg{width:19px;height:19px}'
+  +'.kr-reels{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}'
+  +'.kr-reels::-webkit-scrollbar{height:6px}.kr-reels::-webkit-scrollbar-thumb{background:var(--sand,#E5DBD0);border-radius:3px}'
+  +'.kr-reel{position:relative;flex:0 0 auto;width:192px;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#33292E,#7A4A3A);text-decoration:none;scroll-snap-align:start;box-shadow:0 18px 40px -24px rgba(23,20,18,.55);transition:transform .25s}'
+  +'.kr-reel:hover{transform:translateY(-4px)}'
+  +'.kr-reel img,.kr-reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}'
+  +'.kr-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.42)}'
+  +'.kr-ph svg{width:34px;height:34px}'
+  +'.kr-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,12,.55),transparent 46%);z-index:1;pointer-events:none}'
+  +'.kr-badge{position:absolute;left:12px;bottom:12px;width:34px;height:34px;border-radius:50%;background:rgba(23,20,18,.5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;z-index:2;pointer-events:none}'
+  +'[dir="rtl"] .kr-badge{left:auto;right:12px}'
+  +'@media(max-width:600px){.kr-wrap{padding:0 20px}.kr-reel{width:152px}.kr-band{padding:44px 0 48px}}';
+  var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
+
+  function reelHTML(r){
+    var media = r.video
+      ? '<video muted loop playsinline preload="metadata"'+(r.poster?' poster="'+BASE+r.poster+'"':'')+'><source src="'+BASE+r.video+'" type="video/mp4"></video>'
+      : (r.poster ? '<img loading="lazy" src="'+BASE+r.poster+'" alt="Kirpa reel">' : '<div class="kr-ph">'+ICON.instagram+'</div>');
+    return '<a class="kr-reel" href="'+r.link+'" target="_blank" rel="noopener">'+media+'<span class="kr-grad"></span><span class="kr-badge">&#9654;</span></a>';
+  }
+
+  var band=document.createElement('div');
+  band.id='krBand'; band.className='kr-band';
+  band.innerHTML=
+    '<div class="kr-wrap">'
+    +'<div class="kr-head"><div>'
+    +'<span class="kr-eyebrow">'+tt('Follow the journey','تابعوا الرحلة')+'</span>'
+    +'<h3>'+tt("Dubai's most-followed agency — on every feed","الوكالة الأكثر متابعة في دبي — على كل منصة")+'</h3>'
+    +'</div><div class="kr-socials">'
+    +'<a href="'+SOCIALS.instagram+'" target="_blank" rel="noopener" aria-label="Instagram">'+ICON.instagram+'</a>'
+    +'<a href="'+SOCIALS.tiktok+'" target="_blank" rel="noopener" aria-label="TikTok">'+ICON.tiktok+'</a>'
+    +'<a href="'+SOCIALS.linkedin+'" target="_blank" rel="noopener" aria-label="LinkedIn">'+ICON.linkedin+'</a>'
+    +'<a href="'+SOCIALS.facebook+'" target="_blank" rel="noopener" aria-label="Facebook">'+ICON.facebook+'</a>'
+    +'<a href="'+SOCIALS.whatsapp+'" target="_blank" rel="noopener" aria-label="WhatsApp">'+ICON.whatsapp+'</a>'
+    +'</div></div>'
+    +'<div class="kr-reels">'+REELS.map(reelHTML).join('')+'</div>'
+    +'</div>';
+
+  var footer=document.querySelector('footer');
+  if(footer&&footer.parentNode){ footer.parentNode.insertBefore(band,footer); }
+  else { document.body.appendChild(band); }
+
+  /* hover-to-play */
+  band.querySelectorAll('.kr-reel video').forEach(function(v){
+    var tile=v.closest('.kr-reel');
+    tile.addEventListener('mouseenter',function(){ var p=v.play(); if(p&&p.catch)p.catch(function(){}); });
+    tile.addEventListener('mouseleave',function(){ v.pause(); try{v.currentTime=0;}catch(e){} });
+  });
 })();
