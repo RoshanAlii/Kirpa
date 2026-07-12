@@ -478,3 +478,34 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 [dir="rtl"] .nav-links a::after{transform-origin:center}
 [dir="rtl"] .sbar input{text-align:right}
 [dir="rtl"] .switch,[dir="rtl"] .eyebrow{letter-spacing:normal}
+
+/* ================= Nav dropdowns (lang / currency) ================= */
+.dd{position:relative}
+.dd-toggle{background:none;border:none;color:inherit;font-size:11px;letter-spacing:.06em;font-weight:500;opacity:.6;padding:10px 5px;cursor:pointer;transition:opacity .2s;white-space:nowrap}
+.dd-toggle:hover,.dd.open .dd-toggle{opacity:1}
+.dd-menu{position:absolute;top:calc(100% + 10px);right:0;background:var(--paper);border:1px solid var(--sand);border-radius:12px;box-shadow:0 16px 40px rgba(23,20,18,.16);padding:6px;min-width:132px;display:none;z-index:50}
+.dd.open .dd-menu{display:block}
+.dd-menu button{display:flex;justify-content:space-between;align-items:center;width:100%;background:none;border:none;text-align:left;font-family:var(--body);font-size:13px;color:var(--ink);padding:10px 12px;border-radius:8px;cursor:pointer}
+.dd-menu button:hover{background:var(--cream)}
+.dd-menu button.on{color:var(--coral);font-weight:600}
+.dd-menu button .tick{color:var(--coral);font-size:12px}
+[dir="rtl"] .dd-menu{right:auto;left:0}
+[dir="rtl"] .dd-menu button{text-align:right}
+
+/* ================= Nav dropdowns (language / currency) ================= */
+.dd{position:relative;display:inline-flex}
+.dd-btn{background:none;border:none;color:inherit;font-size:11px;letter-spacing:.06em;font-weight:500;opacity:.62;padding:10px 6px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;transition:opacity .2s}
+.dd-btn:hover,.dd.open .dd-btn{opacity:1;color:var(--coral)}
+.dd-btn .car{width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .25s}
+.dd.open .dd-btn .car{transform:rotate(-135deg) translateY(-1px)}
+.dd-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:150px;background:var(--paper);border:1px solid var(--sand);border-radius:14px;box-shadow:0 18px 46px rgba(23,20,18,.16);padding:7px;opacity:0;transform:translateY(-6px) scale(.98);transform-origin:top right;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60}
+.dd.open .dd-menu{opacity:1;transform:none;pointer-events:auto}
+.dd-item{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;background:none;border:none;text-align:start;font-family:var(--body);font-size:13px;color:var(--ink);padding:11px 14px;border-radius:9px;cursor:pointer;transition:background .15s}
+.dd-item:hover{background:var(--cream)}
+.dd-item.on{color:var(--coral);font-weight:600}
+.dd-item .tick{opacity:0;font-size:12px}
+.dd-item.on .tick{opacity:1}
+.dd-item .sym{color:var(--stone);font-size:12px}
+.dd-item:hover .sym{color:var(--ink)}
+/* header-state colours: buttons inherit cream over hero, ink when solid — menu always light */
+@media(max-width:600px){.dd-btn{padding:10px 3px;font-size:10px}.dd-menu{min-width:140px}}
