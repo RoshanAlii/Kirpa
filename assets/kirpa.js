@@ -20,20 +20,22 @@ function fxEcho(aed){
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
 function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
+function L(l,f){return (window.__lang==='ar'&&l[f+'_ar'])?l[f+'_ar']:l[f];}
 function cardHTML(l){
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
+  const title=L(l,'title'),comm=L(l,'community'),bld=L(l,'building'),extra=L(l,'extra');
   return '<article class="res">'
-    +'<a href="'+url+'"><div class="photo '+l.skies[0]+'">'+phImg(l.imgs&&l.imgs[0],l.title)+'<span class="credit">'+l.ref+'</span></div></a>'
+    +'<a href="'+url+'"><div class="photo '+l.skies[0]+'">'+phImg(l.imgs&&l.imgs[0],title)+'<span class="credit">'+l.ref+'</span></div></a>'
     +'<button class="fav '+(on?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.ref+'">'+(on?'♥':'♡')+'</button>'
     +'<div class="res-pad">'
-    +'<span class="ref">'+l.ref+' · '+(l.status==='rent'?'For Rent':'For Sale')+'</span>'
-    +'<h3><a href="'+url+'">'+l.title+'</a></h3>'
-    +'<div class="place">'+(l.building?l.building+', ':'')+l.community+'</div>'
+    +'<span class="ref">'+l.ref+' · '+(l.status==='rent'?t('label.forrent','For Rent'):t('label.forsale','For Sale'))+'</span>'
+    +'<h3><a href="'+url+'">'+title+'</a></h3>'
+    +'<div class="place">'+(bld?bld+'، ':'')+comm+'</div>'
     +'<div class="price">'+fmt(l.aed)+l.per+' '+fxEcho(l.aed)+'</div>'
-    +'<div class="specs">'+l.beds+' bed · '+l.sqft.toLocaleString()+' sqft · '+l.extra+'</div>'
-    +'<div class="foot"><span class="permit">Trakheesi '+l.permit+'</span>'
-    +'<button class="link book" data-ref="'+l.ref+'">Book a viewing</button></div>'
+    +'<div class="specs">'+l.beds+' '+t('label.bed','bed')+' · '+l.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+extra+'</div>'
+    +'<div class="foot"><span class="permit">'+t('permit.for','Trakheesi')+' '+l.permit+'</span>'
+    +'<button class="link book" data-ref="'+l.ref+'">'+t('label.book','Book a viewing')+'</button></div>'
     +'</div></article>';
 }
 function bindCards(scope){
@@ -56,7 +58,7 @@ function renderDrawer(){
   const m=$('#mbarFav');if(m)m.textContent='♡ Shortlist ('+favs.length+')';
   const list=$('#drawerList');if(!list)return;
   if(!favs.length){
-    list.innerHTML='<div class="drawer-empty">Nothing saved yet. Tap the heart on any residence — your shortlist stays on this device, no account needed.</div>';
+    list.innerHTML='<div class="drawer-empty">'+t('dr.empty','Nothing saved yet. Tap the heart on any residence — your shortlist stays on this device, no account needed.')+'</div>';
   }else{
     list.innerHTML=favs.map(ref=>{
       const l=LISTINGS.find(x=>x.ref===ref)||{title:ref,community:''};
@@ -72,21 +74,21 @@ function renderDrawer(){
 document.body.insertAdjacentHTML('beforeend',
  '<div class="scrim" id="scrim"></div>'
 +'<aside class="drawer" id="drawer" aria-label="Shortlist">'
-+'<div class="drawer-head"><b>Your shortlist</b><button id="closeDrawer" aria-label="Close">✕</button></div>'
++'<div class="drawer-head"><b data-i18n="dr.title">Your shortlist</b><button id="closeDrawer" aria-label="Close">✕</button></div>'
 +'<div class="drawer-list" id="drawerList"></div>'
-+'<div class="drawer-cta"><a class="btn coral" id="sendShortlist" href="#" target="_blank" rel="noopener">Send my shortlist to an advisor</a>'
-+'<div class="note">Opens WhatsApp with your saved references attached — no account, no forms. Saved on this device only.</div></div>'
++'<div class="drawer-cta"><a class="btn coral" id="sendShortlist" href="#" target="_blank" rel="noopener" data-i18n="dr.send">Send my shortlist to an advisor</a>'
++'<div class="note" data-i18n="dr.note">Opens WhatsApp with your saved references attached — no account, no forms. Saved on this device only.</div></div>'
 +'</aside>'
 +'<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Book an appointment">'
 +'<div class="sheet-box">'
 +'<div class="sheet-head"><b id="sheetTitle">Book a viewing</b><button id="closeSheet" aria-label="Close">✕</button></div>'
 +'<div class="sheet-sub" id="sheetSub"></div>'
-+'<div class="sheet-lbl">Preferred day</div>'
-+'<div class="sheet-chips" id="dayChips"><button class="schip on">Today</button><button class="schip">Tomorrow</button><button class="schip">This weekend</button><button class="schip">Next week</button></div>'
-+'<div class="sheet-lbl">Preferred time</div>'
-+'<div class="sheet-chips" id="timeChips"><button class="schip on">Morning</button><button class="schip">Afternoon</button><button class="schip">Evening</button></div>'
-+'<a class="btn coral" id="sheetConfirm" href="#" target="_blank" rel="noopener">Confirm on WhatsApp</a>'
-+'<div class="sheet-note">This sends your request with the reference and preferred slot attached — an advisor confirms the exact time by reply.</div>'
++'<div class="sheet-lbl" data-i18n="sh.day">Preferred day</div>'
++'<div class="sheet-chips" id="dayChips"><button class="schip on" data-i18n="sh.today">Today</button><button class="schip" data-i18n="sh.tomorrow">Tomorrow</button><button class="schip" data-i18n="sh.weekend">This weekend</button><button class="schip" data-i18n="sh.nextweek">Next week</button></div>'
++'<div class="sheet-lbl" data-i18n="sh.time">Preferred time</div>'
++'<div class="sheet-chips" id="timeChips"><button class="schip on" data-i18n="sh.morning">Morning</button><button class="schip" data-i18n="sh.afternoon">Afternoon</button><button class="schip" data-i18n="sh.evening">Evening</button></div>'
++'<a class="btn coral" id="sheetConfirm" href="#" target="_blank" rel="noopener" data-i18n="sh.confirm">Confirm on WhatsApp</a>'
++'<div class="sheet-note" data-i18n="sh.note">This sends your request with the reference and preferred slot attached — an advisor confirms the exact time by reply.</div>'
 +'</div></div>');
 
 /* ---------- drawer open/close ---------- */
@@ -117,7 +119,7 @@ if($('#curBtn')){
 let sheetCtx={kind:'viewing',ref:'',title:''};
 function openSheet(kind,ref,title){
   sheetCtx={kind:kind,ref:ref,title:title};
-  const heads={viewing:'Book a viewing',suite:'Book a sales-suite visit',valuation:'Book a valuation visit',call:'Book a call'};
+  const heads={viewing:t('sh.viewing','Book a viewing'),suite:t('sh.suite','Book a sales-suite visit'),valuation:t('sh.valuation','Book a valuation visit'),call:t('sh.call','Book a call')};
   $('#sheetTitle').textContent=heads[kind]||heads.viewing;
   $('#sheetSub').textContent=title||'';
   $('#sheet').classList.add('open');
@@ -152,12 +154,12 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
    '<div class="menu" id="menu">'
   +'<div class="menu-head"><b>KIRPA</b><button id="closeMenu" aria-label="Close">✕</button></div>'
   +'<nav>'
-  +'<a href="'+B+'buy/">Buy</a>'
-  +'<a href="'+B+'rent/">Rent</a>'
-  +'<a href="'+B+'off-plan/">Off-Plan</a>'
-  +'<a href="'+B+'communities/">Communities</a>'
-  +'<a href="'+B+'sell/">Sell</a>'
-  +'<a href="'+B+'index.html">Home</a>'
+  +'<a href="'+B+'buy/" data-i18n="nav.buy">Buy</a>'
+  +'<a href="'+B+'rent/" data-i18n="nav.rent">Rent</a>'
+  +'<a href="'+B+'off-plan/" data-i18n="nav.offplan">Off-Plan</a>'
+  +'<a href="'+B+'communities/" data-i18n="nav.communities">Communities</a>'
+  +'<a href="'+B+'sell/" data-i18n="nav.sell">Sell</a>'
+  +'<a href="'+B+'index.html" data-i18n="nav.home">Home</a>'
   +'</nav>'
   +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN / العربية</button><span>ORN 49046 · Dubai</span></div>'
   +'</div>');
@@ -204,6 +206,10 @@ function applyLang(){
       const ph=el.getAttribute('data-i18n-ph');
       if(ph&&I18N.ar[ph])el.setAttribute('placeholder',I18N.ar[ph]);
     });
+    document.querySelectorAll('[data-i18n-append]').forEach(el=>{
+      const v=I18N.ar[el.getAttribute('data-i18n-append')];
+      if(v)el.textContent='♡ '+v;
+    });
   }
   const ll=document.querySelector('#langLabel');if(ll)ll.textContent=(lang==='ar'?'AR':'EN');
 }
@@ -221,6 +227,7 @@ if($('#langBtn')){
 /* mobile menu language button (separate) still toggles */
 document.querySelectorAll('.menu .switch.lang').forEach(b=>b.onclick=()=>setLang(lang==='ar'?'en':'ar'));
 applyLang();
+if(window.onLangReady)window.onLangReady();
 /* close dropdowns on outside click */
 document.addEventListener('click',()=>{['#curDD','#langDD'].forEach(s=>{const el=document.querySelector(s);if(el)el.classList.remove('open')})});
 
