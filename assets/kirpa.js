@@ -98,14 +98,19 @@ $('#closeDrawer').onclick=closeDrawer;
 $('#scrim').onclick=closeDrawer;
 
 /* ---------- currency ---------- */
-if($('#curBtn')){
-  $('#curBtn').textContent=cur+'\u00a0▾';
-  $('#curBtn').onclick=()=>{
-    cur=CURS[(CURS.indexOf(cur)+1)%CURS.length];
-    localStorage.setItem('kirpa-cur',cur);
-    $('#curBtn').textContent=cur+'\u00a0▾';
+const CUR_NAMES={AED:'UAE Dirham',USD:'US Dollar',GBP:'British Pound',EUR:'Euro'};
+function buildCurMenu(){
+  const m=$('#curMenu');if(!m)return;
+  m.innerHTML=CURS.map(c=>'<button class="dd-item '+(c===cur?'on':'')+'" data-c="'+c+'"><span>'+c+' <span class="sym">'+CUR_NAMES[c]+'</span></span><span class="tick">✓</span></button>').join('');
+  m.querySelectorAll('.dd-item').forEach(b=>b.onclick=()=>{
+    cur=b.dataset.c;localStorage.setItem('kirpa-cur',cur);
+    $('#curLabel').textContent=cur;$('#curDD').classList.remove('open');buildCurMenu();
     if(window.onCurrencyChanged)window.onCurrencyChanged();
-  };
+  });
+}
+if($('#curBtn')){
+  $('#curLabel').textContent=cur;buildCurMenu();
+  $('#curBtn').onclick=e=>{e.stopPropagation();$('#langDD')&&$('#langDD').classList.remove('open');$('#curDD').classList.toggle('open');};
 }
 
 /* ---------- booking sheet ---------- */
@@ -200,11 +205,24 @@ function applyLang(){
       if(ph&&I18N.ar[ph])el.setAttribute('placeholder',I18N.ar[ph]);
     });
   }
-  document.querySelectorAll('.switch.lang').forEach(b=>b.textContent=(lang==='ar'?'AR':'EN')+'\u00a0▾');
+  const ll=document.querySelector('#langLabel');if(ll)ll.textContent=(lang==='ar'?'AR':'EN');
 }
-function toggleLang(){lang=lang==='ar'?'en':'ar';localStorage.setItem('kirpa-lang',lang);location.reload();}
-document.querySelectorAll('.switch.lang').forEach(b=>b.onclick=toggleLang);
+const LANGS=[['en','English'],['ar','العربية']];
+function setLang(v){if(v===lang){return;}lang=v;localStorage.setItem('kirpa-lang',lang);location.reload();}
+function buildLangMenu(){
+  const m=$('#langMenu');if(!m)return;
+  m.innerHTML=LANGS.map(([code,name])=>'<button class="dd-item '+(code===lang?'on':'')+'" data-l="'+code+'"><span>'+name+'</span><span class="tick">✓</span></button>').join('');
+  m.querySelectorAll('.dd-item').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+}
+if($('#langBtn')){
+  buildLangMenu();
+  $('#langBtn').onclick=e=>{e.stopPropagation();$('#curDD')&&$('#curDD').classList.remove('open');$('#langDD').classList.toggle('open');};
+}
+/* mobile menu language button (separate) still toggles */
+document.querySelectorAll('.menu .switch.lang').forEach(b=>b.onclick=()=>setLang(lang==='ar'?'en':'ar'));
 applyLang();
+/* close dropdowns on outside click */
+document.addEventListener('click',()=>{['#curDD','#langDD'].forEach(s=>{const el=document.querySelector(s);if(el)el.classList.remove('open')})});
 
 /* ---------- global Escape closes any open overlay ---------- */
 document.addEventListener('keydown',e=>{
