@@ -272,7 +272,7 @@ renderDrawer();
 
 
 /* ===================================================================
-   AI CONCIERGE — appended below. Fully static: no backend, no API key.
+   AI CONCIERGE + logo — appended. Replaces nav K and adds the chatbot.
    =================================================================== */
 /* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
    Load AFTER listings.js and kirpa.js on every page. Uses the site's own
@@ -285,6 +285,16 @@ renderDrawer();
   var LANG = document.documentElement.getAttribute('lang')||'en';
   var RTL  = LANG==='ar';
   var T = function(en,ar){ return RTL?ar:en; };
+  var STAR='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M98 50L55.73 52.37L75.46 75.46L52.37 55.73L50 98L47.63 55.73L24.54 75.46L44.27 52.37L2 50L44.27 47.63L24.54 24.54L47.63 44.27L50 2L52.37 44.27L75.46 24.54L55.73 47.63Z" fill="currentColor"/></svg>';
+
+  /* Replace the nav logo "K" with the starburst + style it, so this single
+     file fixes both the nav and the concierge (no HTML edits needed). */
+  (function(){
+    var ns=document.createElement('style');
+    ns.textContent='.logo .mark{border:none!important;background:none!important;color:var(--coral,#FF6633)!important;transition:transform .25s}.logo .mark svg{width:86%;height:86%;display:block}.logo:hover .mark{background:none!important;transform:scale(1.06)}';
+    document.head.appendChild(ns);
+    document.querySelectorAll('.logo .mark').forEach(function(m){ m.innerHTML=STAR; });
+  })();
 
   function money(aed){ return (typeof window.fmt==='function')?fmt(aed):('AED '+aed.toLocaleString()); }
   function book(kind,ref,title){ if(typeof window.openSheet==='function') openSheet(kind,ref,title);
@@ -299,14 +309,16 @@ renderDrawer();
 
   /* ---------- styles (scoped kc-) ---------- */
   var css=''
-  +'.kc-launch{position:fixed;right:22px;bottom:22px;z-index:9998;width:56px;height:56px;border-radius:50%;background:var(--ink,#171412);color:var(--cream,#FBF6F1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .18s,background .18s;animation:kc-ring 2.6s infinite}'
-  +'.kc-launch:hover{transform:translateY(-2px) scale(1.05);background:var(--coral,#FF6633)}'
+  +'.kc-launch{position:fixed;right:22px;bottom:22px;z-index:9998;width:56px;height:56px;border-radius:50%;background:var(--ink,#171412);color:var(--coral,#FF6633);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .18s,background .18s,color .18s;animation:kc-ring 2.6s infinite}'
+  +'.kc-launch:hover{transform:translateY(-2px) scale(1.05);background:var(--coral,#FF6633);color:#fff}'
   +'.kc-launch i{font-style:normal;font-family:var(--display,serif);font-size:23px;line-height:1}'
+  +'.kc-launch svg{width:28px;height:28px;display:block}'
   +'@keyframes kc-ring{0%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,.45)}70%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 12px rgba(255,102,51,0)}100%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,0)}}'
   +'.kc-panel{position:fixed;right:22px;bottom:22px;width:380px;height:auto;max-height:min(78vh,600px);min-height:300px;z-index:9999;padding:0;background:var(--paper,#FFFDFB);border:1px solid var(--sand,#E5DBD0);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 30px 70px -28px rgba(23,20,18,.5);font-family:var(--body,sans-serif);color:var(--ink,#171412)}'
   +'.kc-panel.kc-open{display:flex}.kc-panel[dir="rtl"]{text-align:right}'
   +'.kc-top{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid var(--sand,#E5DBD0);flex:0 0 auto}'
-  +'.kc-mark{width:32px;height:32px;border:1px solid var(--ink,#171412);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}'
+  +'.kc-mark{width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--coral,#FF6633)}'
+  +'.kc-mark svg{width:27px;height:27px;display:block}'
   +'.kc-mark i{font-style:normal;font-family:var(--display,serif);font-size:14px}'
   +'.kc-top b{font-family:var(--display,serif);font-weight:400;letter-spacing:.26em;font-size:13px;display:block;line-height:1.2}'
   +'.kc-top small{font-size:10.5px;color:var(--stone,#8F857A);letter-spacing:.03em}'
@@ -350,9 +362,9 @@ renderDrawer();
   var launchLabel=T('Ask Kirpa','اسأل كِربا');
   var wrap=document.createElement('div');
   wrap.innerHTML=
-    '<button class="kc-launch" id="kcLaunch" aria-label="'+launchLabel+'" title="'+launchLabel+'"><i>K</i></button>'
+    '<button class="kc-launch" id="kcLaunch" aria-label="'+launchLabel+'" title="'+launchLabel+'">'+STAR+'</button>'
   + '<section class="kc-panel" id="kcPanel" role="dialog" aria-label="Kirpa Concierge"'+(RTL?' dir="rtl"':'')+'>'
-  +   '<div class="kc-top"><span class="kc-mark"><i>K</i></span><div><b>KIRPA</b><small>'+T('Concierge · here to help','مساعدك العقاري')+'</small></div><button class="kc-x" id="kcClose" aria-label="Close">&times;</button></div>'
+  +   '<div class="kc-top"><span class="kc-mark">'+STAR+'</span><div><b>KIRPA</b><small>'+T('Concierge · here to help','مساعدك العقاري')+'</small></div><button class="kc-x" id="kcClose" aria-label="Close">&times;</button></div>'
   +   '<div class="kc-brief" id="kcBrief"></div>'
   +   '<div class="kc-stream" id="kcStream"></div>'
   +   '<div class="kc-suggest" id="kcSuggest"></div>'
