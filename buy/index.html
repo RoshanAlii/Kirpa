@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=11">
+<link rel="stylesheet" href="../assets/kirpa.css?v=13">
 </head>
 <body>
 
@@ -39,17 +39,17 @@
 
 <div class="page-head">
   <div class="wrap">
-    <span class="eyebrow">For Sale</span>
-    <h1 style="margin-top:14px">Homes for sale</h1>
+    <span class="eyebrow" data-i18n="idx.buy.eyebrow">For Sale</span>
+    <h1 style="margin-top:14px" data-i18n="idx.buy.h">Homes for sale</h1>
     <div class="sub">Every listing carries a valid Trakheesi permit. Prices shown in <span id="curNote">AED</span> — switch currency in the top bar.</div>
     <div class="fbar">
-      <span class="fsel"><select id="fCommunity"><option value="">All communities</option></select></span>
-      <span class="fsel"><select id="fBeds"><option value="">Any beds</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4+</option></select></span>
-      <button class="fchip on" data-min="0" data-max="0">Any price</button>
-      <button class="fchip" data-min="0" data-max="1000000">Under 1M</button>
-      <button class="fchip" data-min="1000000" data-max="3000000">1–3M</button>
-      <button class="fchip" data-min="3000000" data-max="8000000">3–8M</button>
-      <button class="fchip" data-min="8000000" data-max="0">8M+</button>
+      <span class="fsel"><select id="fCommunity"><option value="" data-i18n="f.allcommunities">All communities</option></select></span>
+      <span class="fsel"><select id="fBeds"><option value="" data-i18n="f.anybeds">Any beds</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" data-i18n="sel.4plus">4+</option></select></span>
+      <button class="fchip on" data-min="0" data-max="0" data-i18n="f.anyprice">Any price</button>
+      <button class="fchip" data-min="0" data-max="1000000" data-i18n="chip.under1m">Under 1M</button>
+      <button class="fchip" data-min="1000000" data-max="3000000" data-i18n="chip.1-3m">1–3M</button>
+      <button class="fchip" data-min="3000000" data-max="8000000" data-i18n="chip.3-8m">3–8M</button>
+      <button class="fchip" data-min="8000000" data-max="0" data-i18n="chip.8m">8M+</button>
       <span class="fcount" id="fCount"></span>
     </div>
   </div>
@@ -57,13 +57,13 @@
 
 <div class="wrap idx-grid">
   <div class="res-grid" id="grid"></div>
-  <div class="empty" id="empty" style="display:none">No homes match those filters yet — widen the search, or <a class="link" href="https://wa.me/971543673063?text=I'm%20looking%20for%20a%20home%20to%20buy%20in%20Dubai" target="_blank" rel="noopener">tell an advisor what you need</a> and we'll find it off-market.</div>
+  <div class="empty" id="empty" style="display:none">No homes match those filters yet — widen the search, or <a class="link" href="https://wa.me/971543673063?text=I'm%20looking%20for%20a%20home%20to%20buy%20in%20Dubai" target="_blank" rel="noopener">>tell an advisor what you need</a> and we'll find it off-market.</div>
 
   <div class="cta-band rv">
-      <div><h3>Didn't find the one?</h3><p>Most good deals never reach the portals. Tell an advisor what you're looking for — community, budget, must-haves — and we'll match it, including off-market.</p></div>
+      <div><h3 data-i18n="cta.notfound">Didn't find the one?</h3><p data-i18n="cta.notfound.buyp">Most good deals never reach the portals. Tell an advisor what you're looking for — community, budget, must-haves — and we'll match it, including off-market.</p></div>
       <div class="acts">
-        <a class="btn coral" href="https://wa.me/971543673063?text=I%27m%20looking%20to%20buy%20in%20Dubai.%20Here%27s%20what%20I%20need%3A%20" target="_blank" rel="noopener">WhatsApp an advisor</a>
-        <button class="link" onclick="openSheet('call','','a call about buying in Dubai')">Book a call</button>
+        <a class="btn coral" href="https://wa.me/971543673063?text=I%27m%20looking%20to%20buy%20in%20Dubai.%20Here%27s%20what%20I%20need%3A%20" target="_blank" rel="noopener" data-i18n="cta.wa">WhatsApp an advisor</a>
+        <button class="link" onclick="openSheet('call','','a call about buying in Dubai')" data-i18n="label.call">Book a call</button>
       </div>
     </div>
 </div>
@@ -77,10 +77,10 @@
       </div>
       <div><h4 data-i18n="foot.properties">Properties</h4><ul><li><a href="./" data-i18n="nav.buy">Buy</a></li><li><a href="../rent/" data-i18n="nav.rent">Rent</a></li><li><a href="../off-plan/" data-i18n="nav.offplan">Off-Plan</a></li><li><a href="../sell/" data-i18n="foot.sellwith">Sell with us</a></li></ul></div>
       <div><h4 data-i18n="foot.discover">Discover</h4><ul><li><a href="../communities/" data-i18n="nav.communities">Communities</a></li><li><a href="../tools/mortgage-calculator/" data-i18n="foot.mortgage">Mortgage calculator</a></li></ul></div>
-      <div><h4>Company</h4><ul><li><a href="../index.html#advisors">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener">Contact</a></li><li><span style="opacity:.6">العربية — soon</span></li></ul></div>
+      <div><h4 data-i18n="foot.company">Company</h4><ul><li><a href="../index.html#advisors" data-i18n="foot.team">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener" data-i18n="foot.contact">Contact</a></li><li><span style="opacity:.6">العربية</span></li></ul></div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
+      <span data-i18n="foot.copyright">© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
       <span data-i18n="foot.compliance">All listings carry a valid Trakheesi advertising permit.</span>
     </div>
   </div>
@@ -95,9 +95,9 @@
 </div>
 
 <script>window.BASE='../';window.HEADER_SOLID=true;window.PAGE_STATUS='sale';</script>
-<script src="../assets/i18n.js?v=11"></script>
-<script src="../assets/listings.js?v=11"></script>
-<script src="../assets/kirpa.js?v=11"></script>
+<script src="../assets/i18n.js?v=13"></script>
+<script src="../assets/listings.js?v=13"></script>
+<script src="../assets/kirpa.js?v=13"></script>
 <script>
 const pool=LISTINGS.filter(l=>l.status===window.PAGE_STATUS);
 /* populate community filter from data */
