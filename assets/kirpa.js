@@ -273,7 +273,6 @@ renderDrawer();
 
 /* ===================================================================
    AI CONCIERGE — appended below. Fully static: no backend, no API key.
-   Injects the K icon on every page; matches live listings.js inventory.
    =================================================================== */
 /* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
    Load AFTER listings.js and kirpa.js on every page. Uses the site's own
@@ -304,7 +303,7 @@ renderDrawer();
   +'.kc-launch:hover{transform:translateY(-2px) scale(1.05);background:var(--coral,#FF6633)}'
   +'.kc-launch i{font-style:normal;font-family:var(--display,serif);font-size:23px;line-height:1}'
   +'@keyframes kc-ring{0%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,.45)}70%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 12px rgba(255,102,51,0)}100%{box-shadow:0 14px 30px -12px rgba(23,20,18,.5),0 0 0 0 rgba(255,102,51,0)}}'
-  +'.kc-panel{position:fixed;right:22px;bottom:22px;width:384px;height:min(624px,82vh);z-index:9999;background:var(--paper,#FFFDFB);border:1px solid var(--sand,#E5DBD0);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 30px 70px -28px rgba(23,20,18,.5);font-family:var(--body,sans-serif);color:var(--ink,#171412)}'
+  +'.kc-panel{position:fixed;right:22px;bottom:22px;width:380px;height:auto;max-height:min(78vh,600px);min-height:300px;z-index:9999;background:var(--paper,#FFFDFB);border:1px solid var(--sand,#E5DBD0);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 30px 70px -28px rgba(23,20,18,.5);font-family:var(--body,sans-serif);color:var(--ink,#171412)}'
   +'.kc-panel.kc-open{display:flex}.kc-panel[dir="rtl"]{text-align:right}'
   +'.kc-top{display:flex;align-items:center;gap:11px;padding:14px 16px;border-bottom:1px solid var(--sand,#E5DBD0);flex:0 0 auto}'
   +'.kc-mark{width:32px;height:32px;border:1px solid var(--ink,#171412);border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}'
@@ -344,7 +343,7 @@ renderDrawer();
   +'.kc-handoff a{display:block;text-align:center;background:var(--coral,#FF6633);color:#fff;text-decoration:none;border-radius:10px;padding:11px;font-size:13px;font-weight:500}'
   +'.kc-foot{flex:0 0 auto;padding:9px 16px;border-top:1px solid var(--sand,#E5DBD0);font-size:11px;color:var(--stone,#8F857A);text-align:center}'
   +'.kc-foot a{color:var(--coral,#FF6633);text-decoration:none}'
-  +'@media(max-width:600px){.kc-launch{bottom:76px;right:16px;width:52px;height:52px}.kc-launch i{font-size:21px}.kc-panel{right:0;left:0;bottom:0;width:100%;height:88vh;border-radius:18px 18px 0 0}}';
+  +'@media(max-width:600px){.kc-launch{bottom:76px;right:16px;width:52px;height:52px}.kc-launch i{font-size:21px}.kc-panel{right:0;left:0;bottom:0;width:100%;height:auto;max-height:86vh;min-height:56vh;border-radius:18px 18px 0 0}}';
   var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
 
   /* ---------- markup ---------- */
