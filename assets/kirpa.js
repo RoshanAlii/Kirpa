@@ -199,7 +199,7 @@ function applyLang(){
   const html=document.documentElement;
   html.setAttribute('lang',lang);
   html.setAttribute('dir',lang==='ar'?'rtl':'ltr');
-  if(lang==='ar' && window.I18N){
+  if(lang==='ar' && typeof I18N!=='undefined' && I18N.ar){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
       const v=I18N.ar[el.getAttribute('data-i18n')];
       if(v)el.textContent=v;
