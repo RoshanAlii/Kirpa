@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=10">
+<link rel="stylesheet" href="../assets/kirpa.css?v=11">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
   <div class="nav">
     <a class="logo" href="../index.html"><span class="mark"><i>K</i></span><span class="word"><b>KIRPA</b></span></a>
     <nav class="nav-links">
-      <a href="../buy/">Buy</a><a href="../rent/">Rent</a><a href="../off-plan/">Off-Plan</a><a href="./">Communities</a><a href="../sell/">Sell</a>
+      <a href="../buy/" data-i18n="nav.buy">Buy</a><a href="../rent/" data-i18n="nav.rent">Rent</a><a href="../off-plan/" data-i18n="nav.offplan">Off-Plan</a><a href="./" data-i18n="nav.communities">Communities</a><a href="../sell/" data-i18n="nav.sell">Sell</a>
     </nav>
     <div class="nav-right">
       <div class="dd" id="langDD"><button class="dd-btn lang" id="langBtn"><span id="langLabel">EN</span><i class="car"></i></button><div class="dd-menu" id="langMenu"></div></div>
@@ -39,12 +39,12 @@
 
 <div class="page-head">
   <div class="wrap">
-    <div class="crumb"><a href="../index.html">Home</a> / <a href="./">Communities</a> / <span id="crumbName"></span></div>
+    <div class="crumb"><a href="../index.html">Home</a> / <a href="./" data-i18n="nav.communities">Communities</a> / <span id="crumbName"></span></div>
     <h1 id="gName" style="margin-top:18px"></h1>
     <div class="g-hero"><div class="photo" id="gPhoto"></div></div>
     <div class="g-body">
       <div id="gBlurb"></div>
-      <div class="stat-list"><b>At a glance</b><div id="gStats"></div></div>
+      <div class="stat-list"><b data-i18n="g.glance">At a glance</b><div id="gStats"></div></div>
     </div>
   </div>
 </div>
@@ -52,8 +52,8 @@
 <section class="similar" style="padding-top:10px">
   <div class="wrap">
     <div class="sec-head">
-      <div><span class="eyebrow">Live now</span><h2 style="font-family:var(--display);font-size:clamp(26px,3vw,38px);font-weight:400;margin-top:14px" id="liveTitle">Homes in this community</h2></div>
-      <a class="link" href="../buy/">All homes</a>
+      <div><span class="eyebrow" data-i18n="g.live">Live now</span><h2 style="font-family:var(--display);font-size:clamp(26px,3vw,38px);font-weight:400;margin-top:14px" id="liveTitle">Homes in this community</h2></div>
+      <a class="link" href="../buy/" data-i18n="sec.allhomes">All homes</a>
     </div>
     <div class="res-grid" id="gGrid"></div>
     <div class="empty" id="gEmpty" style="display:none">Nothing listed here right now — <a class="link" id="gAskLink" href="#" target="_blank" rel="noopener">ask an advisor</a> what's coming to market.</div>
@@ -72,50 +72,51 @@
     <div class="foot-top">
       <div>
         <div class="foot-logo">KIRPA</div>
-        <p>Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
+        <p data-i18n="foot.about">Your trusted real estate partner in Dubai — off-plan investments, land, and portfolio building for NRIs. Office 1802, O-14 Tower, Marasi Drive, Business Bay, Dubai.</p>
       </div>
-      <div><h4>Properties</h4><ul><li><a href="../buy/">Buy</a></li><li><a href="../rent/">Rent</a></li><li><a href="../off-plan/">Off-Plan</a></li><li><a href="../sell/">Sell with us</a></li></ul></div>
-      <div><h4>Discover</h4><ul><li><a href="./">Communities</a></li><li><a href="../tools/mortgage-calculator/">Mortgage calculator</a></li></ul></div>
+      <div><h4 data-i18n="foot.properties">Properties</h4><ul><li><a href="../buy/" data-i18n="nav.buy">Buy</a></li><li><a href="../rent/" data-i18n="nav.rent">Rent</a></li><li><a href="../off-plan/" data-i18n="nav.offplan">Off-Plan</a></li><li><a href="../sell/" data-i18n="foot.sellwith">Sell with us</a></li></ul></div>
+      <div><h4 data-i18n="foot.discover">Discover</h4><ul><li><a href="./" data-i18n="nav.communities">Communities</a></li><li><a href="../tools/mortgage-calculator/" data-i18n="foot.mortgage">Mortgage calculator</a></li></ul></div>
       <div><h4>Company</h4><ul><li><a href="../index.html#advisors">Our team</a></li><li><a href="https://wa.me/971543673063" target="_blank" rel="noopener">Contact</a></li><li><span style="opacity:.6">العربية — soon</span></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Kirpa Properties LLC · ORN 49046 · Licensed by RERA, Dubai Land Department</span>
-      <span>All listings carry a valid Trakheesi advertising permit.</span>
+      <span data-i18n="foot.compliance">All listings carry a valid Trakheesi advertising permit.</span>
     </div>
   </div>
 </footer>
 
 <div class="mbar">
   <div class="row">
-    <a href="../index.html" style="text-decoration:none">Home</a>
+    <a href="../index.html" style="text-decoration:none" data-i18n="m.home">Home</a>
     <a class="wa" id="mbarWa" href="https://wa.me/971543673063" target="_blank" rel="noopener">WhatsApp</a>
-    <button id="mbarFav">♡ Shortlist</button>
+    <button id="mbarFav" data-i18n-append="m.shortlist">♡ Shortlist</button>
   </div>
 </div>
 
 <script>window.BASE='../';window.HEADER_SOLID=true;</script>
-<script src="../assets/i18n.js?v=10"></script>
-<script src="../assets/listings.js?v=10"></script>
-<script src="../assets/kirpa.js?v=10"></script>
+<script src="../assets/i18n.js?v=11"></script>
+<script src="../assets/listings.js?v=11"></script>
+<script src="../assets/kirpa.js?v=11"></script>
 <script>
 const slug=(new URLSearchParams(location.search).get('c')||'dubai-hills').toLowerCase();
 const C=COMMUNITIES[slug]||COMMUNITIES['dubai-hills'];
 document.title='Kirpa Properties — Living in '+C.name;
-$('#crumbName').textContent=C.name;
-$('#gName').textContent='Living in '+C.name;
+$('#crumbName').textContent=(window.__lang==='ar'&&C.name_ar)?C.name_ar:C.name;
+$('#gName').textContent=(window.__lang==='ar'?(t('g.living','Living in')+' '+(C.name_ar||C.name)):('Living in '+C.name));
 $('#gPhoto').classList.add(C.sky);if(C.img)$('#gPhoto').insertAdjacentHTML('afterbegin',phImg(C.img,C.name));
 $('#gBlurb').innerHTML=C.blurb.map(p=>'<p>'+p+'</p>').join('');
-$('#gStats').innerHTML=C.stats.map(s=>'<span>'+s+'</span>').join('');
+$('#gStats').innerHTML=((window.__lang==='ar'&&C.stats_ar)?C.stats_ar:C.stats).map(s=>'<span>'+s+'</span>').join('');
 const ask='https://wa.me/971543673063?text='+encodeURIComponent("I'm interested in "+C.name+' — what do you have coming to market?');
-$('#gAskLink').href=ask;$('#mbarWa').href=ask;$('#ctaWa').href=ask;$('#ctaTitle').textContent='Thinking about '+C.name+'?';$('#ctaCall').onclick=()=>openSheet('call','','a call about '+C.name);
+$('#gAskLink').href=ask;$('#mbarWa').href=ask;$('#ctaWa').href=ask;$('#ctaTitle').textContent=(window.__lang==='ar'?t('g.thinking','Thinking about this community?'):('Thinking about '+C.name+'?'));$('#ctaCall').onclick=()=>openSheet('call','','a call about '+C.name);
 function renderLive(){
   const out=LISTINGS.filter(l=>l.community===C.name);
-  $('#liveTitle').textContent='Homes in '+C.name+' ('+out.length+' live)';
+  $('#liveTitle').textContent=(window.__lang==='ar'?((C.name_ar||C.name)+' — '+t('g.livehomes','homes')+' ('+out.length+')'):('Homes in '+C.name+' ('+out.length+' live)'));
   $('#gGrid').innerHTML=out.map(cardHTML).join('');
   bindCards($('#gGrid'));
   $('#gEmpty').style.display=out.length?'none':'block';
 }
 window.onFavsChanged=renderLive;window.onCurrencyChanged=renderLive;
+window.onLangReady=()=>{renderLive();$('#ctaTitle').textContent=(window.__lang==='ar'?t('g.thinking'):('Thinking about '+C.name+'?'));$('#gStats').innerHTML=((window.__lang==='ar'&&C.stats_ar)?C.stats_ar:C.stats).map(s=>'<span>'+s+'</span>').join('');$('#gName').textContent=(window.__lang==='ar'?(t('g.living')+' '+(C.name_ar||C.name)):('Living in '+C.name));};
 renderLive();
 </script>
 </body>
