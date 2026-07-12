@@ -58,3 +58,5 @@ function t(key,fallback){
   if(window.__lang==='ar' && I18N.ar[key]!==undefined) return I18N.ar[key];
   return fallback!==undefined?fallback:key;
 }
+
+window.I18N=I18N;
