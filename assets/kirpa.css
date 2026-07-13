@@ -5,7 +5,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:linear-gradient(180deg,#F4E7DB 0%,#F9F1EA 15%,#FBF6F1 42%,#FBF6F1 100%);background-color:var(--cream);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  body{background:linear-gradient(180deg,#EFD2B6 0%,#F4E3D0 20%,#F8ECE0 43%,#F5EADE 64%,#F0E3D4 84%,#ECDCCA 100%);background-color:var(--cream);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
   .wrap{max-width:1240px;margin:0 auto;padding:0 40px}
   a{color:inherit;text-decoration:none}
   button{font-family:var(--body);cursor:pointer}
@@ -513,3 +513,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .dd-item:hover .sym{color:var(--ink)}
 /* header-state colours: buttons inherit cream over hero, ink when solid — menu always light */
 @media(max-width:600px){.dd-btn{padding:10px 3px;font-size:10px}.dd-menu{min-width:140px}}
+
+/* let the page gradient flow through the reels ribbon (no flat block) */
+.kr-band{background:transparent!important}
