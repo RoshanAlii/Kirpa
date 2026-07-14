@@ -272,7 +272,7 @@ renderDrawer();
 
 
 /* ===================================================================
-   CONCIERGE + LOGO + SOCIAL/REELS RIBBON — appended.
+   CONCIERGE + LOGO + SOCIAL/REELS RIBBON (ribbon: homepage only).
    =================================================================== */
 /* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
    Load AFTER listings.js and kirpa.js on every page. Uses the site's own
@@ -581,6 +581,7 @@ renderDrawer();
 (function(){
   if(document.getElementById('krBand'))return;
   var BASE=window.BASE||'';
+  if(BASE!=='')return; /* homepage only */
   var AR=(document.documentElement.getAttribute('lang')||'en')==='ar';
   var tt=function(en,ar){return AR?ar:en;};
 
