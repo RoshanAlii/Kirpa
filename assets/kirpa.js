@@ -272,7 +272,7 @@ renderDrawer();
 
 
 /* ===================================================================
-   CONCIERGE + LOGO + SOCIAL/REELS RIBBON (ribbon: homepage only).
+   CONCIERGE + LOGO + RIBBON (home only) + link repairs.
    =================================================================== */
 /* Kirpa Properties — AI-style Concierge (fully static, no backend, no API key).
    Load AFTER listings.js and kirpa.js on every page. Uses the site's own
@@ -285,6 +285,8 @@ renderDrawer();
   var LANG = document.documentElement.getAttribute('lang')||'en';
   var RTL  = LANG==='ar';
   var T = function(en,ar){ return RTL?ar:en; };
+  /* safety net: repair any stale mortgage-calculator links */
+  document.querySelectorAll('a[href*="tools/mortgage-calculator"]').forEach(function(a){a.href=a.href.replace('tools/mortgage-calculator/','tools/').replace('tools/mortgage-calculator','tools/');});
   var STAR='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M98 50L55.73 52.37L75.46 75.46L52.37 55.73L50 98L47.63 55.73L24.54 75.46L44.27 52.37L2 50L44.27 47.63L24.54 24.54L47.63 44.27L50 2L52.37 44.27L75.46 24.54L55.73 47.63Z" fill="currentColor"/></svg>';
 
   /* Replace the nav logo "K" with the starburst + style it, so this single
