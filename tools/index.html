@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=15">
+<link rel="stylesheet" href="../assets/kirpa.css?v=16">
 <style>
 .calc{background:var(--paper);border:1px solid var(--sand);border-radius:18px;padding:34px 36px;margin-bottom:34px}
 .calc h2{font-family:var(--display);font-size:24px;font-weight:400;margin-bottom:6px}
@@ -122,22 +122,24 @@
 <script src="../assets/listings.js?v=13"></script>
 <script src="../assets/kirpa.js?v=17"></script>
 <script>
+/* self-contained: does not depend on kirpa.js */
+var q=function(s){return document.querySelector(s)};
 function calcM(){
-  const price=+$('#mPrice').value||0,down=Math.min(90,Math.max(0,+$('#mDown').value||0));
-  const yrs=Math.min(30,Math.max(1,+$('#mYears').value||25)),rate=Math.max(.1,+$('#mRate').value||4.5);
+  const price=+q('#mPrice').value||0,down=Math.min(90,Math.max(0,+q('#mDown').value||0));
+  const yrs=Math.min(30,Math.max(1,+q('#mYears').value||25)),rate=Math.max(.1,+q('#mRate').value||4.5);
   const P=price*(1-down/100),r=rate/100/12,n=yrs*12;
   const m=P>0?P*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1):0;
-  $('#mOut').textContent='AED '+Math.round(m).toLocaleString()+' / month';
-  $('#mSub').textContent='Loan AED '+Math.round(P).toLocaleString()+' · total interest ≈ AED '+Math.round(m*n-P).toLocaleString()+' over '+yrs+' years';
+  q('#mOut').textContent='AED '+Math.round(m).toLocaleString()+' / month';
+  q('#mSub').textContent='Loan AED '+Math.round(P).toLocaleString()+' · total interest ≈ AED '+Math.round(m*n-P).toLocaleString()+' over '+yrs+' years';
 }
 function calcR(){
-  const p=+$('#rPrice').value||1,rent=+$('#rRent').value||0,svc=+$('#rSvc').value||0;
+  const p=+q('#rPrice').value||1,rent=+q('#rRent').value||0,svc=+q('#rSvc').value||0;
   const gross=rent/p*100,net=(rent-svc)/p*100;
-  $('#rOut').textContent=gross.toFixed(2)+'% gross · '+net.toFixed(2)+'% net of service charge';
-  $('#rSub').textContent='On AED '+p.toLocaleString()+' with AED '+rent.toLocaleString()+' annual rent';
+  q('#rOut').textContent=gross.toFixed(2)+'% gross · '+net.toFixed(2)+'% net of service charge';
+  q('#rSub').textContent='On AED '+p.toLocaleString()+' with AED '+rent.toLocaleString()+' annual rent';
 }
-['mPrice','mDown','mYears','mRate'].forEach(id=>$('#'+id).addEventListener('input',calcM));
-['rPrice','rRent','rSvc'].forEach(id=>$('#'+id).addEventListener('input',calcR));
+['mPrice','mDown','mYears','mRate'].forEach(id=>q('#'+id).addEventListener('input',calcM));
+['rPrice','rRent','rSvc'].forEach(id=>q('#'+id).addEventListener('input',calcR));
 calcM();calcR();
 </script>
 </body>
