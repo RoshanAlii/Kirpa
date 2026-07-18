@@ -1,7 +1,13 @@
-  :root{
+:root{
     --cream:#FBF6F1; --ink:#171412; --coral:#FF6633; --sand:#E5DBD0;
     --stone:#8F857A; --paper:#FFFDFB;
     --display:'Marcellus',serif; --body:'Poppins',system-ui,sans-serif;
+  }
+  /* Hindi: Devanagari-capable stack; Latin glyphs fall back to brand fonts.
+     Marcellus has no Devanagari, so Hindi headings use Noto Sans Devanagari. */
+  html[lang="hi"]{
+    --display:'Noto Sans Devanagari','Marcellus',serif;
+    --body:'Noto Sans Devanagari','Poppins',system-ui,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
