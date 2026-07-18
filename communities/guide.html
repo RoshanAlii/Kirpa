@@ -101,22 +101,28 @@
 const slug=(new URLSearchParams(location.search).get('c')||'dubai-hills').toLowerCase();
 const C=COMMUNITIES[slug]||COMMUNITIES['dubai-hills'];
 document.title='Kirpa Properties — Living in '+C.name;
+/* Hindi is LTR and has no _hi data fields, so proper-noun community names stay Latin;
+   only the surrounding label is translated, with Hindi word order (name first). */
+function gNameTxt(){var l=window.__lang;return l==='ar'?(t('g.living','Living in')+' '+(C.name_ar||C.name)):l==='hi'?(C.name+' '+t('g.living')):('Living in '+C.name);}
+function ctaTitleTxt(){var l=window.__lang;return (l==='ar'||l==='hi')?t('g.thinking','Thinking about this community?'):('Thinking about '+C.name+'?');}
+function liveTitleTxt(n){var l=window.__lang;return l==='ar'?((C.name_ar||C.name)+' — '+t('g.livehomes','homes')+' ('+n+')'):l==='hi'?(C.name+' — '+t('g.livehomes','homes')+' ('+n+')'):('Homes in '+C.name+' ('+n+' live)');}
+function statsHtml(){return ((window.__lang==='ar'&&C.stats_ar)?C.stats_ar:C.stats).map(s=>'<span>'+s+'</span>').join('');}
 $('#crumbName').textContent=(window.__lang==='ar'&&C.name_ar)?C.name_ar:C.name;
-$('#gName').textContent=(window.__lang==='ar'?(t('g.living','Living in')+' '+(C.name_ar||C.name)):('Living in '+C.name));
+$('#gName').textContent=gNameTxt();
 $('#gPhoto').classList.add(C.sky);if(C.img)$('#gPhoto').insertAdjacentHTML('afterbegin',phImg(C.img,C.name));
 $('#gBlurb').innerHTML=C.blurb.map(p=>'<p>'+p+'</p>').join('');
-$('#gStats').innerHTML=((window.__lang==='ar'&&C.stats_ar)?C.stats_ar:C.stats).map(s=>'<span>'+s+'</span>').join('');
+$('#gStats').innerHTML=statsHtml();
 const ask='https://wa.me/971543673063?text='+encodeURIComponent("I'm interested in "+C.name+' — what do you have coming to market?');
-$('#gAskLink').href=ask;$('#mbarWa').href=ask;$('#ctaWa').href=ask;$('#ctaTitle').textContent=(window.__lang==='ar'?t('g.thinking','Thinking about this community?'):('Thinking about '+C.name+'?'));$('#ctaCall').onclick=()=>openSheet('call','','a call about '+C.name);
+$('#gAskLink').href=ask;$('#mbarWa').href=ask;$('#ctaWa').href=ask;$('#ctaTitle').textContent=ctaTitleTxt();$('#ctaCall').onclick=()=>openSheet('call','','a call about '+C.name);
 function renderLive(){
   const out=LISTINGS.filter(l=>l.community===C.name);
-  $('#liveTitle').textContent=(window.__lang==='ar'?((C.name_ar||C.name)+' — '+t('g.livehomes','homes')+' ('+out.length+')'):('Homes in '+C.name+' ('+out.length+' live)'));
+  $('#liveTitle').textContent=liveTitleTxt(out.length);
   $('#gGrid').innerHTML=out.map(cardHTML).join('');
   bindCards($('#gGrid'));
   $('#gEmpty').style.display=out.length?'none':'block';
 }
 window.onFavsChanged=renderLive;window.onCurrencyChanged=renderLive;
-window.onLangReady=()=>{renderLive();$('#ctaTitle').textContent=(window.__lang==='ar'?t('g.thinking'):('Thinking about '+C.name+'?'));$('#gStats').innerHTML=((window.__lang==='ar'&&C.stats_ar)?C.stats_ar:C.stats).map(s=>'<span>'+s+'</span>').join('');$('#gName').textContent=(window.__lang==='ar'?(t('g.living')+' '+(C.name_ar||C.name)):('Living in '+C.name));};
+window.onLangReady=()=>{renderLive();$('#ctaTitle').textContent=ctaTitleTxt();$('#gStats').innerHTML=statsHtml();$('#gName').textContent=gNameTxt();};
 renderLive();
 </script>
 </body>
