@@ -161,7 +161,7 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
   +'<a href="'+B+'sell/" data-i18n="nav.sell">Sell</a>'
   +'<a href="'+B+'index.html" data-i18n="nav.home">Home</a>'
   +'</nav>'
-  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN / العربية</button><span>ORN 49046 · Dubai</span></div>'
+  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN · हिन्दी · العربية</button><span>ORN 49046 · Dubai</span></div>'
   +'</div>');
   const m=$('#menu');
   if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
@@ -199,21 +199,27 @@ function applyLang(){
   const html=document.documentElement;
   html.setAttribute('lang',lang);
   html.setAttribute('dir',lang==='ar'?'rtl':'ltr');
-  if(lang==='ar' && typeof I18N!=='undefined' && I18N.ar){
+  if(lang==='hi' && !document.getElementById('hi-font')){
+    var hf=document.createElement('link');hf.id='hi-font';hf.rel='stylesheet';
+    hf.href='https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&display=swap';
+    document.head.appendChild(hf);
+  }
+  const D=(typeof I18N!=='undefined')?I18N[lang]:null;
+  if(lang!=='en' && D){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const v=I18N.ar[el.getAttribute('data-i18n')];
+      const v=D[el.getAttribute('data-i18n')];
       if(v)el.textContent=v;
       const ph=el.getAttribute('data-i18n-ph');
-      if(ph&&I18N.ar[ph])el.setAttribute('placeholder',I18N.ar[ph]);
+      if(ph&&D[ph])el.setAttribute('placeholder',D[ph]);
     });
     document.querySelectorAll('[data-i18n-append]').forEach(el=>{
-      const v=I18N.ar[el.getAttribute('data-i18n-append')];
+      const v=D[el.getAttribute('data-i18n-append')];
       if(v)el.textContent='♡ '+v;
     });
   }
-  const ll=document.querySelector('#langLabel');if(ll)ll.textContent=(lang==='ar'?'AR':'EN');
+  const ll=document.querySelector('#langLabel');if(ll)ll.textContent=lang.toUpperCase();
 }
-const LANGS=[['en','English'],['ar','العربية']];
+const LANGS=[['en','English'],['hi','हिन्दी'],['ar','العربية']];
 function setLang(v){if(v===lang){return;}lang=v;localStorage.setItem('kirpa-lang',lang);location.reload();}
 function buildLangMenu(){
   const m=$('#langMenu');if(!m)return;
@@ -225,7 +231,7 @@ if($('#langBtn')){
   $('#langBtn').onclick=e=>{e.stopPropagation();$('#curDD')&&$('#curDD').classList.remove('open');$('#langDD').classList.toggle('open');};
 }
 /* mobile menu language button (separate) still toggles */
-document.querySelectorAll('.menu .switch.lang').forEach(b=>b.onclick=()=>setLang(lang==='ar'?'en':'ar'));
+document.querySelectorAll('.menu .switch.lang').forEach(b=>b.onclick=()=>{const o=LANGS.map(x=>x[0]);setLang(o[(o.indexOf(lang)+1)%o.length]);});
 applyLang();
 if(window.onLangReady)window.onLangReady();
 /* close dropdowns on outside click */
