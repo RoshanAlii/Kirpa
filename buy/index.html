@@ -44,7 +44,7 @@
     <div class="sub">Every listing carries a valid Trakheesi permit. Prices shown in <span id="curNote">AED</span> — switch currency in the top bar.</div>
     <div class="fbar">
       <span class="fsel"><select id="fCommunity"><option value="" data-i18n="f.allcommunities">All communities</option></select></span>
-      <span class="fsel"><select id="fBeds"><option value="" data-i18n="f.anybeds">Any beds</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" data-i18n="sel.4plus">4+</option></select></span>
+      <span class="fsel"><select id="fBeds"><option value="" data-i18n="f.anybeds">Any beds</option><option value="studio">Studio</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4" data-i18n="sel.4plus">4+</option></select></span>
       <button class="fchip on" data-min="0" data-max="0" data-i18n="f.anyprice">Any price</button>
       <button class="fchip" data-min="0" data-max="1000000" data-i18n="chip.under1m">Under 1M</button>
       <button class="fchip" data-min="1000000" data-max="3000000" data-i18n="chip.1-3m">1–3M</button>
@@ -116,7 +116,7 @@ if(_p.get('min')||_p.get('max')){
 function apply(){
   const out=pool.filter(l=>
     (!f.community||l.community===f.community)&&
-    (!f.beds||(f.beds==='4'?l.beds>=4:l.beds===+f.beds))&&
+    (!f.beds||(f.beds==='4'?l.beds>=4:f.beds==='studio'?l.beds==='Studio':l.beds===+f.beds))&&
     (!f.min||l.aed>=f.min)&&(!f.max||l.aed<f.max)
   );
   $('#grid').innerHTML=out.map(cardHTML).join('');
