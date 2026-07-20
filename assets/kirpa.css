@@ -9,6 +9,12 @@
     --display:'Noto Sans Devanagari','Marcellus',serif;
     --body:'Noto Sans Devanagari','Poppins',system-ui,sans-serif;
   }
+  /* Punjabi (Gurmukhi): Marcellus/Poppins have no Gurmukhi glyphs,
+     so headings and body fall back to Noto Sans Gurmukhi. */
+  html[lang="pa"]{
+    --display:'Noto Sans Gurmukhi','Marcellus',serif;
+    --body:'Noto Sans Gurmukhi','Poppins',system-ui,sans-serif;
+  }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.055'/%3E%3C/svg%3E") 0 0/150px 150px repeat,radial-gradient(135% 95% at 50% 16%,#F2EADD 0%,#ECE1D3 52%,#E3D4C1 100%) center no-repeat;background-color:#ECE1D3;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}

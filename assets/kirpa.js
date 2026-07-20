@@ -12,7 +12,7 @@ let cur=localStorage.getItem('kirpa-cur')||'AED';
 function fmt(aed,c){
   c=c||cur;const r=RATES[c][0],sym=RATES[c][1],v=aed*r;
   const n=v>=1e6?(v/1e6).toFixed(2).replace(/\.?0+$/,'')+'M':Math.round(v).toLocaleString();
-  return c==='AED'?('AED '+aed.toLocaleString()):(sym+n);
+  return c==='AED'?((window.__lang==='pa'?'ਦਿਰਹਮ ':'AED ')+aed.toLocaleString()):(sym+n);
 }
 function fxEcho(aed){
   return cur==='AED'?('<span class="fx">(≈ '+fmt(aed,'USD')+')</span>'):('<span class="fx">('+fmt(aed,'AED')+')</span>');
@@ -20,7 +20,7 @@ function fxEcho(aed){
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
 function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
-function L(l,f){return (window.__lang==='ar'&&l[f+'_ar'])?l[f+'_ar']:l[f];}
+function L(l,f){return window.LF?window.LF(l,f):l[f];}
 function cardHTML(l){
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
@@ -161,7 +161,7 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
   +'<a href="'+B+'sell/" data-i18n="nav.sell">Sell</a>'
   +'<a href="'+B+'index.html" data-i18n="nav.home">Home</a>'
   +'</nav>'
-  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN · हिन्दी · العربية</button><span>ORN 49046 · Dubai</span></div>'
+  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN · ਪੰਜਾਬੀ · हिन्दी · العربية</button><span>ORN 49046 · Dubai</span></div>'
   +'</div>');
   const m=$('#menu');
   if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
@@ -204,6 +204,11 @@ function applyLang(){
     hf.href='https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&display=swap';
     document.head.appendChild(hf);
   }
+  if(lang==='pa' && !document.getElementById('pa-font')){
+    var pf=document.createElement('link');pf.id='pa-font';pf.rel='stylesheet';
+    pf.href='https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;500;600&display=swap';
+    document.head.appendChild(pf);
+  }
   const D=(typeof I18N!=='undefined')?I18N[lang]:null;
   if(lang!=='en' && D){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
@@ -219,7 +224,7 @@ function applyLang(){
   }
   const ll=document.querySelector('#langLabel');if(ll)ll.textContent=lang.toUpperCase();
 }
-const LANGS=[['en','English'],['hi','हिन्दी'],['ar','العربية']];
+const LANGS=[['en','English'],['pa','ਪੰਜਾਬੀ'],['hi','हिन्दी'],['ar','العربية']];
 function setLang(v){if(v===lang){return;}lang=v;localStorage.setItem('kirpa-lang',lang);location.reload();}
 function buildLangMenu(){
   const m=$('#langMenu');if(!m)return;
@@ -290,7 +295,13 @@ renderDrawer();
   var BASE = window.BASE||'';
   var LANG = document.documentElement.getAttribute('lang')||'en';
   var RTL  = LANG==='ar';
-  var T = function(en,ar){ return RTL?ar:en; };
+  var PA_C={"Ask Kirpa": "ਕਿਰਪਾ ਨੂੰ ਪੁੱਛੋ", "Concierge · here to help": "ਕਨਸੀਅਰਜ · ਮਦਦ ਲਈ ਹਾਜ਼ਰ", "Connect me with an advisor": "ਮੈਨੂੰ ਸਲਾਹਕਾਰ ਨਾਲ ਜੋੜੋ", "Prefer to talk now? ": "ਹੁਣੇ ਗੱਲ ਕਰਨੀ ਹੈ? ", "Message us on WhatsApp": "ਵਟਸਐਪ ’ਤੇ ਸਾਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ", "Hi Kirpa — your concierge qualified me. ": "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਕਿਰਪਾ — ਤੁਹਾਡੇ ਕਨਸੀਅਰਜ ਨੇ ਮੇਰੀ ਜਾਣਕਾਰੀ ਲੈ ਲਈ। ", "Can an advisor take it from here?": "ਕੀ ਕੋਈ ਸਲਾਹਕਾਰ ਅੱਗੇ ਸੰਭਾਲ ਸਕਦਾ ਹੈ?", "For Rent": "ਕਿਰਾਏ ਲਈ", "For Sale": "ਵਿਕਰੀ ਲਈ", "Book": "ਬੁੱਕ ਕਰੋ", "Off-Plan": "ਆਫ਼-ਪਲਾਨ", "From ": "ਸ਼ੁਰੂ ", "Visit": "ਵਿਜ਼ਿਟ ਕਰੋ", "Hello — I'm Kirpa's concierge. What brings you in today?": "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ — ਮੈਂ ਕਿਰਪਾ ਦਾ ਕਨਸੀਅਰਜ ਹਾਂ। ਅੱਜ ਤੁਹਾਨੂੰ ਕੀ ਲੱਭ ਰਹੇ ਹੋ?", "Buy a home": "ਘਰ ਖਰੀਦੋ", "Rent a home": "ਘਰ ਕਿਰਾਏ ’ਤੇ ਲਵੋ", "Off-plan / investment": "ਆਫ਼-ਪਲਾਨ / ਨਿਵੇਸ਼", "Just a question": "ਬੱਸ ਇੱਕ ਸਵਾਲ", "What budget are we working with?": "ਅਸੀਂ ਕਿੰਨੇ ਬਜਟ ਨਾਲ ਕੰਮ ਕਰ ਰਹੇ ਹਾਂ?", " (per year)": " (ਪ੍ਰਤੀ ਸਾਲ)", "Any budget": "ਕੋਈ ਵੀ ਬਜਟ", "Any": "ਕੋਈ ਵੀ", "Anywhere in Dubai": "ਦੁਬਈ ਵਿੱਚ ਕਿਤੇ ਵੀ", "Any particular area, or shall I show the best across Dubai?": "ਕੋਈ ਖ਼ਾਸ ਇਲਾਕਾ, ਜਾਂ ਮੈਂ ਪੂਰੇ ਦੁਬਈ ’ਚੋਂ ਵਧੀਆ ਵਿਖਾਵਾਂ?", "How many bedrooms?": "ਕਿੰਨੇ ਬੈੱਡਰੂਮ?", "I don't have a live match for that right now — but a lot of our best stock never hits the portals. Shall I have an advisor find it off-market?": "ਇਸ ਵੇਲੇ ਮੇਰੇ ਕੋਲ ਇਸ ਦਾ ਕੋਈ ਲਾਈਵ ਮੇਲ ਨਹੀਂ — ਪਰ ਸਾਡਾ ਬਹੁਤ ਵਧੀਆ ਸਟਾਕ ਪੋਰਟਲਾਂ ’ਤੇ ਕਦੇ ਨਹੀਂ ਆਉਂਦਾ। ਕੀ ਮੈਂ ਕਿਸੇ ਸਲਾਹਕਾਰ ਤੋਂ ਇਸ ਨੂੰ ਬਜ਼ਾਰ ਤੋਂ ਬਾਹਰੋਂ ਲੱਭਵਾਵਾਂ?", "Yes, find it for me": "ਹਾਂ, ਮੇਰੇ ਲਈ ਲੱਭੋ", "Start over": "ਮੁੜ ਸ਼ੁਰੂ ਕਰੋ", "in": "ਵਿੱਚ", "When are you hoping to move or buy?": "ਤੁਸੀਂ ਕਦੋਂ ਤੱਕ ਸ਼ਿਫ਼ਟ ਜਾਂ ਖਰੀਦਣ ਦੀ ਉਮੀਦ ਕਰ ਰਹੇ ਹੋ?", "Ready now": "ਹੁਣੇ ਤਿਆਰ", "1–3 months": "1–3 ਮਹੀਨੇ", "Just researching": "ਬੱਸ ਖੋਜ ਕਰ ਰਿਹਾ", "Researching": "ਖੋਜ", "Last thing — are you a UAE resident?": "ਆਖ਼ਰੀ ਗੱਲ — ਕੀ ਤੁਸੀਂ ਯੂਏਈ ਦੇ ਨਿਵਾਸੀ ਹੋ?", "UAE resident": "ਯੂਏਈ ਨਿਵਾਸੀ", "Resident": "ਨਿਵਾਸੀ", "Non-resident": "ਗ਼ੈਰ-ਨਿਵਾਸੀ", "Perfect — I've put your brief together. Tap below and an advisor picks it up on WhatsApp, usually within 15 minutes. Anything else in the meantime?": "ਵਧੀਆ — ਮੈਂ ਤੁਹਾਡਾ ਸੰਖੇਪ ਤਿਆਰ ਕਰ ਲਿਆ। ਹੇਠਾਂ ਟੈਪ ਕਰੋ ਅਤੇ ਇੱਕ ਸਲਾਹਕਾਰ ਵਟਸਐਪ ’ਤੇ ਇਸ ਨੂੰ ਸੰਭਾਲ ਲਵੇਗਾ, ਆਮ ਤੌਰ ’ਤੇ 15 ਮਿੰਟਾਂ ਵਿੱਚ। ਇਸ ਦੌਰਾਨ ਹੋਰ ਕੁਝ?", "Show similar homes": "ਮਿਲਦੇ-ਜੁਲਦੇ ਘਰ ਵਿਖਾਓ", "Ask about fees": "ਫ਼ੀਸਾਂ ਬਾਰੇ ਪੁੱਛੋ", "Done — tap below and an advisor will reach out on WhatsApp.": "ਹੋ ਗਿਆ — ਹੇਠਾਂ ਟੈਪ ਕਰੋ ਅਤੇ ਇੱਕ ਸਲਾਹਕਾਰ ਵਟਸਐਪ ’ਤੇ ਸੰਪਰਕ ਕਰੇਗਾ।", "Buying property in Dubai can put you on the path to a renewable investor residence visa, and higher-value purchases can qualify for a long-term Golden Visa. The exact thresholds change from time to time — an advisor will confirm what your budget qualifies for.": "ਦੁਬਈ ਵਿੱਚ ਜਾਇਦਾਦ ਖਰੀਦਣਾ ਤੁਹਾਨੂੰ ਨਵਿਆਉਣਯੋਗ ਨਿਵੇਸ਼ਕ ਰਿਹਾਇਸ਼ੀ ਵੀਜ਼ੇ ਦੇ ਰਾਹ ’ਤੇ ਪਾ ਸਕਦਾ ਹੈ, ਅਤੇ ਵੱਧ-ਕੀਮਤ ਵਾਲੀਆਂ ਖਰੀਦਾਂ ਲੰਬੇ ਸਮੇਂ ਦੇ ਗੋਲਡਨ ਵੀਜ਼ੇ ਲਈ ਯੋਗ ਹੋ ਸਕਦੀਆਂ ਹਨ। ਸਹੀ ਹੱਦਾਂ ਸਮੇਂ-ਸਮੇਂ ’ਤੇ ਬਦਲਦੀਆਂ ਹਨ — ਇੱਕ ਸਲਾਹਕਾਰ ਪੁਸ਼ਟੀ ਕਰੇਗਾ ਕਿ ਤੁਹਾਡਾ ਬਜਟ ਕਿਸ ਲਈ ਯੋਗ ਹੈ।", "Beyond the price, budget for the Dubai Land Department transfer fee, an agency fee, and — if you're financing — bank arrangement fees. Your advisor gives you the exact all-in number for a specific unit.": "ਕੀਮਤ ਤੋਂ ਇਲਾਵਾ, ਦੁਬਈ ਲੈਂਡ ਵਿਭਾਗ ਦੀ ਟ੍ਰਾਂਸਫ਼ਰ ਫ਼ੀਸ, ਏਜੰਸੀ ਫ਼ੀਸ, ਅਤੇ — ਜੇ ਤੁਸੀਂ ਵਿੱਤ ਲੈ ਰਹੇ ਹੋ — ਬੈਂਕ ਦੀ ਪ੍ਰਬੰਧ ਫ਼ੀਸ ਲਈ ਵੀ ਬਜਟ ਰੱਖੋ। ਤੁਹਾਡਾ ਸਲਾਹਕਾਰ ਕਿਸੇ ਖ਼ਾਸ ਯੂਨਿਟ ਲਈ ਸਹੀ ਕੁੱਲ ਰਕਮ ਦੱਸੇਗਾ।", "Short version: shortlist and view, agree a price, sign an MOU with a deposit, then transfer at the Land Department. Off-plan runs on a payment plan through handover. An advisor walks you through each step.": "ਸੰਖੇਪ ਵਿੱਚ: ਸ਼ਾਰਟਲਿਸਟ ਬਣਾਓ ਤੇ ਵੇਖੋ, ਕੀਮਤ ’ਤੇ ਸਹਿਮਤ ਹੋਵੋ, ਇੱਕ ਡਿਪਾਜ਼ਿਟ ਨਾਲ MOU ’ਤੇ ਦਸਤਖ਼ਤ ਕਰੋ, ਫਿਰ ਲੈਂਡ ਵਿਭਾਗ ਵਿਖੇ ਟ੍ਰਾਂਸਫ਼ਰ ਕਰੋ। ਆਫ਼-ਪਲਾਨ ਹੈਂਡਓਵਰ ਤੱਕ ਭੁਗਤਾਨ ਯੋਜਨਾ ’ਤੇ ਚੱਲਦਾ ਹੈ। ਇੱਕ ਸਲਾਹਕਾਰ ਹਰ ਕਦਮ ’ਤੇ ਤੁਹਾਡੀ ਅਗਵਾਈ ਕਰੇਗਾ।", "Happy to help — what would you like to know?": "ਮਦਦ ਲਈ ਖ਼ੁਸ਼ ਹਾਂ — ਤੁਸੀਂ ਕੀ ਜਾਣਨਾ ਚਾਹੋਗੇ?", "Do I get residency if I buy?": "ਕੀ ਖਰੀਦਣ ’ਤੇ ਰਿਹਾਇਸ਼ ਮਿਲਦੀ ਹੈ?", "What are the fees?": "ਫ਼ੀਸਾਂ ਕੀ ਹਨ?", "How does buying work?": "ਖਰੀਦਦਾਰੀ ਕਿਵੇਂ ਹੁੰਦੀ ਹੈ?", "Actually, show me homes": "ਦਰਅਸਲ, ਮੈਨੂੰ ਘਰ ਵਿਖਾਓ", "Another question": "ਇੱਕ ਹੋਰ ਸਵਾਲ", "Show me homes": "ਮੈਨੂੰ ਘਰ ਵਿਖਾਓ", "Talk to an advisor": "ਸਲਾਹਕਾਰ ਨਾਲ ਗੱਲ ਕਰੋ", "bed": "ਬੈੱਡ", "Interested in": "ਰੁਚੀ"};
+  var T = function(en,ar,pa){ return LANG==='ar'?ar:(LANG==='pa'?(pa||PA_C[en]||en):en); };
+  function curPre(){ return LANG==='pa'?'ਦਿਰਹਮ ':'AED '; }
+  function bandTxt(b){ if(LANG!=='pa')return b; if(b==='Under 1M')return '1M ਤੋਂ ਘੱਟ'; if(b==='Under 100k')return '100k ਤੋਂ ਘੱਟ'; return b; }
+  function commLbl(n){ if(!n)return n; try{ for(var k in COMMUNITIES){ if(COMMUNITIES[k].name===n) return window.LF?window.LF(COMMUNITIES[k],'name'):n; } }catch(e){} return n; }
+  function intentLbl(v){ if(LANG!=='pa')return v; return v==='Buy'?'ਖਰੀਦ':v==='Rent'?'ਕਿਰਾਇਆ':v==='Off-plan'?'ਆਫ਼-ਪਲਾਨ':v; }
+  function pillKey(k){ if(LANG!=='pa')return k.charAt(0).toUpperCase()+k.slice(1); return {intent:'ਇਰਾਦਾ',budget:'ਬਜਟ',area:'ਇਲਾਕਾ',beds:'ਬੈੱਡਰੂਮ',timeline:'ਸਮਾਂ',residency:'ਰਿਹਾਇਸ਼'}[k]||k; }
   /* safety net: repair any stale mortgage-calculator links */
   document.querySelectorAll('a[href*="tools/mortgage-calculator"]').forEach(function(a){a.href=a.href.replace('tools/mortgage-calculator/','tools/').replace('tools/mortgage-calculator','tools/');});
   var STAR='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M98 50L55.73 52.37L75.46 75.46L52.37 55.73L50 98L47.63 55.73L24.54 75.46L44.27 52.37L2 50L44.27 47.63L24.54 24.54L47.63 44.27L50 2L52.37 44.27L75.46 24.54L55.73 47.63Z" fill="currentColor"/></svg>';
@@ -400,12 +411,12 @@ renderDrawer();
   function paintBrief(){
     var order=['intent','budget','area','beds','timeline','residency'];
     var pills=order.filter(function(k){return lead[k];}).map(function(k){
-      var v=lead[k]; if(k==='beds')v=(v==='4'?'4+':v)+' bed';
-      return '<span class="kc-pill"><b>'+k.charAt(0).toUpperCase()+k.slice(1)+'</b> '+v+'</span>';});
+      var v=lead[k]; if(k==='beds')v=(v==='4'?'4+':v)+' '+(LANG==='pa'?'ਬੈੱਡ':LANG==='ar'?'غرفة':'bed'); if(k==='area')v=commLbl(v); if(k==='intent')v=intentLbl(v);
+      return '<span class="kc-pill"><b>'+pillKey(k)+'</b> '+v+'</span>';});
     if(pills.length){briefEl.innerHTML=pills.join('');briefEl.classList.add('kc-show');}
     if(lead.intent&&(lead.budget||lead.area)){
-      var parts=[]; order.forEach(function(k){if(lead[k])parts.push(k.charAt(0).toUpperCase()+k.slice(1)+': '+(k==='beds'?(lead[k]==='4'?'4+':lead[k]):lead[k]));});
-      if(lead.refs.length)parts.push('Interested in: '+lead.refs.join(', '));
+      var parts=[]; order.forEach(function(k){if(lead[k]){var vv=(k==='beds'?(lead[k]==='4'?'4+':lead[k]):lead[k]); if(k==='area')vv=commLbl(vv); if(k==='intent')vv=intentLbl(vv); parts.push(pillKey(k)+': '+vv);}});
+      if(lead.refs.length)parts.push(T('Interested in','مهتم بـ')+': '+lead.refs.join(', '));
       var msg=T('Hi Kirpa — your concierge qualified me. ','مرحباً كِربا — أكمل مساعدكم بياناتي. ')+parts.join(' · ')+'. '+T('Can an advisor take it from here?','هل يمكن لمستشار المتابعة؟');
       handoffLink.href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
       if(handoffEl.style.display!=='block'){handoffEl.style.display='block';track('concierge_lead_ready',{});}
@@ -434,7 +445,7 @@ renderDrawer();
   function matchProjects(){ return _projects().filter(function(p){ return !lead.area||p.community===lead.area; }); }
 
   function listingCard(l){
-    var title=(RTL&&l.title_ar)?l.title_ar:l.title;
+    var title=(window.LF?window.LF(l,'title'):l.title);
     return '<div class="kc-card"><a class="kc-card-main" href="'+BASE+'properties/listing.html?ref='+l.ref+'">'
       +'<span class="kc-cref">'+l.ref+' · '+(l.status==='rent'?T('For Rent','للإيجار'):T('For Sale','للبيع'))+'</span>'
       +'<b>'+title+'</b><span class="kc-cplace">'+(l.building?l.building+', ':'')+l.community+'</span>'
@@ -477,14 +488,14 @@ renderDrawer();
       ? [['Any budget',0,0],['Under 100k',0,100000],['100–200k',100000,200000],['200–300k',200000,300000],['300k+',300000,0]]
       : [['Any budget',0,0],['Under 1M',0,1000000],['1–3M',1000000,3000000],['3–8M',3000000,8000000],['8M+',8000000,0]];
     botSay(T('What budget are we working with?','ما الميزانية التقريبية؟')+(lead.intent==='Rent'?T(' (per year)',' (سنوياً)'):''));
-    options(bands.map(function(b){return {label:(b[0]==='Any budget'?T('Any budget','أي ميزانية'):('AED '+b[0])),fn:function(){lead.budget=b[0]==='Any budget'?T('Any','أي'):('AED '+b[0]);lead.budgetRange=[b[1],b[2]];paintBrief();askArea();}};}));
+    options(bands.map(function(b){return {label:(b[0]==='Any budget'?T('Any budget','أي ميزانية'):(curPre()+bandTxt(b[0]))),fn:function(){lead.budget=b[0]==='Any budget'?T('Any','أي'):(curPre()+bandTxt(b[0]));lead.budgetRange=[b[1],b[2]];paintBrief();askArea();}};}));
   }
 
   function askArea(){
     var comms=communities(lead.intent).slice(0,6);
     botSay(T('Any particular area, or shall I show the best across Dubai?','هل لديك منطقة مفضّلة، أم أعرض الأفضل في دبي؟'));
     var opts=[{label:T('Anywhere in Dubai','أي مكان في دبي'),plain:true,fn:function(){lead.area=null;askBeds();}}];
-    comms.forEach(function(c){opts.push({label:c,fn:function(){lead.area=c;paintBrief();askBeds();}});});
+    comms.forEach(function(c){opts.push({label:commLbl(c),fn:function(){lead.area=c;paintBrief();askBeds();}});});
     options(opts);
   }
 
@@ -507,13 +518,13 @@ renderDrawer();
     }
     var show=matches.slice(0,4);
     lead.refs=isOff?[]:show.map(function(l){return l.ref;});
-    var line=T('Here'+(show.length>1?' are':"'s")+' '+show.length+' that fit','إليك '+show.length+' وحدة مناسبة')+(lead.area?' '+T('in','في')+' '+lead.area:'')+':';
+    var line=T('Here'+(show.length>1?' are':"'s")+' '+show.length+' that fit','إليك '+show.length+' وحدة مناسبة','ਇੱਥੇ '+show.length+' ਮਿਲਦੇ ਹਨ')+(lead.area?' '+T('in','في')+' '+commLbl(lead.area):'')+':';
     typing(function(){
       addMsg(line,'bot');
       var box=document.createElement('div'); box.className='kc-cards';
       box.innerHTML=show.map(isOff?projectCard:listingCard).join('');
       if(!isOff&&matches.length>show.length){
-        box.innerHTML+='<a class="kc-seeall" href="'+seeAllURL()+'">'+T('See all '+matches.length+' →','عرض كل '+matches.length+' ←')+'</a>';
+        box.innerHTML+='<a class="kc-seeall" href="'+seeAllURL()+'">'+T('See all '+matches.length+' →','عرض كل '+matches.length+' ←','ਸਾਰੇ '+matches.length+' ਵੇਖੋ →')+'</a>';
       }
       stream.appendChild(box); bindCards(box); stream.scrollTop=stream.scrollHeight;
       paintBrief();
