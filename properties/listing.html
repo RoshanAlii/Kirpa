@@ -187,14 +187,14 @@ function renderPage(){
     [t('lp.community','Community'),window.LF?window.LF(L,'community'):L.community],[t('lp.building','Building'),window.LF?window.LF(L,'building'):L.building],
     [t('lp.bedrooms','Bedrooms'),L.beds],[t('lp.bathrooms','Bathrooms'),L.baths],
     [t('lp.size','Size'),L.sqft.toLocaleString()+' '+t('label.sqft','sqft')],[t('lp.note','Note'),window.LF?window.LF(L,'extra'):L.extra],
-    [t('permit.for','Trakheesi permit'),L.permit]
+    [t('permit.for','Trakheesi permit'),L.permit||t('permit.req','On request')]
   ].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('');
   $('#featChips').innerHTML=(window.LF?window.LF(L,'features'):L.features).map(f=>'<span>'+f+'</span>').join('');
-  $('#lpSpecs').textContent=L.beds+' '+t('label.bed','bed')+' · '+L.baths+' '+(window.__lang==='pa'?'ਬਾਥ':window.__lang==='ar'?'حمام':'bath')+' · '+L.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+(window.LF?window.LF(L,'extra'):L.extra);
+  $('#lpSpecs').textContent=(typeof L.beds==='number'?L.beds+' '+t('label.bed','bed'):L.beds)+' · '+(typeof L.baths==='number'?L.baths+' '+(window.__lang==='pa'?'ਬਾਥ':window.__lang==='ar'?'حمام':'bath'):L.baths)+' · '+L.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+(window.LF?window.LF(L,'extra'):L.extra);
   $('#agentFace').classList.add(A.sky);$('#agentFace').textContent=A.name[0];
   $('#agentName').textContent=A.name;
   $('#agentRole').textContent=(window.__lang!=='en'?(A.role==='Team Leader, Sales'?t('role.tl'):A.role==='Consultant, Off-Plan'?t('role.consult'):A.role):A.role)+' · '+(window.LF?window.LF(A,'langs'):A.langs);
-  $('#lpPermit').textContent='Trakheesi '+L.permit+' · ORN 49046';
+  $('#lpPermit').textContent=(L.permit?'Trakheesi '+L.permit:'Permit no. on request')+' · ORN 49046';
   const ask='Hello '+A.name.split(' ')[0]+", I have a question about "+L.ref+' — '+L.title;
   $('#waBtn').href='https://wa.me/971543673063?text='+encodeURIComponent(ask);
   $('#mbarWa').href=$('#waBtn').href;
