@@ -33,8 +33,8 @@ function cardHTML(l){
     +'<h3><a href="'+url+'">'+title+'</a></h3>'
     +'<div class="place">'+(bld?bld+'، ':'')+comm+'</div>'
     +'<div class="price">'+fmt(l.aed)+l.per+' '+fxEcho(l.aed)+'</div>'
-    +'<div class="specs">'+l.beds+' '+t('label.bed','bed')+' · '+l.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+extra+'</div>'
-    +'<div class="foot"><span class="permit">'+t('permit.for','Trakheesi')+' '+l.permit+'</span>'
+    +'<div class="specs">'+(typeof l.beds==='number'?l.beds+' '+t('label.bed','bed'):l.beds)+' · '+l.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+extra+'</div>'
+    +'<div class="foot"><span class="permit">'+(l.permit?t('permit.for','Trakheesi')+' '+l.permit:t('permit.req','Permit no. on request'))+'</span>'
     +'<button class="link book" data-ref="'+l.ref+'">'+t('label.book','Book a viewing')+'</button></div>'
     +'</div></article>';
 }
