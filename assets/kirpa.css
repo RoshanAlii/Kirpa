@@ -95,7 +95,7 @@
   .hero .photo{position:absolute;inset:0}
   .hero .photo::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='hg'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23hg)' opacity='0.06'/%3E%3C/svg%3E") 0 0/160px 160px repeat,radial-gradient(96% 70% at 78% 92%,rgba(255,116,54,.44) 0%,rgba(255,116,54,0) 54%),linear-gradient(to top,rgba(8,10,18,.74) 0%,rgba(8,10,18,.30) 34%,rgba(8,10,18,.08) 60%,rgba(8,10,18,.36) 100%)}
   .hero-inner{position:relative;width:100%;max-width:1240px;margin:0 auto;padding:0 40px 88px;text-align:center}
-  .hero h1{font-family:var(--display);font-size:clamp(42px,6vw,86px);line-height:1.06;font-weight:400;max-width:16ch;margin-left:auto;margin-right:auto}
+  .hero h1{font-family:var(--display);font-size:clamp(42px,6vw,86px);line-height:1.06;font-weight:400;max-width:16ch;margin-left:auto;margin-right:auto;text-shadow:0 2px 34px rgba(0,0,0,.38)}
   .hero .eyebrow{color:var(--coral);display:block;margin-bottom:26px}
   /* structured search bar — always visible */
   .searchbox{margin:48px auto 0;max-width:860px}
@@ -113,15 +113,15 @@
   .searchbox.open .panel{display:block}
   .chips{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
   .hero .chips{justify-content:center}
-  .chips .lbl{font-size:12px;color:rgba(251,246,241,.65)}
+  .chips .lbl{font-size:12px;color:rgba(251,246,241,.82)}
   .chip{border:1px solid rgba(251,246,241,.45);border-radius:999px;background:rgba(251,246,241,.05);padding:8px 18px;font-size:12.5px;color:rgba(251,246,241,.9);cursor:pointer;transition:all .2s}
   .chip.on,.chip:hover{border-color:var(--coral);color:#fff;background:rgba(255,102,51,.22)}
   .sug{list-style:none}
   .sug li{display:flex;justify-content:space-between;padding:13px 22px;font-size:14px;cursor:pointer}
   .sug li:hover{background:var(--cream)}
   .sug li span{color:var(--stone);font-size:12px}
-  .hero-foot{position:relative;margin-top:26px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(251,246,241,.6)}
-  .hero-foot a{border-bottom:1px solid var(--coral);padding-bottom:2px;color:rgba(251,246,241,.85)}
+  .hero-foot{position:relative;margin-top:26px;display:flex;justify-content:center;flex-wrap:wrap;gap:10px 28px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(251,246,241,.82);text-shadow:0 1px 12px rgba(0,0,0,.45)}
+  .hero-foot a{border-bottom:1px solid var(--coral);padding-bottom:2px;color:#fff}
 
   /* Sections */
   section{padding:130px 0}
@@ -564,7 +564,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 
 /* hero fuses into the page gradient */
 .hero{position:relative}
-.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,rgba(236,225,211,0) 0%,rgba(236,225,211,.42) 72%,#ECE1D3 100%);pointer-events:none;z-index:1}
+.hero::after{display:none}
 .hero-inner{z-index:2}
 
   /* ============================================================
