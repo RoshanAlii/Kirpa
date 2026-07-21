@@ -38,12 +38,27 @@ function cardHTML(l){
     +'<button class="link book" data-ref="'+l.ref+'">'+t('label.book','Book a viewing')+'</button></div>'
     +'</div></article>';
 }
+/* Blur-up: fades sharpness in as each listing photo loads. Defensive by design —
+   cached/complete images go straight to sharp (no blur flash), and every blurred
+   image has load+error listeners plus a 6s safety, so a photo can never stay stuck blurred. */
+function blurUp(scope){
+  (scope||document).querySelectorAll('.ph-img:not(.bu)').forEach(function(img){
+    img.classList.add('bu');
+    if(img.complete && img.naturalWidth){ img.classList.add('loaded'); return; }
+    img.classList.add('blurload');
+    var done=function(){ img.classList.add('loaded'); };
+    img.addEventListener('load',done,{once:true});
+    img.addEventListener('error',done,{once:true});
+    setTimeout(done,6000);
+  });
+}
 function bindCards(scope){
   (scope||document).querySelectorAll('.fav').forEach(b=>b.onclick=()=>toggleFav(b.dataset.ref));
   (scope||document).querySelectorAll('.book').forEach(b=>b.onclick=()=>{
     const l=LISTINGS.find(x=>x.ref===b.dataset.ref);
     openSheet('viewing',l.ref,l.ref+' — '+l.title);
   });
+  blurUp(scope);
 }
 
 /* ---------- shortlist ---------- */
