@@ -234,7 +234,7 @@
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 function renderRes(){
-  $('#resGrid').innerHTML=LISTINGS.map(cardHTML).join('');
+  $('#resGrid').innerHTML=LISTINGS.slice(0,9).map(cardHTML).join('');
   bindCards($('#resGrid'));
   document.querySelectorAll('#offplan .money').forEach(el=>{el.textContent=fmt(+el.dataset.aed)});
 }
