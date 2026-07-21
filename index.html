@@ -13,6 +13,7 @@
 <meta property="og:url" content="https://roshanalii.github.io/Kirpa/">
 <meta property="og:image" content="https://roshanalii.github.io/Kirpa/assets/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/kirpa.css?v=18">
@@ -313,6 +314,8 @@ window.COMMAR={};Object.values(COMMUNITIES).forEach(c=>{COMMAR[c.name]=c.name_ar
 window.COMMLOC={};Object.values(COMMUNITIES).forEach(c=>{COMMLOC[c.name]=window.LF?window.LF(c,'name'):c.name;});
 window.onLangReady=()=>{renderExplore(document.querySelector('.tab.on').dataset.lens);renderRes();};
 renderExplore('comm');renderRes();
+/* failsafe: never leave a section invisible — reveal anything the observer hasn't reached after 2.5s */
+setTimeout(function(){document.querySelectorAll('.rv:not(.in)').forEach(function(e){e.classList.add('in')});},2500);
 </script>
 </body>
 </html>
