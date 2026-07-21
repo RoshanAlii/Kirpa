@@ -20,11 +20,11 @@ function fxEcho(aed){
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
 function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
-function L(l,f){return window.LF?window.LF(l,f):l[f];}
+function LF2(l,f){return window.LF?window.LF(l,f):l[f];}
 function cardHTML(l){
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
-  const title=L(l,'title'),comm=L(l,'community'),bld=L(l,'building'),extra=L(l,'extra');
+  const title=LF2(l,'title'),comm=LF2(l,'community'),bld=LF2(l,'building'),extra=LF2(l,'extra');
   return '<article class="res">'
     +'<a href="'+url+'"><div class="photo '+l.skies[0]+'">'+phImg(l.imgs&&l.imgs[0],title)+'<span class="credit">'+l.ref+'</span></div></a>'
     +'<button class="fav '+(on?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.ref+'">'+(on?'♥':'♡')+'</button>'
