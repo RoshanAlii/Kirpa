@@ -564,3 +564,43 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .hero{position:relative}
 .hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:200px;background:linear-gradient(to bottom,rgba(236,225,211,0) 0%,rgba(236,225,211,.55) 62%,#ECE1D3 100%);pointer-events:none;z-index:1}
 .hero-inner{z-index:2}
+
+  /* ============================================================
+     TEAM — homepage advisor marquee + /team page  (added Jul 2026)
+     Coral stays reserved for brand/interactive; avatars use muted
+     tints set inline from TEAM_TINTS in assets/team.js.
+     ============================================================ */
+  .adv-marquee{margin-top:40px}
+  .adv-mq-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);font-weight:500;margin-bottom:16px}
+  .mq-mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+  .mq-mask + .mq-mask{margin-top:12px}
+  .mq-track{display:flex;gap:12px;width:max-content;will-change:transform}
+  .mq-left{animation:mq-l 60s linear infinite}
+  .mq-right{animation:mq-r 60s linear infinite}
+  .mq-mask:hover .mq-track,.mq-track:focus-within{animation-play-state:paused}
+  @keyframes mq-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes mq-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  .mq-card{background:var(--paper);border:1px solid var(--sand);border-radius:12px;padding:12px 16px 12px 12px;display:flex;align-items:center;gap:11px;flex:0 0 auto}
+  .mq-av{width:38px;height:38px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:15px}
+  .mq-card b{font-size:13.5px;font-weight:600;display:block;white-space:nowrap}
+  .mq-card span{font-size:11.5px;color:var(--stone);display:block;white-space:nowrap}
+  @media(prefers-reduced-motion:reduce){.mq-left,.mq-right{animation:none}.mq-mask{-webkit-mask-image:none;mask-image:none}.mq-track{flex-wrap:wrap;width:auto}}
+
+  /* /team page */
+  .team-head{padding:150px 0 0}
+  .team-intro{max-width:620px;margin-top:16px;color:var(--stone);font-size:16px}
+  .team-filters{display:flex;flex-wrap:wrap;gap:10px;margin:40px 0 8px}
+  .tf{border:1px solid var(--sand);background:var(--paper);color:var(--stone);border-radius:999px;padding:9px 18px;font-size:12px;letter-spacing:.06em;font-weight:500;cursor:pointer;transition:all .2s;font-family:var(--body)}
+  .tf:hover{border-color:var(--coral);color:var(--ink)}
+  .tf.on{background:var(--coral);border-color:var(--coral);color:#fff}
+  .team-group{margin-top:48px}
+  .team-group h3{font-family:var(--display);font-weight:400;font-size:22px;margin-bottom:22px}
+  .team-group h3 em{color:var(--stone);font-style:normal;font-size:15px}
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+  .tm-card{background:var(--paper);border:1px solid var(--sand);border-radius:14px;padding:20px 18px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;transition:box-shadow .2s,transform .2s}
+  .tm-card:hover{box-shadow:0 14px 34px rgba(23,20,18,.10);transform:translateY(-2px)}
+  .tm-av{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:18px;margin-bottom:10px}
+  .tm-card b{font-size:15px;font-weight:600}
+  .tm-card > span{font-size:12.5px;color:var(--stone)}
+  .tm-book{margin-top:12px}
+  @media(max-width:640px){.team-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.team-head{padding:120px 0 0}}
