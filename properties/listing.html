@@ -11,11 +11,11 @@
 <meta property="og:title" content="Residence — Kirpa Properties">
 <meta property="og:description" content="A RERA-registered Kirpa Properties residence in Dubai. Book a viewing on WhatsApp.">
 <meta property="og:url" content="https://roshanalii.github.io/Kirpa/properties/listing.html">
-<meta property="og:image" content="https://roshanalii.github.io/Kirpa/assets/og-cover.jpg">
+<meta property="og:image" content="https://roshanalii.github.io/Kirpa/assets/og-cover-premium.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=19">
+<link rel="stylesheet" href="../assets/kirpa.css?v=24">
 </head>
 <body>
 
@@ -59,6 +59,10 @@
         <div class="photo" id="g2"></div>
       </div>
     </div>
+    <div class="gallery-note">
+      <span>Representative photography is shown while original listing media is being verified.</span>
+      <a id="mediaRequest" href="#" target="_blank" rel="noopener">Request verified media + floor plan ↗</a>
+    </div>
   </div>
 </div>
 
@@ -76,6 +80,14 @@
     <div class="lp-sec">
       <h2 data-i18n="lp.features">Features</h2>
       <div class="feat-chips" id="featChips"></div>
+    </div>
+    <div class="lp-sec diligence">
+      <h2>Before you view</h2>
+      <div class="diligence-grid">
+        <article><span>01</span><b>Original media</b><p>We share the latest verified photos or a live video walkthrough before you travel.</p></article>
+        <article><span>02</span><b>Property documents</b><p>Request the floor plan, title or Oqood status, service charges and permit details.</p></article>
+        <article><span>03</span><b>True ownership cost</b><p>Ask for a clear estimate of transfer, agency, mortgage and recurring ownership costs.</p></article>
+      </div>
     </div>
   </div>
 
@@ -135,7 +147,8 @@
 <script>window.BASE='../';window.HEADER_SOLID=true;</script>
 <script src="../assets/i18n.js?v=14"></script>
 <script src="../assets/listings.js?v=14"></script>
-<script src="../assets/kirpa.js?v=20"></script>
+<script src="../assets/kirpa.js?v=21"></script>
+<script src="../assets/premium.js?v=1"></script>
 <script>
 /* ---------- resolve listing ---------- */
 const ref=(new URLSearchParams(location.search).get('ref')||'KP-104').toUpperCase();
@@ -178,9 +191,10 @@ function renderPage(){
   $('#lpPlace').textContent=(window.__lang==='ar'?((L.building_ar?L.building_ar+'، ':'')+(L.community_ar||L.community)+'، دبي'):(window.__lang==='pa'?(((L.building_pa||L.building)?(L.building_pa||L.building)+', ':'')+(L.community_pa||L.community)+', ਦੁਬਈ'):((L.building?L.building+', ':'')+L.community+', Dubai')));
   ['g0','g1','g2'].forEach((id,i)=>{
     const el=$('#'+id);el.classList.add(L.skies[i%L.skies.length]);
-    if(L.imgs&&L.imgs[i])el.insertAdjacentHTML('afterbegin',phImg(L.imgs[i],L.title));
+    el.insertAdjacentHTML('afterbegin',phImg(listingImage(L,i),L.title+' — representative photography'));
+    if(i===0)el.style.viewTransitionName=vtName(L.ref);
   });
-  $('#gCredit').textContent=L.ref;
+  $('#gCredit').textContent='Representative photography · '+cardRef(L.ref);
   $('#lpDesc').innerHTML=(window.LF?window.LF(L,'desc'):L.desc).map(p=>'<p>'+p+'</p>').join('');
   $('#factsBody').innerHTML=[
     [t('lp.ref','Reference'),L.ref],[t('lp.status','Status'),L.status==='rent'?t('label.forrent','For Rent'):t('label.forsale','For Sale')],
@@ -197,11 +211,17 @@ function renderPage(){
   $('#lpPermit').textContent=(L.permit?'Trakheesi '+L.permit:'Permit no. on request')+' · ORN 49046';
   const ask='Hello '+A.name.split(' ')[0]+", I have a question about "+L.ref+' — '+L.title;
   $('#waBtn').href='https://wa.me/971543673063?text='+encodeURIComponent(ask);
+  $('#mediaRequest').href='https://wa.me/971543673063?text='+encodeURIComponent('Please send the verified original media and floor plan for '+L.ref+' — '+L.title);
   $('#mbarWa').href=$('#waBtn').href;
   money();
   favState();
-  $('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');
+  $('#simGrid').innerHTML=similarListings().map(cardHTML).join('');
   bindCards($('#simGrid'));
+}
+function similarListings(){
+  return LISTINGS.filter(x=>x.ref!==L.ref&&x.status===L.status)
+    .sort((a,b)=>(b.community===L.community)-(a.community===L.community)||(b.type===L.type)-(a.type===L.type)||Math.abs(a.aed-L.aed)-Math.abs(b.aed-L.aed))
+    .slice(0,6);
 }
 function favState(){
   const on=favs.includes(L.ref);
@@ -209,8 +229,8 @@ function favState(){
 }
 $('#lpFav').onclick=()=>toggleFav(L.ref);
 $('#bookBtn').onclick=()=>openSheet('viewing',L.ref,L.ref+' — '+L.title);
-window.onCurrencyChanged=()=>{money();$('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');bindCards($('#simGrid'))};
-window.onFavsChanged=()=>{favState();$('#simGrid').innerHTML=LISTINGS.filter(x=>x.ref!==L.ref).map(cardHTML).join('');bindCards($('#simGrid'))};
+window.onCurrencyChanged=()=>{money();$('#simGrid').innerHTML=similarListings().map(cardHTML).join('');bindCards($('#simGrid'))};
+window.onFavsChanged=()=>{favState();$('#simGrid').innerHTML=similarListings().map(cardHTML).join('');bindCards($('#simGrid'))};
 renderPage();
 </script>
 </body>

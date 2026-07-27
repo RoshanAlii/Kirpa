@@ -11,12 +11,12 @@
 <meta property="og:title" content="Kirpa Properties — Dubai Real Estate">
 <meta property="og:description" content="RERA-registered Dubai brokerage (ORN 49046). Off-plan, sales and rentals across Dubai’s finest communities.">
 <meta property="og:url" content="https://roshanalii.github.io/Kirpa/">
-<meta property="og:image" content="https://roshanalii.github.io/Kirpa/assets/og-cover.jpg">
+<meta property="og:image" content="https://roshanalii.github.io/Kirpa/assets/og-cover-premium.png">
 <meta name="twitter:card" content="summary_large_image">
 <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=23">
+<link rel="stylesheet" href="assets/kirpa.css?v=24">
 </head>
 <body>
 
@@ -45,8 +45,9 @@
 <section class="hero" style="padding:0">
   <div class="photo sky-a"><img class="ph-img" id="heroImg" src="https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=2200&h=1300&crop=entropy&q=72" alt="Dubai skyline at night with Burj Khalifa" fetchpriority="high" onerror="this.remove()"></div>
   <div class="hero-inner">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Dubai · Built on Loyalty and Trust</span>
-    <h1 data-i18n="hero.title">Homes of rare standing in Dubai's finest communities</h1>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Private brokerage · Dubai</span>
+    <h1 data-i18n="hero.title">Dubai property, considered differently.</h1>
+    <p class="hero-copy">Curated homes, clear market intelligence and an advisor who stays with you from first question to final signature.</p>
 
     <div class="searchbox" id="searchbox">
       <div class="barwrap">
@@ -77,6 +78,17 @@
       <span><span data-i18n="hero.owner">Owner? What is your property worth?</span></span>
       <span data-i18n="hero.trustline">RERA-registered · ORN 49046 · Business Bay, Dubai</span>
     </div>
+    <a class="hero-scroll" href="#explore"><span>Explore</span><i aria-hidden="true"></i></a>
+  </div>
+</section>
+
+<!-- VERIFIED PROOF -->
+<section class="trust-rail" aria-label="Kirpa credentials">
+  <div class="wrap trust-grid">
+    <article><span>Registered brokerage</span><strong>ORN 49046</strong><small>Licensed by RERA, Dubai</small></article>
+    <article><span>Recorded inventory</span><strong id="inventoryCount">—</strong><small>Sale, rent and commercial records</small></article>
+    <article><span>Response target</span><strong>&lt;15 min</strong><small>During business hours on WhatsApp</small></article>
+    <a href="https://www.google.com/search?q=Kirpa+Properties+Dubai+reviews" target="_blank" rel="noopener"><span>Public reputation</span><strong>5.0</strong><small>Google rating · verify live ↗</small></a>
   </div>
 </section>
 
@@ -93,6 +105,25 @@
       </div>
     </div>
   </div>
+  <div class="wrap">
+    <div class="dubai-atlas rv">
+      <div class="atlas-map" aria-label="Interactive Dubai community navigator">
+        <span class="atlas-axis axis-a"></span><span class="atlas-axis axis-b"></span><span class="atlas-coast"></span>
+        <button class="atlas-point point-palm" data-community="palm-jumeirah" aria-pressed="false"><i></i><span>Palm Jumeirah</span></button>
+        <button class="atlas-point point-marina" data-community="dubai-marina" aria-pressed="false"><i></i><span>Dubai Marina</span></button>
+        <button class="atlas-point point-hills" data-community="dubai-hills" aria-pressed="false"><i></i><span>Dubai Hills</span></button>
+        <button class="atlas-point point-downtown" data-community="downtown" aria-pressed="true"><i></i><span>Downtown</span></button>
+        <small>Community navigator · not to scale</small>
+      </div>
+      <div class="atlas-panel">
+        <span class="eyebrow">Community intelligence</span>
+        <h3 data-atlas-name tabindex="-1">Downtown Dubai</h3>
+        <p data-atlas-summary></p>
+        <div class="atlas-stats" data-atlas-stats></div>
+        <a class="link" data-atlas-link href="communities/guide.html?c=downtown">Open community guide</a>
+      </div>
+    </div>
+  </div>
   <div class="wrap"><div class="explore-grid rv" id="exploreGrid"></div></div>
 </section>
 
@@ -100,8 +131,13 @@
 <section>
   <div class="wrap">
     <div class="sec-head rv">
-      <div><span class="eyebrow" data-i18n="sec.residences">Selected Residences</span><h2 data-i18n="sec.residences.h">A small number of homes, presented with care.</h2></div>
-      <a class="link" href="buy/" data-i18n="sec.viewall">View all</a>
+      <div><span class="eyebrow" data-i18n="sec.residences">The private edit</span><h2 data-i18n="sec.residences.h">A focused collection, chosen for a reason.</h2></div>
+      <div class="collection-tabs" aria-label="Property collection">
+        <button class="collection-tab on" data-collection="prime">Prime</button>
+        <button class="collection-tab" data-collection="investment">Investment</button>
+        <button class="collection-tab" data-collection="villas">Villas</button>
+        <a class="link" href="buy/" data-i18n="sec.viewall">View all</a>
+      </div>
     </div>
     <div class="res-grid rv" id="resGrid"></div>
   </div>
@@ -120,7 +156,7 @@
         <span class="eyebrow">Jumeirah Village Circle</span>
         <h3>The Orchard Place</h3>
         <table class="op-table">
-          <tr><td data-i18n="op.developer">Developer</td><td data-i18n="op.track">Name — track record ↗</td></tr>
+          <tr><td data-i18n="op.developer">Developer</td><td data-i18n="op.track">Details and track record on request</td></tr>
           <tr><td data-i18n="op.from">From</td><td class="money" data-aed="1900000">AED 1,900,000</td></tr>
           <tr><td data-i18n="op.plan">Payment plan</td><td>60 / 40</td></tr>
           <tr><td data-i18n="op.handover">Handover</td><td>Q4 2027</td></tr>
@@ -152,32 +188,41 @@
     <div class="sec-head rv" id="advisors">
       <div><span class="eyebrow" data-i18n="sec.advisors">Your Advisors</span><h2 data-i18n="sec.advisors.h">The people you'll actually talk to.</h2></div>
     </div>
-    <div class="advisors rv">
-      <div class="adv"><div class="face photo sky-b">M</div><div><b>Manpreet Kaur</b><span data-i18n="role.founder">Founder / CEO</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Manpreet (Founder / CEO)')" data-i18n="label.call">Book a call</button></div></div>
-      <div class="adv"><div class="face photo sky-c">JC</div><div><b>Dr. Jai Chatha</b><span data-i18n="role.md">Founder / Managing Director</span><br><button class="link" style="margin-top:6px" onclick="openSheet('call','','a call with Dr. Jai Chatha (Managing Director)')" data-i18n="label.call">Book a call</button></div></div>
-    </div>
-    <div class="adv-marquee rv" aria-label="Kirpa consultants and team">
-      <div class="adv-mq-label"><span data-i18n="advisors.rest">+ 42 consultants &amp; team</span> · <span data-i18n="advisors.pause">hover to pause</span></div>
-      <div class="mq-mask"><div class="mq-track mq-left" id="advMarqueeA"></div></div>
-      <div class="mq-mask"><div class="mq-track mq-right" id="advMarqueeB"></div></div>
-      <a class="link" href="team.html" style="margin-top:22px;display:inline-block" data-i18n="advisors.all">Meet the full team →</a>
+    <div class="advisor-stage rv">
+      <article class="lead-advisor">
+        <div class="advisor-monogram"><span>MK</span><i>Founder</i></div>
+        <div><span class="eyebrow">Leadership</span><h3>Manpreet Kaur</h3><p data-i18n="role.founder">Founder / CEO</p><button class="link" onclick="openSheet('call','','a call with Manpreet (Founder / CEO)')" data-i18n="label.call">Book a private call</button></div>
+      </article>
+      <article class="lead-advisor">
+        <div class="advisor-monogram alt"><span>JC</span><i>Director</i></div>
+        <div><span class="eyebrow">Leadership</span><h3>Dr. Jai Chatha</h3><p data-i18n="role.md">Founder / Managing Director</p><button class="link" onclick="openSheet('call','','a call with Dr. Jai Chatha (Managing Director)')" data-i18n="label.call">Book a private call</button></div>
+      </article>
+      <aside class="advisor-promise">
+        <span class="eyebrow">The Kirpa standard</span>
+        <h3>One brief. One accountable advisor.</h3>
+        <p>Your search is carried by a named specialist—not passed around a sales floor.</p>
+        <a class="link" href="team.html" data-i18n="advisors.all">Meet the full team →</a>
+      </aside>
     </div>
     <div class="proof-row rv">
-      <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Dubai+reviews" target="_blank" rel="noopener"><b>★ 5.0</b><span class="sub" data-i18n="proof.reviews">Google reviews — see for yourself ↗</span></a>
-      <div class="proof"><b>&lt;15 min</b><span class="sub" data-i18n="proof.resp">First-response target on WhatsApp, business hours</span></div>
-      <a class="proof" href="https://www.google.com/search?q=Kirpa+Properties+Property+Finder" target="_blank" rel="noopener"><b>93 listings</b><span class="sub" data-i18n="proof.pf2">Live on Property Finder · 10 agents ↗</span></a>
+      <div class="proof"><b>Secondary</b><span class="sub">Resale and leasing specialists</span></div>
+      <div class="proof"><b>Off-plan</b><span class="sub">Developer and payment-plan guidance</span></div>
+      <div class="proof"><b>Commercial</b><span class="sub">Offices, retail and portfolio advice</span></div>
     </div>
   </div>
 </section>
 
-<!-- JOURNAL STRIP -->
-<section style="padding-top:0">
+<!-- MARKET NOTES -->
+<section class="insights" style="padding-top:0">
   <div class="wrap">
-    <div class="journal-strip rv">
-      <div class="j"><span class="eyebrow" data-i18n="j.market">Market</span><b data-i18n="j.m.t">July market update: prices, inventory, meaning</b></div>
-      <div class="j"><span class="eyebrow" data-i18n="j.buying">Buying</span><b data-i18n="j.b.t">Buying in Dubai as a non-resident</b></div>
-      <div class="j"><span class="eyebrow" data-i18n="j.residency">Residency</span><b data-i18n="j.r.t">The Golden Visa through property, 2026</b></div>
-      <span class="small" style="color:var(--stone);font-size:12px;align-self:center"><span data-i18n="label.comingsoon">The Journal — coming soon</span></span>
+    <div class="sec-head rv">
+      <div><span class="eyebrow">Kirpa intelligence</span><h2>Useful context before a viewing.</h2></div>
+      <a class="link" href="https://wa.me/971543673063?text=Please%20send%20me%20Kirpa%27s%20latest%20Dubai%20property%20market%20brief" target="_blank" rel="noopener">Request the latest brief</a>
+    </div>
+    <div class="insight-grid rv">
+      <article><span>01 · Market</span><h3>How to read Dubai inventory without chasing headlines</h3><p>Separate launch supply, resale liquidity and genuinely scarce homes before comparing price.</p></article>
+      <article><span>02 · Buying</span><h3>A clear route for non-resident buyers</h3><p>From shortlist and due diligence to MOU, transfer and ownership costs—mapped before you commit.</p></article>
+      <article><span>03 · Residency</span><h3>Property, residency and the questions to ask first</h3><p>Eligibility depends on current rules and the property structure. We verify the route before advising.</p></article>
     </div>
   </div>
 </section>
@@ -236,15 +281,31 @@
 <script>window.BASE='';</script>
 <script src="assets/i18n.js?v=14"></script>
 <script src="assets/listings.js?v=14"></script>
-<script src="assets/kirpa.js?v=20"></script>
+<script src="assets/kirpa.js?v=21"></script>
+<script src="assets/premium.js?v=1"></script>
 <script src="assets/team.js?v=1"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
+let homeCollection='prime';
+function collectionPool(mode){
+  const sale=LISTINGS.filter(l=>l.status==='sale'&&l.segment==='residential');
+  if(mode==='investment'){
+    return sale.filter(l=>l.aed<=3000000).sort((a,b)=>a.aed-b.aed||b.sqft-a.sqft).slice(0,6);
+  }
+  if(mode==='villas'){
+    return sale.filter(l=>l.type==='Villa'||l.type==='Townhouse').sort((a,b)=>b.aed-a.aed).slice(0,6);
+  }
+  return sale.slice().sort((a,b)=>b.aed-a.aed).slice(0,6);
+}
 function renderRes(){
-  $('#resGrid').innerHTML=LISTINGS.slice(0,9).map(cardHTML).join('');
+  $('#resGrid').innerHTML=collectionPool(homeCollection).map(cardHTML).join('');
   bindCards($('#resGrid'));
   document.querySelectorAll('#offplan .money').forEach(el=>{el.textContent=fmt(+el.dataset.aed)});
 }
+document.querySelectorAll('.collection-tab').forEach(tab=>tab.addEventListener('click',()=>{
+  document.querySelectorAll('.collection-tab').forEach(item=>item.classList.remove('on'));
+  tab.classList.add('on');homeCollection=tab.dataset.collection;renderRes();
+}));
 function renderExplore(lens){
   $('#exploreGrid').innerHTML=LENSES[lens].map(row=>{const r=row;
     const nm=(window.COMMLOC&&COMMLOC[r[0]])?COMMLOC[r[0]]:r[0];

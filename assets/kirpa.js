@@ -20,22 +20,59 @@ function fxEcho(aed){
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
 function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
+const MEDIA_POOLS={
+  apartment:[
+    'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&h=1000&q=76'
+  ],
+  villa:[
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1400&h=1000&q=76'
+  ],
+  commercial:[
+    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&h=1000&q=76',
+    'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&h=1000&q=76'
+  ]
+};
+function refHash(ref){
+  return String(ref||'').split('').reduce((n,c)=>((n*31)+c.charCodeAt(0))>>>0,7);
+}
+function listingImage(l,index){
+  index=index||0;
+  const type=String(l.type||l.extra||'').toLowerCase();
+  const key=/office|retail|commercial/.test(type)?'commercial':(/villa|townhouse/.test(type)?'villa':'apartment');
+  const pool=MEDIA_POOLS[key];
+  return pool[(refHash(l.ref)+index)%pool.length]||((l.imgs||[])[index]||'');
+}
+function cardRef(ref){
+  ref=String(ref||'');
+  return ref.length>15?'Ref · …'+ref.slice(-6):'Ref · '+ref;
+}
+function vtName(ref){return 'kirpa-'+refHash(ref).toString(36)}
 function LF2(l,f){return window.LF?window.LF(l,f):l[f];}
 function cardHTML(l){
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
   const title=LF2(l,'title'),comm=LF2(l,'community'),bld=LF2(l,'building'),extra=LF2(l,'extra');
+  const status=l.status==='rent'?t('label.forrent','For Rent'):t('label.forsale','For Sale');
+  const media=listingImage(l,0);
   return '<article class="res">'
-    +'<a href="'+url+'"><div class="photo '+l.skies[0]+'">'+phImg(l.imgs&&l.imgs[0],title)+'<span class="credit">'+l.ref+'</span></div></a>'
+    +'<a class="res-media" href="'+url+'" aria-label="'+title+'"><div class="photo '+l.skies[0]+'" style="view-transition-name:'+vtName(l.ref)+'">'+phImg(media,title+' — representative photography')+'<div class="res-media-meta"><span>'+status+'</span><span>Representative image</span></div></div></a>'
     +'<button class="fav '+(on?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.ref+'">'+(on?'♥':'♡')+'</button>'
     +'<div class="res-pad">'
-    +'<span class="ref">'+l.ref+' · '+(l.status==='rent'?t('label.forrent','For Rent'):t('label.forsale','For Sale'))+'</span>'
+    +'<span class="ref">'+comm+' · '+extra+'</span>'
     +'<h3><a href="'+url+'">'+title+'</a></h3>'
-    +'<div class="place">'+(bld?bld+'، ':'')+comm+'</div>'
+    +'<div class="place">'+(bld?bld+' · '+comm:comm)+'</div>'
     +'<div class="price">'+fmt(l.aed)+l.per+' '+fxEcho(l.aed)+'</div>'
     +'<div class="specs">'+(typeof l.beds==='number'?l.beds+' '+t('label.bed','bed'):l.beds)+' · '+l.sqft.toLocaleString()+' '+t('label.sqft','sqft')+' · '+extra+'</div>'
-    +'<div class="foot"><span class="permit">'+(l.permit?t('permit.for','Trakheesi')+' '+l.permit:t('permit.req','Permit no. on request'))+'</span>'
-    +'<button class="link book" data-ref="'+l.ref+'">'+t('label.book','Book a viewing')+'</button></div>'
+    +'<div class="foot"><span class="permit">'+cardRef(l.ref)+'</span>'
+    +'<a class="res-arrow" href="'+url+'">View residence <span aria-hidden="true">↗</span></a></div>'
     +'</div></article>';
 }
 /* Blur-up: fades sharpness in as each listing photo loads. Defensive by design —
@@ -176,7 +213,8 @@ $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('#sheet').cl
   +'<a href="'+B+'sell/" data-i18n="nav.sell">Sell</a>'
   +'<a href="'+B+'index.html" data-i18n="nav.home">Home</a>'
   +'</nav>'
-  +'<div class="menu-foot"><button class="switch lang" style="background:none;border:1px solid #3a352f;border-radius:999px;padding:8px 16px;color:var(--cream)">EN · ਪੰਜਾਬੀ · हिन्दी · العربية</button><span>ORN 49046 · Dubai</span></div>'
+  +'<div class="menu-tools"><button class="switch lang">EN · ਪੰਜਾਬੀ · हिन्दी · العربية</button><button class="menu-currency" id="menuCurrency">Currency · '+cur+'</button><a href="https://wa.me/'+WA+'" target="_blank" rel="noopener">Speak to an advisor ↗</a></div>'
+  +'<div class="menu-foot"><span>RERA registered</span><span>ORN 49046 · Dubai</span></div>'
   +'</div>');
   const m=$('#menu');
   if($('#burger'))$('#burger').onclick=()=>m.classList.add('open');
@@ -633,13 +671,7 @@ renderDrawer();
      video = short muted .mp4 path in your repo (plays on hover)       [optional]
      Put media in an assets/reels/ folder. A tile works with just a link
      (branded placeholder); add poster for a thumbnail; add video for hover-play. */
-  var REELS=[
-    {link:SOCIALS.instagram, poster:'', video:''},
-    {link:SOCIALS.instagram, poster:'', video:''},
-    {link:SOCIALS.instagram, poster:'', video:''},
-    {link:SOCIALS.instagram, poster:'', video:''},
-    {link:SOCIALS.instagram, poster:'', video:''}
-  ];
+  var REELS=[];
 
   var ICON={
     instagram:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>',
@@ -684,8 +716,8 @@ renderDrawer();
   band.innerHTML=
     '<div class="kr-wrap">'
     +'<div class="kr-head"><div>'
-    +'<span class="kr-eyebrow">'+tt('Follow the journey','تابعوا الرحلة')+'</span>'
-    +'<h3>'+tt("Dubai's most-followed agency — on every feed","الوكالة الأكثر متابعة في دبي — على كل منصة")+'</h3>'
+    +'<span class="kr-eyebrow">'+tt('The Kirpa perspective','منظور كِربا')+'</span>'
+    +'<h3>'+tt("Market intelligence, new launches and life in Dubai","رؤى السوق والإطلاقات الجديدة والحياة في دبي")+'</h3>'
     +'</div><div class="kr-socials">'
     +'<a href="'+SOCIALS.instagram+'" target="_blank" rel="noopener" aria-label="Instagram">'+ICON.instagram+'</a>'
     +'<a href="'+SOCIALS.tiktok+'" target="_blank" rel="noopener" aria-label="TikTok">'+ICON.tiktok+'</a>'
@@ -693,7 +725,7 @@ renderDrawer();
     +'<a href="'+SOCIALS.facebook+'" target="_blank" rel="noopener" aria-label="Facebook">'+ICON.facebook+'</a>'
     +'<a href="'+SOCIALS.whatsapp+'" target="_blank" rel="noopener" aria-label="WhatsApp">'+ICON.whatsapp+'</a>'
     +'</div></div>'
-    +'<div class="kr-reels">'+REELS.map(reelHTML).join('')+'</div>'
+    +(REELS.length?'<div class="kr-reels">'+REELS.map(reelHTML).join('')+'</div>':'<div class="kr-signal"><span>01 · Market notes</span><span>02 · New-launch tours</span><span>03 · Advisor conversations</span><a href="'+SOCIALS.instagram+'" target="_blank" rel="noopener">Follow on Instagram ↗</a></div>')
     +'</div>';
 
   var footer=document.querySelector('footer');

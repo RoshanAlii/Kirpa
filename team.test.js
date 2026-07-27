@@ -9,6 +9,7 @@ function ok(name, cond){ (cond ? (pass++, console.log('  PASS  '+name)) : (fail+
 const idx  = fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
 const team = fs.readFileSync(path.join(__dirname,'team.html'),'utf8');
 const css  = fs.readFileSync(path.join(__dirname,'assets/kirpa.css'),'utf8');
+const premium = fs.readFileSync(path.join(__dirname,'assets/premium.js'),'utf8');
 
 console.log('\n— roster data —');
 ok('44 people total', TEAM.length === 44);
@@ -28,16 +29,16 @@ ok('coral not used as an avatar tint', !TEAM_TINTS.some(t => /ff6633/i.test(t[0]
 console.log('\n— homepage (index.html) —');
 ok('loads team.js', /assets\/team\.js/.test(idx));
 ok('links to team.html', /href="team\.html"/.test(idx));
-ok('marquee track A present', /id="advMarqueeA"/.test(idx));
-ok('marquee track B present', /id="advMarqueeB"/.test(idx));
+ok('leadership stage present', /class="advisor-stage/.test(idx));
+ok('advisor accountability promise present', /class="advisor-promise/.test(idx));
 ok('founders pinned (Manpreet)', /Manpreet Kaur/.test(idx));
 ok('founders pinned (Dr. Jai Chatha)', /Dr\. Jai Chatha/.test(idx));
-ok('stat corrected to 93 listings', /93 listings/.test(idx));
-ok('stat corrected to 10 agents', /10 agents/.test(idx));
+ok('inventory count mount point present', /id="inventoryCount"/.test(idx));
+ok('inventory count derives from listing data', /inventory\.textContent=LISTINGS\.length/.test(premium));
 ok('old "96 listings" removed', !/96 listings/.test(idx));
 ok('old "11 agents" removed', !/11 agents/.test(idx));
 ok('old 3-advisor language spans removed', !/adv\.l\.kp/.test(idx));
-ok('CSS cache-busted to v=20', /kirpa\.css\?v=20/.test(idx));
+ok('CSS cache-busted to v=24', /kirpa\.css\?v=24/.test(idx));
 
 console.log('\n— team page (team.html) —');
 ok('loads team.js', /assets\/team\.js/.test(team));
@@ -47,10 +48,10 @@ ok('filter buttons wired', (team.match(/data-filter=/g)||[]).length >= 6);
 ok('reuses site nav', /nav-links/.test(team) && /KIRPA/.test(team));
 ok('canonical url set', /canonical" href="https:\/\/roshanalii\.github\.io\/Kirpa\/team\.html"/.test(team));
 
-console.log('\n— styles (kirpa.css) —');
-ok('marquee keyframes present', /@keyframes mq-l/.test(css) && /@keyframes mq-r/.test(css));
-ok('pause-on-hover rule', /\.mq-mask:hover \.mq-track[^{]*\{animation-play-state:paused\}/.test(css));
-ok('reduced-motion disables marquee', /prefers-reduced-motion:reduce\)\{\.mq-left,\.mq-right\{animation:none\}/.test(css));
+console.log('\n— premium styles (kirpa.css) —');
+ok('quiet-future palette present', /--panel:#191915/.test(css) && /--champagne:#B99A69/.test(css));
+ok('advisor stage styles present', /\.advisor-stage\{/.test(css) && /\.advisor-promise\{/.test(css));
+ok('reduced-motion override present', /prefers-reduced-motion:reduce/.test(css) && /animation-duration:\.01ms/.test(css));
 ok('team grid + card styles', /\.team-grid\{/.test(css) && /\.tm-card\{/.test(css));
 
 console.log('\n'+ (fail ? '❌ '+fail+' FAILED, '+pass+' passed' : '✅ ALL '+pass+' TESTS PASSED') +'\n');
