@@ -45,6 +45,88 @@
   addEventListener('scroll',onScroll,{passive:true});
   onScroll();
 
+  /* A quiet context label lets the navigation say where the visitor is. */
+  var nav=document.querySelector('#hdr .nav');
+  var navContext;
+  if(nav){
+    navContext=document.createElement('span');
+    navContext.className='nav-context';
+    navContext.setAttribute('aria-live','polite');
+    var path=location.pathname.replace(/\/index\.html$/,'/').replace(/\/$/,'');
+    var contextMap={
+      '/buy':'Dubai / Residences for sale',
+      '/rent':'Dubai / Residences for rent',
+      '/off-plan':'Dubai / Off-plan',
+      '/communities':'Dubai / Communities',
+      '/sell':'Dubai / Private client desk',
+      '/tools':'Dubai / Buyer tools',
+      '/team':'Dubai / Advisory team'
+    };
+    var context='Dubai / Private brokerage';
+    Object.keys(contextMap).forEach(function(key){if(path.endsWith(key))context=contextMap[key];});
+    if(body.classList.contains('property-detail'))context='Dubai / Residence';
+    navContext.textContent=context;
+    var links=nav.querySelector('.nav-links');
+    nav.insertBefore(navContext,links||nav.lastChild);
+    if(body.classList.contains('home-page')&&'IntersectionObserver' in window){
+      var landmarks=[
+        ['.hero','Dubai / Private brokerage'],
+        ['#explore','Dubai / Community intelligence'],
+        ['.private-edit','Dubai / Private edit'],
+        ['#offplan','Dubai / Off-plan'],
+        ['#sell','Dubai / Owner advisory'],
+        ['#advisors','Dubai / Advisory team']
+      ];
+      var contextObserver=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){if(entry.isIntersecting)navContext.textContent=entry.target.dataset.navContext;});
+      },{threshold:.28,rootMargin:'-18% 0px -58% 0px'});
+      landmarks.forEach(function(item){
+        var section=document.querySelector(item[0]);
+        if(section){section.dataset.navContext=item[1];contextObserver.observe(section);}
+      });
+    }
+    if(body.classList.contains('property-detail')){
+      var crumb=document.getElementById('crumbCommunity');
+      if(crumb){
+        var updateDetailContext=function(){
+          if(crumb.textContent&&crumb.textContent!=='Community')navContext.textContent='Dubai / '+crumb.textContent;
+        };
+        new MutationObserver(updateDetailContext).observe(crumb,{childList:true,characterData:true,subtree:true});
+        updateDetailContext();
+      }
+    }
+  }
+
+  /* Kirpa's star becomes a recognisable wipe between a collection and a residence. */
+  var wipe=document.createElement('div');
+  wipe.className='kr-star-wipe';
+  wipe.setAttribute('aria-hidden','true');
+  wipe.innerHTML='<i>✦</i>';
+  body.appendChild(wipe);
+  document.addEventListener('click',function(e){
+    var anchor=e.target.closest&&e.target.closest('a[href*="properties/listing.html"]');
+    if(!anchor||reduce||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||anchor.target==='_blank')return;
+    var url;
+    try{url=new URL(anchor.href,location.href);}catch(err){return;}
+    if(url.origin!==location.origin)return;
+    e.preventDefault();
+    wipe.classList.add('active');
+    setTimeout(function(){location.href=url.href;},430);
+  });
+
+  /* Command-K opens the private concierge from anywhere on the site. */
+  var command=document.getElementById('kcLaunch');
+  if(command){
+    command.setAttribute('aria-keyshortcuts','Meta+K Control+K');
+    command.setAttribute('title','Ask Kirpa · Command K');
+    document.addEventListener('keydown',function(e){
+      if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){
+        e.preventDefault();
+        command.click();
+      }
+    });
+  }
+
   /* Hero segmented control remains synced with the real search value. */
   var segments=document.getElementById('heroSegments');
   var intent=document.getElementById('intent');

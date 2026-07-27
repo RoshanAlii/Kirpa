@@ -16,7 +16,7 @@
 <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=26">
+<link rel="stylesheet" href="assets/kirpa.css?v=27">
 </head>
 <body class="home-page">
 
@@ -128,7 +128,14 @@
   <div class="wrap">
     <div class="dubai-atlas rv">
       <div class="atlas-map" aria-label="Interactive Dubai community navigator">
+        <div class="atlas-layers" aria-label="Map layer">
+          <button class="on" data-atlas-layer="overview" aria-pressed="true">Overview</button>
+          <button data-atlas-layer="residences" aria-pressed="false">Residences</button>
+          <button data-atlas-layer="lifestyle" aria-pressed="false">Lifestyle</button>
+        </div>
         <span class="atlas-axis axis-a"></span><span class="atlas-axis axis-b"></span><span class="atlas-coast"></span>
+        <span class="atlas-orbit orbit-a"></span><span class="atlas-orbit orbit-b"></span>
+        <span class="atlas-volume volume-a"></span><span class="atlas-volume volume-b"></span><span class="atlas-volume volume-c"></span>
         <button class="atlas-point point-palm" data-community="palm-jumeirah" aria-pressed="false"><i></i><span>Palm Jumeirah</span></button>
         <button class="atlas-point point-marina" data-community="dubai-marina" aria-pressed="false"><i></i><span>Dubai Marina</span></button>
         <button class="atlas-point point-hills" data-community="dubai-hills" aria-pressed="false"><i></i><span>Dubai Hills</span></button>
@@ -139,7 +146,9 @@
         <span class="eyebrow">Community intelligence</span>
         <h3 data-atlas-name tabindex="-1">Downtown Dubai</h3>
         <p data-atlas-summary></p>
+        <div class="atlas-inventory"><span>Recorded residences</span><b data-atlas-count>—</b></div>
         <div class="atlas-stats" data-atlas-stats></div>
+        <div class="atlas-matches" data-atlas-matches></div>
         <a class="link" data-atlas-link href="communities/guide.html?c=downtown">Open community guide</a>
       </div>
     </div>
@@ -159,7 +168,7 @@
         <a class="link" href="buy/" data-i18n="sec.viewall">View all</a>
       </div>
     </div>
-    <div class="res-grid rv" id="resGrid"></div>
+    <div class="residence-runway rv" id="resGrid" aria-live="polite" tabindex="0"></div>
   </div>
 </section>
 
@@ -302,12 +311,14 @@
 <script src="assets/i18n.js?v=14"></script>
 <script src="assets/listings.js?v=14"></script>
 <script src="assets/kirpa.js?v=22"></script>
-<script src="assets/premium.js?v=1"></script>
-<script src="assets/experience.js?v=1"></script>
+<script src="assets/premium.js?v=2"></script>
+<script src="assets/experience.js?v=2"></script>
 <script src="assets/team.js?v=1"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
 let homeCollection='prime';
+let runwayIndex=0;
+let runwayBusy=false;
 function collectionPool(mode){
   const sale=LISTINGS.filter(l=>l.status==='sale'&&l.segment==='residential');
   if(mode==='investment'){
@@ -318,14 +329,86 @@ function collectionPool(mode){
   }
   return sale.slice().sort((a,b)=>b.aed-a.aed).slice(0,6);
 }
-function renderRes(){
-  $('#resGrid').innerHTML=collectionPool(homeCollection).map(cardHTML).join('');
-  bindCards($('#resGrid'));
+function runwayLabel(){
+  return homeCollection==='investment'?'Considered value':homeCollection==='villas'?'Villa collection':'Prime collection';
+}
+function runwayRationale(l){
+  if(homeCollection==='investment')return 'Selected from the lower-priced end of Kirpa’s recorded sale inventory, with space and community context kept visible.';
+  if(homeCollection==='villas')return 'A private-home format with room to breathe, selected from Kirpa’s current villa and townhouse records.';
+  return 'One of the highest-value residences in Kirpa’s recorded sale collection, presented with its essential purchase context.';
+}
+function paintRunway(){
+  const pool=collectionPool(homeCollection);
+  const host=$('#resGrid');
+  if(!pool.length){host.innerHTML='<p class="empty">No residences are recorded in this collection yet.</p>';return;}
+  runwayIndex=(runwayIndex+pool.length)%pool.length;
+  const l=pool[runwayIndex];
+  const next=pool[(runwayIndex+1)%pool.length];
+  const saved=favs.includes(l.ref);
+  const detail='properties/listing.html?ref='+encodeURIComponent(l.ref);
+  const nextDetail='properties/listing.html?ref='+encodeURIComponent(next.ref);
+  const request='https://wa.me/971543673063?text='+encodeURIComponent('Hello Kirpa, I would like a private viewing of '+l.title+' ('+l.ref+').');
+  const progress=Math.round(((runwayIndex+1)/pool.length)*100);
+  host.innerHTML=
+    '<div class="runway-aperture" aria-hidden="true"><i></i><i></i></div>'+
+    '<div class="runway-visual">'+
+      '<a class="runway-image" href="'+detail+'" style="view-transition-name:residence-'+l.ref.toLowerCase()+'">'+
+        phImg(listingImage(l,0),l.title+' — representative photography')+
+        '<span class="runway-media-note">Representative photography</span>'+
+      '</a>'+
+      '<button class="fav runway-fav '+(saved?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.title+'">'+(saved?'♥':'♡')+'</button>'+
+      '<div class="runway-count" aria-label="Residence '+(runwayIndex+1)+' of '+pool.length+'"><b>'+String(runwayIndex+1).padStart(2,'0')+'</b><span>/ '+String(pool.length).padStart(2,'0')+'</span></div>'+
+      '<a class="runway-next-preview" href="'+nextDetail+'" data-runway-next>'+
+        '<span>Next residence</span>'+phImg(listingImage(next,0),next.title+' — representative photography')+'<b>'+next.title+'</b>'+
+      '</a>'+
+    '</div>'+
+    '<article class="runway-copy">'+
+      '<span class="eyebrow">'+runwayLabel()+'</span>'+
+      '<h3>'+l.title+'</h3>'+
+      '<p class="runway-place">'+l.building+' · '+l.community+'</p>'+
+      '<div class="runway-price"><b>'+fmt(l.aed)+'</b><span>'+l.per+'</span></div>'+
+      '<div class="runway-spec-grid">'+
+        '<div><span>Bedrooms</span><b>'+l.beds+'</b></div>'+
+        '<div><span>Interior</span><b>'+l.sqft.toLocaleString()+' sq ft</b></div>'+
+        '<div><span>Residence</span><b>'+l.type+'</b></div>'+
+      '</div>'+
+      '<p class="runway-rationale">'+runwayRationale(l)+'</p>'+
+      '<div class="runway-actions"><a class="btn coral runway-primary" href="'+detail+'">Enter residence</a><a class="link" href="'+request+'" target="_blank" rel="noopener">Request private viewing</a></div>'+
+      '<div class="runway-controls">'+
+        '<button type="button" data-runway-prev aria-label="Previous residence">←</button>'+
+        '<div class="runway-progress" aria-hidden="true"><i style="--runway-progress:'+progress+'%"></i></div>'+
+        '<button type="button" data-runway-next aria-label="Next residence">→</button>'+
+      '</div>'+
+    '</article>';
+  bindCards(host);
+  host.querySelector('[data-runway-prev]').addEventListener('click',()=>moveRunway(-1));
+  host.querySelectorAll('[data-runway-next]').forEach(control=>control.addEventListener('click',e=>{e.preventDefault();moveRunway(1);}));
+  setTimeout(()=>host.classList.remove('is-entering'),720);
+  runwayBusy=false;
   document.querySelectorAll('#offplan .money').forEach(el=>{el.textContent=fmt(+el.dataset.aed)});
 }
+function renderRes(index=runwayIndex,direction=''){
+  const host=$('#resGrid');
+  runwayIndex=index;
+  if(!direction){host.classList.add('is-entering');paintRunway();return;}
+  if(runwayBusy)return;
+  runwayBusy=true;
+  host.classList.add('is-changing',direction);
+  setTimeout(()=>{
+    host.classList.remove('is-changing',direction);
+    host.classList.add('is-entering',direction==='to-next'?'from-next':'from-prev');
+    paintRunway();
+    setTimeout(()=>host.classList.remove('from-next','from-prev'),520);
+  },300);
+}
+function moveRunway(delta){renderRes(runwayIndex+delta,delta>0?'to-next':'to-prev');}
+$('#resGrid').addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'){e.preventDefault();moveRunway(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();moveRunway(-1);}
+});
 document.querySelectorAll('.collection-tab').forEach(tab=>tab.addEventListener('click',()=>{
   document.querySelectorAll('.collection-tab').forEach(item=>item.classList.remove('on'));
-  tab.classList.add('on');homeCollection=tab.dataset.collection;renderRes();
+  tab.classList.add('on');homeCollection=tab.dataset.collection;runwayIndex=0;renderRes(0,'to-next');
 }));
 function renderExplore(lens){
   $('#exploreGrid').innerHTML=LENSES[lens].map(row=>{const r=row;

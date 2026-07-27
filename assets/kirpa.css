@@ -1670,3 +1670,334 @@ body:not(.home-page):not(.property-index):not(.property-detail) .page-head{
   .home-page .insight-grid article{min-height:300px;padding:30px}
   .property-index{background:linear-gradient(180deg,#172B47 0 760px,#F1EEE8 760px)}
 }
+
+/* ============================================================
+   KIRPA SPATIAL LUXURY
+   A cinematic residence runway, inventory-aware Dubai atlas,
+   private command centre and residence media suite.
+   ============================================================ */
+[hidden]{display:none!important}
+
+/* navigation remembers where the visitor is */
+.nav-context{
+  display:flex;align-items:center;gap:10px;min-width:0;margin:0 16px;color:inherit;
+  font:500 8px/1.2 var(--body);letter-spacing:.15em;text-transform:uppercase;opacity:.48;
+  white-space:nowrap
+}
+.nav-context::before{content:'';width:20px;height:1px;background:currentColor;opacity:.45}
+header.solid .nav-context{opacity:.52}
+
+/* one residence at a time: the private edit becomes a cinematic runway */
+.home-page .private-edit{padding-top:132px;padding-bottom:150px}
+.home-page .private-edit #resGrid.residence-runway{
+  position:relative;display:grid!important;grid-template-columns:minmax(0,1.45fr) minmax(370px,.72fr)!important;
+  grid-template-rows:none!important;gap:0;width:100%;min-height:720px;margin:12px 0 0;padding:0!important;
+  overflow:hidden!important;scroll-snap-type:none!important;border:1px solid rgba(255,255,255,.9);
+  border-radius:38px;background:rgba(255,255,255,.72);
+  box-shadow:0 54px 120px -64px rgba(24,29,39,.68),inset 0 1px 0 #fff;
+  isolation:isolate;outline:none
+}
+.residence-runway:focus-visible{box-shadow:0 0 0 3px rgba(91,124,250,.28),0 54px 120px -64px rgba(24,29,39,.68)}
+.runway-visual{position:relative;min-width:0;min-height:720px;overflow:hidden;background:#182435}
+.runway-image{position:absolute;inset:0;display:block;color:#fff}
+.runway-image .ph-img{width:100%;height:100%;object-fit:cover;filter:saturate(1.04) contrast(1.04)}
+.runway-image::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(7,14,24,.02) 48%,rgba(7,14,24,.18)),linear-gradient(0deg,rgba(7,14,24,.55),transparent 48%)
+}
+.runway-media-note{
+  position:absolute;z-index:2;left:28px;bottom:26px;padding:9px 12px;border:1px solid rgba(255,255,255,.24);
+  border-radius:999px;background:rgba(9,18,29,.30);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  color:rgba(255,255,255,.68);font-size:8px;letter-spacing:.14em;text-transform:uppercase
+}
+.runway-fav{
+  z-index:6!important;top:25px!important;right:25px!important;width:46px!important;height:46px!important;
+  background:rgba(10,20,32,.38)!important;border:1px solid rgba(255,255,255,.28)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)
+}
+.runway-count{
+  position:absolute;z-index:5;top:27px;left:30px;display:flex;align-items:baseline;gap:7px;color:#fff
+}
+.runway-count b{font:400 32px/1 var(--display)}
+.runway-count span{font:500 9px/1 var(--body);letter-spacing:.12em;color:rgba(255,255,255,.5)}
+.runway-next-preview{
+  position:absolute;z-index:6;right:27px;bottom:27px;width:230px;min-height:138px;padding:9px;border:1px solid rgba(255,255,255,.35);
+  border-radius:20px;background:rgba(255,255,255,.68);color:var(--espresso);overflow:hidden;
+  box-shadow:0 24px 55px -30px rgba(6,15,27,.7),inset 0 1px 0 #fff;
+  backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);
+  transition:transform .35s var(--ease-out),background .35s
+}
+.runway-next-preview:hover{transform:translateY(-5px);background:rgba(255,255,255,.82)}
+.runway-next-preview>span{
+  position:absolute;z-index:2;left:18px;top:16px;color:#fff;font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+  text-shadow:0 1px 12px rgba(0,0,0,.5)
+}
+.runway-next-preview .ph-img{display:block;width:100%;height:78px;object-fit:cover;border-radius:13px;filter:saturate(.95)}
+.runway-next-preview b{display:block;padding:10px 7px 4px;font:400 14px/1.2 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.runway-copy{
+  position:relative;display:flex;flex-direction:column;justify-content:center;min-width:0;padding:70px 54px 56px;
+  background:
+    radial-gradient(24rem 20rem at 100% 0%,rgba(169,138,244,.15),transparent 68%),
+    radial-gradient(22rem 20rem at 0% 100%,rgba(44,183,176,.11),transparent 70%),
+    rgba(250,248,244,.84)
+}
+.runway-copy::before{
+  content:'K / PRIVATE EDIT';position:absolute;right:34px;top:30px;color:rgba(24,22,19,.28);
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase
+}
+.runway-copy .eyebrow{margin-bottom:22px}
+.runway-copy h3{max-width:11ch;font:400 clamp(38px,4.2vw,62px)/.98 var(--display);letter-spacing:-.045em;color:var(--espresso)}
+.runway-place{margin-top:17px;color:rgba(24,22,19,.50);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.runway-price{display:flex;align-items:baseline;gap:9px;margin-top:34px}
+.runway-price b{font:400 25px/1.1 var(--display);color:var(--espresso)}
+.runway-price span{font-size:10px;color:rgba(24,22,19,.45)}
+.runway-spec-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:30px;padding-block:20px;
+  border-block:1px solid rgba(24,22,19,.10)
+}
+.runway-spec-grid>div{padding:0 14px;border-right:1px solid rgba(24,22,19,.09)}
+.runway-spec-grid>div:first-child{padding-left:0}.runway-spec-grid>div:last-child{padding-right:0;border:0}
+.runway-spec-grid span,.runway-spec-grid b{display:block}
+.runway-spec-grid span{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(24,22,19,.42)}
+.runway-spec-grid b{margin-top:7px;font-size:12px;font-weight:600;color:var(--espresso)}
+.runway-rationale{max-width:39ch;margin-top:24px;color:rgba(24,22,19,.57);font-size:12.5px;line-height:1.7}
+.runway-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:29px}
+.runway-actions .btn{padding-inline:24px}.runway-actions .link{font-size:10px}
+.runway-controls{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:13px;margin-top:40px}
+.runway-controls button{
+  width:42px;height:42px;border:1px solid rgba(24,22,19,.13);border-radius:50%;background:rgba(255,255,255,.58);
+  color:var(--espresso);font-size:16px;transition:background .25s,transform .25s
+}
+.runway-controls button:hover{background:#fff;transform:scale(1.06)}
+.runway-progress{height:2px;background:rgba(24,22,19,.12);overflow:hidden}
+.runway-progress i{display:block;width:var(--runway-progress);height:100%;background:linear-gradient(90deg,var(--sunset),var(--lilac));transition:width .55s var(--ease-out)}
+.runway-aperture{position:absolute;inset:0;z-index:20;display:flex;pointer-events:none}
+.runway-aperture i{width:50%;height:100%;background:#121D2C;transform:scaleX(0);transition:transform .34s var(--ease-smooth)}
+.runway-aperture i:first-child{transform-origin:left}.runway-aperture i:last-child{transform-origin:right}
+.residence-runway.is-changing .runway-aperture i{transform:scaleX(1)}
+.residence-runway.is-entering .runway-visual{animation:runway-media-in .65s var(--ease-out) both}
+.residence-runway.is-entering .runway-copy>*{animation:runway-copy-in .58s var(--ease-out) both}
+.residence-runway.is-entering .runway-copy>*:nth-child(3){animation-delay:.04s}
+.residence-runway.is-entering .runway-copy>*:nth-child(4){animation-delay:.08s}
+.residence-runway.is-entering .runway-copy>*:nth-child(5){animation-delay:.12s}
+.residence-runway.is-entering .runway-copy>*:nth-child(n+6){animation-delay:.16s}
+@keyframes runway-media-in{from{opacity:.35;transform:scale(1.035)}to{opacity:1;transform:none}}
+@keyframes runway-copy-in{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+
+/* the atlas behaves like a small spatial instrument */
+.home-page .dubai-atlas{grid-template-columns:minmax(0,1.38fr) minmax(370px,.72fr);min-height:650px}
+.home-page .atlas-map{min-height:650px;perspective:900px}
+.home-page .atlas-map::before{
+  opacity:.46;background-size:38px 38px;transform:perspective(520px) rotateX(56deg) scale(1.48);
+  transform-origin:center 84%;transition:opacity .5s,transform .7s var(--ease-out)
+}
+.atlas-layers{
+  position:absolute;z-index:12;left:24px;top:24px;display:flex;gap:5px;padding:5px;border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;background:rgba(9,18,29,.36);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)
+}
+.atlas-layers button{
+  min-height:32px;padding:0 13px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.48);
+  font:500 8px/1 var(--body);letter-spacing:.11em;text-transform:uppercase;transition:.3s
+}
+.atlas-layers button.on{background:rgba(255,255,255,.9);color:#162235;box-shadow:0 8px 22px -12px #000}
+.atlas-orbit{
+  position:absolute;z-index:2;border:1px solid rgba(91,124,250,.28);border-radius:50%;
+  transform:rotateX(64deg) rotateZ(-18deg);transition:opacity .5s,transform .8s var(--ease-out),border-color .5s
+}
+.orbit-a{width:55%;height:44%;left:28%;top:30%}.orbit-b{width:36%;height:31%;left:39%;top:38%;border-color:rgba(44,183,176,.28)}
+.atlas-volume{
+  position:absolute;z-index:3;width:20px;height:58px;opacity:.28;
+  background:linear-gradient(90deg,rgba(91,124,250,.30),rgba(91,124,250,.88));
+  border:1px solid rgba(255,255,255,.28);box-shadow:12px -10px 30px rgba(91,124,250,.18);
+  transform:skewY(-22deg) scaleY(.45);transform-origin:center bottom;transition:.65s var(--ease-out)
+}
+.volume-a{left:59%;top:41%}.volume-b{left:46%;top:61%;height:82px}.volume-c{left:26%;top:68%;height:48px}
+.layer-residences .atlas-volume{opacity:.9;transform:skewY(-22deg) scaleY(1);background:linear-gradient(90deg,#536FE0,#8CA4FF)}
+.layer-residences .atlas-map::before{opacity:.65;transform:perspective(520px) rotateX(58deg) scale(1.55)}
+.layer-residences .atlas-orbit{opacity:.25}
+.layer-lifestyle .atlas-orbit{opacity:1;border-color:rgba(44,183,176,.65);transform:rotateX(61deg) rotateZ(-11deg) scale(1.08)}
+.layer-lifestyle .atlas-volume{opacity:.10}
+.home-page .atlas-panel{padding:54px 42px;justify-content:flex-start;overflow:hidden}
+.home-page .atlas-panel h3{margin-top:34px;font-size:clamp(40px,4vw,56px)}
+.atlas-inventory{
+  display:flex;justify-content:space-between;align-items:center;margin-top:27px;padding:13px 0;
+  border-block:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.48);
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase
+}
+.atlas-inventory b{color:#fff;font:400 24px/1 var(--display)}
+.home-page .atlas-stats{margin:21px 0 25px;transition:opacity .35s,max-height .45s,margin .45s;max-height:260px}
+.atlas-matches{display:grid;gap:8px;max-height:0;opacity:0;overflow:hidden;transition:opacity .4s,max-height .55s var(--ease-out),margin .4s}
+.atlas-matches>a{
+  display:grid;grid-template-columns:1fr auto;gap:3px 10px;padding:13px 15px;border:1px solid rgba(255,255,255,.11);
+  border-radius:14px;background:rgba(255,255,255,.045);color:#fff;transition:background .25s,border-color .25s,transform .25s
+}
+.atlas-matches>a:hover{background:rgba(255,255,255,.09);border-color:rgba(91,124,250,.5);transform:translateX(3px)}
+.atlas-matches a>span{grid-column:1/-1;color:#8FDCD6;font-size:9px}
+.atlas-matches a>b{font:400 14px/1.2 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atlas-matches a>small{color:rgba(255,255,255,.48);font-size:8px;white-space:nowrap}
+.atlas-matches a i{font-style:normal;color:#fff}
+.atlas-matches>p{color:rgba(255,255,255,.5);font-size:11px;line-height:1.6}
+.layer-residences .atlas-stats{max-height:0;opacity:0;margin:0;overflow:hidden}
+.layer-residences .atlas-matches{max-height:310px;opacity:1;margin:20px 0 25px}
+
+/* property media suite and ownership context */
+.property-detail .gallery{position:relative}
+.gallery-open{
+  position:absolute;z-index:5;right:24px;bottom:24px;display:flex;align-items:center;gap:16px;min-height:48px;padding:0 10px 0 18px;
+  border:1px solid rgba(255,255,255,.30);border-radius:999px;background:rgba(255,255,255,.72);color:#182235;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 16px 40px -24px #000;
+  font:500 9px/1 var(--body);letter-spacing:.1em;text-transform:uppercase
+}
+.gallery-open b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#172A46;color:#fff;font-size:8px}
+.gallery-modes{
+  display:flex;width:max-content;margin:22px 0 0 auto;padding:5px;border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;background:rgba(255,255,255,.055)
+}
+.gallery-modes button{
+  min-height:34px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:rgba(255,255,255,.5);
+  font:500 8px/1 var(--body);letter-spacing:.12em;text-transform:uppercase
+}
+.gallery-modes button.on{background:#fff;color:#172A46}
+.floorplan-request{
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:60px;align-items:center;min-height:520px;margin-top:30px;padding:48px;
+  border:1px solid rgba(255,255,255,.16);border-radius:30px;background:
+  radial-gradient(38rem 24rem at 20% 90%,rgba(44,183,176,.17),transparent 70%),rgba(255,255,255,.045)
+}
+.floorplan-request h2{max-width:10ch;margin:16px 0;font:400 clamp(38px,4.8vw,64px)/1 var(--display);color:#fff}
+.floorplan-request p{max-width:40ch;color:rgba(255,255,255,.55);font-size:13px;line-height:1.7}
+.floorplan-request .btn{display:inline-flex;margin-top:24px}
+.floorplan-blueprint{
+  position:relative;aspect-ratio:1.25;border:1px solid rgba(143,220,214,.48);border-radius:8px;
+  background-image:linear-gradient(rgba(143,220,214,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(143,220,214,.09) 1px,transparent 1px);
+  background-size:24px 24px;box-shadow:inset 0 0 70px rgba(44,183,176,.08)
+}
+.floorplan-blueprint i{position:absolute;border:1px solid rgba(143,220,214,.72)}
+.floorplan-blueprint i:nth-child(1){inset:12% 44% 48% 8%}
+.floorplan-blueprint i:nth-child(2){inset:12% 8% 48% 58%}
+.floorplan-blueprint i:nth-child(3){inset:58% 52% 10% 8%}
+.floorplan-blueprint i:nth-child(4){inset:58% 8% 10% 52%}
+.floorplan-blueprint span{position:absolute;left:14px;bottom:12px;color:#8FDCD6;font-size:8px;letter-spacing:.16em}
+.community-context{
+  padding:34px;border:1px solid rgba(24,22,19,.09);border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,255,255,.62),rgba(221,244,241,.42))
+}
+.community-context h2{margin:15px 0 12px}
+.community-context-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin:25px 0;background:rgba(24,22,19,.1)}
+.community-context-stats div{display:flex;gap:12px;align-items:flex-start;padding:15px;background:rgba(250,248,244,.92)}
+.community-context-stats span{color:var(--sunset);font:400 17px/1 var(--display)}
+.community-context-stats b{font-size:10px;line-height:1.45}
+.ownership-brief{margin-top:17px;padding:18px;border:1px solid rgba(24,22,19,.09);border-radius:16px;background:rgba(255,255,255,.48)}
+.ownership-brief>span{display:block;margin-bottom:13px;color:var(--sunset);font-size:8px;letter-spacing:.14em;text-transform:uppercase}
+.ownership-brief>div{display:flex;justify-content:space-between;gap:18px;padding:8px 0;border-top:1px solid rgba(24,22,19,.07)}
+.ownership-brief b{font-size:10px;color:rgba(24,22,19,.46);font-weight:500}
+.ownership-brief strong{font-size:10px;text-align:right}
+.ownership-brief .link{display:inline-block;margin-top:12px;font-size:9px}
+body.gallery-opened{overflow:hidden}
+.media-lightbox{
+  position:fixed;inset:0;z-index:10000;display:grid;grid-template-columns:80px 1fr 80px;grid-template-rows:74px 1fr 70px;
+  padding:18px;background:rgba(6,10,16,.94);color:#fff;opacity:0;pointer-events:none;
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);transition:opacity .3s
+}
+.media-lightbox.active{opacity:1;pointer-events:auto}
+.lightbox-top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:0 10px}
+.lightbox-top span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.52)}
+.lightbox-top button{border:0;background:none;color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.lightbox-image{grid-column:2;position:relative;overflow:hidden;border-radius:20px;background:#101825;transition:opacity .18s,transform .18s}
+.lightbox-image.to-next{opacity:.2;transform:translateX(-18px)}.lightbox-image.to-prev{opacity:.2;transform:translateX(18px)}
+.lightbox-image .ph-img{width:100%;height:100%;object-fit:contain}
+.lightbox-nav{align-self:center;justify-self:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(255,255,255,.06);color:#fff;font-size:18px}
+.lightbox-nav:hover{background:rgba(255,255,255,.14)}
+.lightbox-nav.prev{grid-column:1;grid-row:2}.lightbox-nav.next{grid-column:3;grid-row:2}
+.lightbox-foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:0 10px}
+.lightbox-foot span{font:400 21px/1 var(--display)}.lightbox-foot small{color:rgba(255,255,255,.38);font-size:8px;letter-spacing:.1em;text-transform:uppercase}
+
+/* brand-star transition between collection and residence */
+.kr-star-wipe{
+  position:fixed;inset:0;z-index:20000;display:grid;place-items:center;pointer-events:none;
+  color:#fff;background:linear-gradient(135deg,#172A46,#263C66 58%,#2CB7B0);
+  clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%);
+  transition:clip-path .48s var(--ease-smooth)
+}
+.kr-star-wipe i{font:400 44px/1 var(--display);font-style:normal;opacity:0;transform:scale(.3) rotate(-25deg);transition:.3s .1s}
+.kr-star-wipe.active{clip-path:polygon(50% -35%,60% 39%,117% 14%,69% 54%,118% 88%,59% 65%,50% 135%,41% 65%,-18% 88%,31% 54%,-17% 14%,40% 39%)}
+.kr-star-wipe.active i{opacity:1;transform:scale(1) rotate(0)}
+
+/* the concierge reads as a private command centre */
+body .kc-launch{
+  right:24px;bottom:24px;width:202px;height:54px;padding:0 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  justify-content:flex-start;gap:12px;background:rgba(18,31,47,.88);color:#FF8D68;animation:none;
+  box-shadow:0 20px 50px -24px rgba(6,15,27,.75),inset 0 1px 0 rgba(255,255,255,.14);
+  backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)
+}
+body .kc-launch::after{content:'ASK KIRPA   ⌘ K';color:#fff;font:500 9px/1 var(--body);letter-spacing:.14em;white-space:pre}
+body .kc-launch:hover{transform:translateY(-3px);background:#1E3858;color:#FF8D68}
+body .kc-launch svg{width:24px;height:24px;flex:0 0 auto}
+body .kc-panel{
+  right:24px;bottom:92px;width:450px;max-height:min(78vh,680px);border:1px solid rgba(255,255,255,.76);border-radius:27px;
+  background:rgba(248,246,241,.90);box-shadow:0 36px 90px -38px rgba(8,18,30,.65),inset 0 1px 0 #fff;
+  backdrop-filter:blur(30px) saturate(145%);-webkit-backdrop-filter:blur(30px) saturate(145%)
+}
+body .kc-top{padding:18px 20px;background:linear-gradient(135deg,#172A46,#22395B);color:#fff;border:0}
+body .kc-top small{color:rgba(255,255,255,.52)}
+body .kc-top .kc-x{color:rgba(255,255,255,.72)}
+body .kc-stream{padding:20px}
+body .kc-bot{background:rgba(255,255,255,.8);border-color:rgba(24,22,19,.08)}
+body .kc-me{background:#172A46}
+body .kc-foot{background:rgba(255,255,255,.46)}
+
+@media(max-width:1180px){
+  .nav-context{display:none}
+  .home-page .private-edit #resGrid.residence-runway{grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr)!important}
+  .runway-copy{padding-inline:42px}
+}
+@media(max-width:900px){
+  .home-page .private-edit{padding-top:100px;padding-bottom:110px}
+  .home-page .private-edit #resGrid.residence-runway{display:grid!important;grid-template-columns:1fr!important;min-height:0}
+  .runway-visual{min-height:540px}.runway-copy{padding:58px 48px}
+  .runway-copy h3{font-size:52px;max-width:14ch}
+  .home-page .dubai-atlas{grid-template-columns:1fr;min-height:0}
+  .home-page .atlas-map{min-height:560px}
+  .floorplan-request{grid-template-columns:1fr;gap:35px}
+}
+@media(max-width:700px){
+  .home-page .private-edit{padding-top:82px;padding-bottom:90px}
+  .home-page .private-edit #resGrid.residence-runway{
+    display:grid!important;margin:0!important;padding:0!important;overflow:hidden!important;border-radius:28px;min-height:0
+  }
+  .runway-visual{min-height:430px}.runway-copy{padding:46px 27px 36px}
+  .runway-copy::before{right:24px;top:21px}.runway-copy h3{font-size:42px;max-width:11ch}
+  .runway-next-preview{right:16px;bottom:16px;width:175px;min-height:116px}
+  .runway-next-preview .ph-img{height:65px}.runway-next-preview b{font-size:12px}
+  .runway-media-note{left:18px;bottom:18px;max-width:130px;line-height:1.4}
+  .runway-count{left:20px;top:21px}.runway-fav{right:18px!important;top:18px!important}
+  .runway-actions{align-items:flex-start;flex-direction:column;gap:17px}
+  .runway-controls{margin-top:32px}
+  .home-page .dubai-atlas{border-radius:25px}.home-page .atlas-map{min-height:475px}
+  .atlas-layers{left:14px;top:14px}.atlas-layers button{padding-inline:9px;font-size:7px}
+  .atlas-point{font-size:8px;letter-spacing:.07em;gap:7px}.point-palm{left:5%}.point-marina{left:11%}.point-hills{left:42%}
+  .home-page .atlas-panel{padding:40px 27px}.home-page .atlas-panel h3{margin-top:26px}
+  .gallery-open{right:14px;bottom:14px}.gallery-modes{margin-right:0}
+  .floorplan-request{min-height:0;padding:25px;border-radius:22px}.floorplan-request h2{font-size:43px}
+  .community-context{padding:26px}.community-context-stats{grid-template-columns:1fr}
+  .media-lightbox{grid-template-columns:46px 1fr 46px;grid-template-rows:64px 1fr 66px;padding:8px}
+  .lightbox-image{border-radius:13px}.lightbox-nav{width:38px;height:38px}
+  .lightbox-foot small{display:none}
+  body .kc-launch{right:14px;bottom:76px;width:170px;height:50px;padding-inline:15px}
+  body .kc-launch::after{content:'ASK KIRPA   ⌘ K';font-size:8px}
+  body .kc-panel{right:0;left:0;bottom:0;width:100%;max-height:86vh;border-radius:25px 25px 0 0}
+}
+@media(max-width:430px){
+  .runway-visual{min-height:370px}
+  .runway-copy{padding-inline:23px}.runway-copy h3{font-size:38px}
+  .runway-spec-grid{grid-template-columns:1fr;gap:12px}
+  .runway-spec-grid>div,.runway-spec-grid>div:first-child{display:flex;justify-content:space-between;padding:0 0 12px;border:0;border-bottom:1px solid rgba(24,22,19,.07)}
+  .runway-spec-grid>div:last-child{padding-bottom:0;border:0}.runway-spec-grid b{margin:0}
+  .runway-next-preview{width:155px}.runway-next-preview b{display:none}
+  .runway-media-note{display:none}
+  .atlas-layers button{padding-inline:8px}.home-page .atlas-map{min-height:430px}
+}
+@media(prefers-reduced-motion:reduce){
+  .runway-aperture,.kr-star-wipe{display:none}
+  .residence-runway.is-entering .runway-visual,.residence-runway.is-entering .runway-copy>*{animation:none}
+  .atlas-volume,.atlas-orbit,.lightbox-image{transition:none}
+}

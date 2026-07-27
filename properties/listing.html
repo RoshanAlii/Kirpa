@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/kirpa.css?v=26">
+<link rel="stylesheet" href="../assets/kirpa.css?v=27">
 </head>
 <body class="property-detail">
 
@@ -58,10 +58,19 @@
         <div class="photo" id="g1"></div>
         <div class="photo" id="g2"></div>
       </div>
+      <button class="gallery-open" id="openGallery" type="button"><span>View gallery</span><b>03</b></button>
     </div>
     <div class="gallery-note">
       <span>Representative photography is shown while original listing media is being verified.</span>
       <a id="mediaRequest" href="#" target="_blank" rel="noopener">Request verified media + floor plan ↗</a>
+    </div>
+    <div class="gallery-modes" aria-label="Residence media">
+      <button class="on" type="button" data-gallery-mode="photography" aria-pressed="true">Photography</button>
+      <button type="button" data-gallery-mode="floorplan" aria-pressed="false">Floor plan</button>
+    </div>
+    <div class="floorplan-request" id="floorplanPanel" hidden>
+      <div class="floorplan-blueprint" aria-hidden="true"><i></i><i></i><i></i><i></i><span>PLAN / <b id="floorplanRef">KIRPA</b></span></div>
+      <div><span class="eyebrow">Verified property file</span><h2>Request the current floor plan.</h2><p>Kirpa confirms the source document and version before sharing it, so your viewing starts with the right layout.</p><a class="btn coral" id="floorplanRequest" href="#" target="_blank" rel="noopener">Request floor plan</a></div>
     </div>
   </div>
 </div>
@@ -89,12 +98,25 @@
         <article><span>03</span><b>True ownership cost</b><p>Ask for a clear estimate of transfer, agency, mortgage and recurring ownership costs.</p></article>
       </div>
     </div>
+    <div class="lp-sec community-context" id="communityContext">
+      <span class="eyebrow">Neighbourhood context</span>
+      <h2 id="communityTitle">The community around the residence.</h2>
+      <p id="communitySummary"></p>
+      <div class="community-context-stats" id="communityStats"></div>
+      <a class="link" id="communityGuide" href="../communities/">Open community guide</a>
+    </div>
   </div>
 
   <aside class="side-card">
     <div class="lp-price"><span id="lpPrice"></span><span class="fx" id="lpFx"></span></div>
     <div class="lp-specs" id="lpSpecs"></div>
     <div class="estimate" id="estimate"></div>
+    <div class="ownership-brief">
+      <span id="ownershipLabel">Purchase picture</span>
+      <div><b id="ownershipPriceLabel">Property price</b><strong id="ownershipPrice"></strong></div>
+      <div><b id="ownershipCostLabel">Transaction costs</b><strong id="ownershipCost">Quoted for this residence</strong></div>
+      <a class="link" id="costSheet" href="#" target="_blank" rel="noopener">Request private cost sheet</a>
+    </div>
     <div class="agent">
       <div class="face photo" id="agentFace"></div>
       <div><b id="agentName"></b><span id="agentRole"></span></div>
@@ -115,6 +137,15 @@
     <div class="res-grid" id="simGrid"></div>
   </div>
 </section>
+
+<!-- CINEMATIC MEDIA VIEWER -->
+<div class="media-lightbox" id="mediaLightbox" role="dialog" aria-modal="true" aria-label="Residence gallery" hidden>
+  <div class="lightbox-top"><span id="lightboxRef">Residence gallery</span><button id="closeGallery" type="button" aria-label="Close gallery">Close ×</button></div>
+  <button class="lightbox-nav prev" id="galleryPrev" type="button" aria-label="Previous image">←</button>
+  <div class="lightbox-image" id="lightboxImage"></div>
+  <button class="lightbox-nav next" id="galleryNext" type="button" aria-label="Next image">→</button>
+  <div class="lightbox-foot"><span id="lightboxCount">01 / 03</span><small>Representative photography · verified media available on request</small></div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -148,13 +179,15 @@
 <script src="../assets/i18n.js?v=14"></script>
 <script src="../assets/listings.js?v=14"></script>
 <script src="../assets/kirpa.js?v=22"></script>
-<script src="../assets/premium.js?v=1"></script>
-<script src="../assets/experience.js?v=1"></script>
+<script src="../assets/premium.js?v=2"></script>
+<script src="../assets/experience.js?v=2"></script>
 <script>
 /* ---------- resolve listing ---------- */
 const ref=(new URLSearchParams(location.search).get('ref')||'KP-104').toUpperCase();
 const L=LISTINGS.find(x=>x.ref===ref)||LISTINGS[0];
 const A=AGENTS[L.agent];
+const GALLERY=[0,1,2].map(i=>listingImage(L,i));
+let galleryIndex=0;
 
 /* ---------- head / seo ---------- */
 document.title='Kirpa Properties — '+L.title+' · '+L.community;
@@ -172,6 +205,7 @@ const s=document.createElement('script');s.type='application/ld+json';s.textCont
 function money(){ 
   $('#lpPrice').textContent=fmt(L.aed)+L.per;
   $('#lpFx').textContent=cur==='AED'?(' (≈ '+fmt(L.aed,'USD')+')'):(' ('+fmt(L.aed,'AED')+')');
+  if($('#ownershipPrice'))$('#ownershipPrice').textContent=fmt(L.aed)+L.per;
   renderEstimate();
 }
 function renderEstimate(){
@@ -211,8 +245,30 @@ function renderPage(){
   $('#agentRole').textContent=(window.__lang!=='en'?(A.role==='Team Leader, Sales'?t('role.tl'):A.role==='Consultant, Off-Plan'?t('role.consult'):A.role):A.role)+' · '+(window.LF?window.LF(A,'langs'):A.langs);
   $('#lpPermit').textContent=(L.permit?'Trakheesi '+L.permit:'Permit no. on request')+' · ORN 49046';
   const ask='Hello '+A.name.split(' ')[0]+", I have a question about "+L.ref+' — '+L.title;
+  const mediaAsk='Please send the verified original media and floor plan for '+L.ref+' — '+L.title;
+  const costAsk=(L.status==='sale'?'Please prepare the private purchase cost sheet for ':'Please prepare the move-in cost sheet for ')+L.ref+' — '+L.title;
   $('#waBtn').href='https://wa.me/971543673063?text='+encodeURIComponent(ask);
-  $('#mediaRequest').href='https://wa.me/971543673063?text='+encodeURIComponent('Please send the verified original media and floor plan for '+L.ref+' — '+L.title);
+  $('#mediaRequest').href='https://wa.me/971543673063?text='+encodeURIComponent(mediaAsk);
+  $('#floorplanRequest').href=$('#mediaRequest').href;
+  $('#floorplanRef').textContent=L.ref;
+  $('#costSheet').href='https://wa.me/971543673063?text='+encodeURIComponent(costAsk);
+  $('#ownershipLabel').textContent=L.status==='sale'?'Purchase picture':'Tenancy picture';
+  $('#ownershipPriceLabel').textContent=L.status==='sale'?'Property price':'Annual rent';
+  $('#ownershipCostLabel').textContent=L.status==='sale'?'Transaction costs':'Move-in costs';
+  $('#costSheet').textContent=L.status==='sale'?'Request private cost sheet':'Request move-in cost sheet';
+  $('#ownershipCost').textContent='Quoted for this residence';
+  $('#ownershipPrice').textContent=fmt(L.aed)+L.per;
+  const communityEntry=Object.entries(COMMUNITIES).find(([,c])=>c.name===L.community);
+  if(communityEntry){
+    const [communitySlug,community]=communityEntry;
+    $('#communityTitle').textContent=community.name+', in context.';
+    $('#communitySummary').textContent=(community.blurb&&community.blurb[0])||'';
+    $('#communityStats').innerHTML=(community.stats||[]).slice(0,4).map((stat,i)=>'<div><span>0'+(i+1)+'</span><b>'+stat+'</b></div>').join('');
+    $('#communityGuide').href='../communities/guide.html?c='+communitySlug;
+  }else{
+    $('#communityContext').hidden=true;
+  }
+  $('#lightboxRef').textContent=L.ref+' · '+L.title;
   $('#mbarWa').href=$('#waBtn').href;
   money();
   favState();
@@ -230,6 +286,49 @@ function favState(){
 }
 $('#lpFav').onclick=()=>toggleFav(L.ref);
 $('#bookBtn').onclick=()=>openSheet('viewing',L.ref,L.ref+' — '+L.title);
+function renderGalleryImage(){
+  $('#lightboxImage').innerHTML=phImg(GALLERY[galleryIndex],L.title+' — representative photography '+(galleryIndex+1));
+  $('#lightboxCount').textContent=String(galleryIndex+1).padStart(2,'0')+' / '+String(GALLERY.length).padStart(2,'0');
+  blurUp($('#lightboxImage'));
+}
+function openGallery(){
+  galleryIndex=0;
+  renderGalleryImage();
+  $('#mediaLightbox').hidden=false;
+  document.body.classList.add('gallery-opened');
+  requestAnimationFrame(()=>$('#mediaLightbox').classList.add('active'));
+  $('#closeGallery').focus({preventScroll:true});
+}
+function closeGallery(){
+  $('#mediaLightbox').classList.remove('active');
+  document.body.classList.remove('gallery-opened');
+  setTimeout(()=>{$('#mediaLightbox').hidden=true;$('#openGallery').focus({preventScroll:true});},300);
+}
+function moveGallery(delta){
+  galleryIndex=(galleryIndex+delta+GALLERY.length)%GALLERY.length;
+  $('#lightboxImage').classList.add(delta>0?'to-next':'to-prev');
+  setTimeout(()=>{$('#lightboxImage').classList.remove('to-next','to-prev');renderGalleryImage();},180);
+}
+$('#openGallery').addEventListener('click',openGallery);
+$('#closeGallery').addEventListener('click',closeGallery);
+$('#galleryPrev').addEventListener('click',()=>moveGallery(-1));
+$('#galleryNext').addEventListener('click',()=>moveGallery(1));
+$('#mediaLightbox').addEventListener('click',e=>{if(e.target===$('#mediaLightbox'))closeGallery();});
+document.addEventListener('keydown',e=>{
+  if($('#mediaLightbox').hidden)return;
+  if(e.key==='Escape')closeGallery();
+  if(e.key==='ArrowLeft')moveGallery(-1);
+  if(e.key==='ArrowRight')moveGallery(1);
+});
+document.querySelectorAll('[data-gallery-mode]').forEach(button=>button.addEventListener('click',()=>{
+  const floorplan=button.dataset.galleryMode==='floorplan';
+  document.querySelectorAll('[data-gallery-mode]').forEach(item=>{
+    const on=item===button;item.classList.toggle('on',on);item.setAttribute('aria-pressed',on?'true':'false');
+  });
+  document.querySelector('.lp-head .gallery').hidden=floorplan;
+  document.querySelector('.gallery-note').hidden=floorplan;
+  $('#floorplanPanel').hidden=!floorplan;
+}));
 window.onCurrencyChanged=()=>{money();$('#simGrid').innerHTML=similarListings().map(cardHTML).join('');bindCards($('#simGrid'))};
 window.onFavsChanged=()=>{favState();$('#simGrid').innerHTML=similarListings().map(cardHTML).join('');bindCards($('#simGrid'))};
 renderPage();

@@ -10,6 +10,8 @@ const idx  = fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
 const team = fs.readFileSync(path.join(__dirname,'team.html'),'utf8');
 const css  = fs.readFileSync(path.join(__dirname,'assets/kirpa.css'),'utf8');
 const premium = fs.readFileSync(path.join(__dirname,'assets/premium.js'),'utf8');
+const experience = fs.readFileSync(path.join(__dirname,'assets/experience.js'),'utf8');
+const listing = fs.readFileSync(path.join(__dirname,'properties/listing.html'),'utf8');
 
 console.log('\n— roster data —');
 ok('44 people total', TEAM.length === 44);
@@ -38,8 +40,11 @@ ok('inventory count derives from listing data', /inventory\.textContent=LISTINGS
 ok('old "96 listings" removed', !/96 listings/.test(idx));
 ok('old "11 agents" removed', !/11 agents/.test(idx));
 ok('old 3-advisor language spans removed', !/adv\.l\.kp/.test(idx));
-ok('CSS cache-busted to v=26', /kirpa\.css\?v=26/.test(idx));
+ok('CSS cache-busted to v=27', /kirpa\.css\?v=27/.test(idx));
 ok('immersive experience layer loaded', /assets\/experience\.js/.test(idx));
+ok('cinematic residence runway present', /class="residence-runway/.test(idx) && /data-runway-next/.test(idx));
+ok('spatial atlas layers present', (idx.match(/data-atlas-layer=/g)||[]).length === 3);
+ok('atlas renders recorded residence matches', /paintMatches/.test(premium) && /data-atlas-matches/.test(idx));
 
 console.log('\n— team page (team.html) —');
 ok('loads team.js', /assets\/team\.js/.test(team));
@@ -56,6 +61,11 @@ ok('luminous edit palette present', /--pool:#2CB7B0/.test(css) && /--sky:#5B7CFA
 ok('advisor stage styles present', /\.advisor-stage\{/.test(css) && /\.advisor-promise\{/.test(css));
 ok('reduced-motion override present', /prefers-reduced-motion:reduce/.test(css) && /animation-duration:\.01ms/.test(css));
 ok('team grid + card styles', /\.team-grid\{/.test(css) && /\.tm-card\{/.test(css));
+ok('spatial luxury styles present', /KIRPA SPATIAL LUXURY/.test(css) && /\.residence-runway/.test(css));
+ok('navigation context and brand wipe wired', /nav-context/.test(experience) && /kr-star-wipe/.test(experience));
+ok('concierge Command-K shortcut wired', /Meta\+K Control\+K/.test(experience));
+ok('property gallery modes present', /data-gallery-mode="photography"/.test(listing) && /id="mediaLightbox"/.test(listing));
+ok('property ownership context present', /class="ownership-brief"/.test(listing) && /id="communityContext"/.test(listing));
 
 console.log('\n'+ (fail ? '❌ '+fail+' FAILED, '+pass+' passed' : '✅ ALL '+pass+' TESTS PASSED') +'\n');
 process.exit(fail ? 1 : 0);
