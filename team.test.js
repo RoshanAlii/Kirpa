@@ -38,7 +38,8 @@ ok('inventory count derives from listing data', /inventory\.textContent=LISTINGS
 ok('old "96 listings" removed', !/96 listings/.test(idx));
 ok('old "11 agents" removed', !/11 agents/.test(idx));
 ok('old 3-advisor language spans removed', !/adv\.l\.kp/.test(idx));
-ok('CSS cache-busted to v=24', /kirpa\.css\?v=24/.test(idx));
+ok('CSS cache-busted to v=25', /kirpa\.css\?v=25/.test(idx));
+ok('immersive experience layer loaded', /assets\/experience\.js/.test(idx));
 
 console.log('\n— team page (team.html) —');
 ok('loads team.js', /assets\/team\.js/.test(team));
@@ -50,6 +51,7 @@ ok('canonical url set', /canonical" href="https:\/\/roshanalii\.github\.io\/Kirp
 
 console.log('\n— premium styles (kirpa.css) —');
 ok('quiet-future palette present', /--panel:#191915/.test(css) && /--champagne:#B99A69/.test(css));
+ok('liquid-glass system present', /--glass-dark:rgba/.test(css) && /\.hero-segments\{/.test(css));
 ok('advisor stage styles present', /\.advisor-stage\{/.test(css) && /\.advisor-promise\{/.test(css));
 ok('reduced-motion override present', /prefers-reduced-motion:reduce/.test(css) && /animation-duration:\.01ms/.test(css));
 ok('team grid + card styles', /\.team-grid\{/.test(css) && /\.tm-card\{/.test(css));

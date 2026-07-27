@@ -56,13 +56,14 @@ function cardRef(ref){
 }
 function vtName(ref){return 'kirpa-'+refHash(ref).toString(36)}
 function LF2(l,f){return window.LF?window.LF(l,f):l[f];}
-function cardHTML(l){
+function cardHTML(l,index){
+  index=Number.isFinite(index)?index:0;
   const on=favs.includes(l.ref);
   const url=window.BASE+'properties/listing.html?ref='+l.ref;
   const title=LF2(l,'title'),comm=LF2(l,'community'),bld=LF2(l,'building'),extra=LF2(l,'extra');
   const status=l.status==='rent'?t('label.forrent','For Rent'):t('label.forsale','For Sale');
   const media=listingImage(l,0);
-  return '<article class="res">'
+  return '<article class="res" data-card-index="'+index+'" data-property-type="'+String(l.type||'').toLowerCase()+'" style="--card-index:'+index+'">'
     +'<a class="res-media" href="'+url+'" aria-label="'+title+'"><div class="photo '+l.skies[0]+'" style="view-transition-name:'+vtName(l.ref)+'">'+phImg(media,title+' — representative photography')+'<div class="res-media-meta"><span>'+status+'</span><span>Representative image</span></div></div></a>'
     +'<button class="fav '+(on?'on':'')+'" data-ref="'+l.ref+'" aria-label="Save '+l.ref+'">'+(on?'♥':'♡')+'</button>'
     +'<div class="res-pad">'
