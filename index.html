@@ -15,8 +15,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600&family=Amiri&family=Noto+Kufi+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/kirpa.css?v=27">
+<link rel="stylesheet" href="assets/kirpa.css?v=28">
 </head>
 <body class="home-page">
 
@@ -43,7 +45,7 @@
 
 <!-- HERO -->
 <section class="hero" style="padding:0">
-  <div class="photo sky-a"><img class="ph-img" id="heroImg" src="https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=2200&h=1300&crop=entropy&q=72" alt="Dubai skyline at night with Burj Khalifa" fetchpriority="high" onerror="this.remove()"></div>
+  <div class="photo sky-a"><img class="ph-img" id="heroImg" src="https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=1600&h=945&crop=entropy&q=70" srcset="https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=900&h=532&crop=entropy&q=68 900w, https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=1400&h=827&crop=entropy&q=70 1400w, https://images.unsplash.com/photo-1753029111752-f12018752cd3?auto=format&fit=crop&w=1920&h=1135&crop=entropy&q=70 1920w" sizes="100vw" loading="eager" decoding="async" alt="Dubai skyline at night with Burj Khalifa" fetchpriority="high" onerror="this.remove()"></div>
   <div class="hero-inner">
     <span class="eyebrow" data-i18n="hero.eyebrow">Private brokerage · Dubai</span>
     <h1 data-i18n="hero.title">Dubai property, considered differently.</h1>
@@ -310,9 +312,9 @@
 <script>window.BASE='';</script>
 <script src="assets/i18n.js?v=14"></script>
 <script src="assets/listings.js?v=14"></script>
-<script src="assets/kirpa.js?v=22"></script>
-<script src="assets/premium.js?v=2"></script>
-<script src="assets/experience.js?v=2"></script>
+<script src="assets/kirpa.js?v=23"></script>
+<script src="assets/premium.js?v=3"></script>
+<script src="assets/experience.js?v=3"></script>
 <script src="assets/team.js?v=1"></script>
 <script>
 /* ---------- home page rendering (shared runtime in assets/kirpa.js) ---------- */
@@ -352,7 +354,7 @@ function paintRunway(){
   host.innerHTML=
     '<div class="runway-aperture" aria-hidden="true"><i></i><i></i></div>'+
     '<div class="runway-visual">'+
-      '<a class="runway-image" href="'+detail+'" style="view-transition-name:residence-'+l.ref.toLowerCase()+'">'+
+      '<a class="runway-image" href="'+detail+'" style="view-transition-name:'+vtName(l.ref)+'">'+
         phImg(listingImage(l,0),l.title+' — representative photography')+
         '<span class="runway-media-note">Representative photography</span>'+
       '</a>'+
@@ -480,7 +482,6 @@ $('#ssGo').onclick=()=>{
   route(intent,$('#qm').value,beds,+bud.dataset.min,+bud.dataset.max);
 };
 
-$('#heroImg').src=HERO_IMG;
 window.COMMAR={};Object.values(COMMUNITIES).forEach(c=>{COMMAR[c.name]=c.name_ar||c.name;});
 window.COMMLOC={};Object.values(COMMUNITIES).forEach(c=>{COMMLOC[c.name]=window.LF?window.LF(c,'name'):c.name;});
 window.onLangReady=()=>{renderExplore(document.querySelector('.tab.on').dataset.lens);renderRes();};

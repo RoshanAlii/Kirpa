@@ -19,7 +19,22 @@ function fxEcho(aed){
 }
 
 /* ---------- card component (used by home + similar + indexes) ---------- */
-function phImg(src,alt){return src?'<img class="ph-img" loading="lazy" src="'+src+'" alt="'+(alt||'')+'" onerror="this.remove()">':''}
+function imageVariant(src,width){
+  src=String(src||'');
+  const wm=src.match(/([?&])w=(\d+)/),hm=src.match(/([?&])h=(\d+)/);
+  if(!wm)return src;
+  const originalWidth=+wm[2],originalHeight=hm?+hm[2]:0;
+  src=src.replace(/([?&])w=\d+/,'$1w='+width);
+  if(hm&&originalWidth)src=src.replace(/([?&])h=\d+/,'$1h='+Math.max(1,Math.round(width*(originalHeight/originalWidth))));
+  return src;
+}
+function phImg(src,alt){
+  if(!src)return '';
+  const responsive=/([?&])w=\d+/.test(src);
+  const fallback=responsive?imageVariant(src,800):src;
+  const srcset=responsive?' srcset="'+[480,800,1200].map(w=>imageVariant(src,w)+' '+w+'w').join(', ')+'" sizes="(max-width:700px) 92vw,(max-width:1100px) 50vw,760px"':'';
+  return '<img class="ph-img" loading="lazy" decoding="async" src="'+fallback+'"'+srcset+' alt="'+(alt||'')+'" onerror="this.remove()">';
+}
 const MEDIA_POOLS={
   apartment:[
     'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&h=1000&q=76',

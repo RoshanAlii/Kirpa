@@ -40,7 +40,7 @@ ok('inventory count derives from listing data', /inventory\.textContent=LISTINGS
 ok('old "96 listings" removed', !/96 listings/.test(idx));
 ok('old "11 agents" removed', !/11 agents/.test(idx));
 ok('old 3-advisor language spans removed', !/adv\.l\.kp/.test(idx));
-ok('CSS cache-busted to v=27', /kirpa\.css\?v=27/.test(idx));
+ok('CSS cache-busted to v=28', /kirpa\.css\?v=28/.test(idx));
 ok('immersive experience layer loaded', /assets\/experience\.js/.test(idx));
 ok('cinematic residence runway present', /class="residence-runway/.test(idx) && /data-runway-next/.test(idx));
 ok('spatial atlas layers present', (idx.match(/data-atlas-layer=/g)||[]).length === 3);
@@ -62,10 +62,13 @@ ok('advisor stage styles present', /\.advisor-stage\{/.test(css) && /\.advisor-p
 ok('reduced-motion override present', /prefers-reduced-motion:reduce/.test(css) && /animation-duration:\.01ms/.test(css));
 ok('team grid + card styles', /\.team-grid\{/.test(css) && /\.tm-card\{/.test(css));
 ok('spatial luxury styles present', /KIRPA SPATIAL LUXURY/.test(css) && /\.residence-runway/.test(css));
-ok('navigation context and brand wipe wired', /nav-context/.test(experience) && /kr-star-wipe/.test(experience));
+ok('navigation context and native route handoff wired', /nav-context/.test(experience) && /kr-route-transition/.test(experience));
 ok('concierge Command-K shortcut wired', /Meta\+K Control\+K/.test(experience));
 ok('property gallery modes present', /data-gallery-mode="photography"/.test(listing) && /id="mediaLightbox"/.test(listing));
 ok('property ownership context present', /class="ownership-brief"/.test(listing) && /id="communityContext"/.test(listing));
+ok('blocking intro and perpetual pointer loop removed', !experience.includes("sessionStorage.getItem('kirpa-intro'") && !experience.includes('requestAnimationFrame(follow)'));
+ok('responsive listing imagery enabled', /srcset=/.test(idx) && /function imageVariant/.test(fs.readFileSync(path.join(__dirname,'assets/kirpa.js'),'utf8')));
+ok('listing pages use progressive batches', /id="loadMore"/.test(fs.readFileSync(path.join(__dirname,'buy/index.html'),'utf8')) && /visibleCount=12/.test(fs.readFileSync(path.join(__dirname,'rent/index.html'),'utf8')));
 
 console.log('\n'+ (fail ? '❌ '+fail+' FAILED, '+pass+' passed' : '✅ ALL '+pass+' TESTS PASSED') +'\n');
 process.exit(fail ? 1 : 0);

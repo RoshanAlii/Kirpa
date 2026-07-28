@@ -1,17 +1,9 @@
 /* Kirpa Properties — premium interaction layer.
    Progressive enhancement only: the site remains usable without this file. */
 (function(){
-  var root=document.documentElement;
   var body=document.body;
 
   requestAnimationFrame(function(){ body.classList.add('is-ready'); });
-
-  if(matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches){
-    document.addEventListener('pointermove',function(e){
-      root.style.setProperty('--pointer-x',Math.round(e.clientX)+'px');
-      root.style.setProperty('--pointer-y',Math.round(e.clientY)+'px');
-    },{passive:true});
-  }
 
   var inventory=document.getElementById('inventoryCount');
   if(inventory && typeof LISTINGS!=='undefined'){
@@ -111,14 +103,6 @@
     setCommunity('downtown',false);
     setLayer(activeLayer);
   }
-
-  document.addEventListener('pointermove',function(e){
-    var card=e.target.closest&&e.target.closest('.res');
-    if(!card)return;
-    var r=card.getBoundingClientRect();
-    card.style.setProperty('--card-x',Math.round(e.clientX-r.left)+'px');
-    card.style.setProperty('--card-y',Math.round(e.clientY-r.top)+'px');
-  },{passive:true});
 
   var social=document.querySelector('.kr-signal');
   if(social) social.setAttribute('aria-label','Kirpa social content');

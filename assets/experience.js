@@ -4,22 +4,6 @@
   var body=document.body;
   var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine=matchMedia('(pointer: fine)').matches;
-
-  /* A brief brand curtain on the first homepage visit only. */
-  if(body.classList.contains('home-page')&&!reduce){
-    var showIntro=true;
-    try{showIntro=sessionStorage.getItem('kirpa-intro')!=='seen';sessionStorage.setItem('kirpa-intro','seen');}catch(e){}
-    if(showIntro){
-      var intro=document.createElement('div');
-      intro.className='kr-intro';
-      intro.innerHTML='<div class="kr-intro-mark">✦</div><div class="kr-intro-word">KIRPA</div><span>Dubai · Private Brokerage</span>';
-      body.appendChild(intro);
-      requestAnimationFrame(function(){intro.classList.add('show');});
-      setTimeout(function(){intro.classList.add('leave');},850);
-      setTimeout(function(){intro.remove();},1500);
-    }
-  }
 
   /* Native-feeling reading progress and directional navigation. */
   var progress=document.createElement('div');
@@ -97,21 +81,31 @@
     }
   }
 
-  /* Kirpa's star becomes a recognisable wipe between a collection and a residence. */
-  var wipe=document.createElement('div');
-  wipe.className='kr-star-wipe';
-  wipe.setAttribute('aria-hidden','true');
-  wipe.innerHTML='<i>✦</i>';
-  body.appendChild(wipe);
+  /* Motion UI-inspired route handoff: a fast edge sweep followed by the
+     browser's native cross-document View Transition when supported. */
+  var route=document.createElement('div');
+  route.className='kr-route-transition';
+  route.setAttribute('aria-hidden','true');
+  route.innerHTML='<i></i><span></span>';
+  body.appendChild(route);
+  var routePending=false;
   document.addEventListener('click',function(e){
-    var anchor=e.target.closest&&e.target.closest('a[href*="properties/listing.html"]');
-    if(!anchor||reduce||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||anchor.target==='_blank')return;
+    var anchor=e.target.closest&&e.target.closest('a[href]');
+    if(!anchor||reduce||routePending||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||anchor.target==='_blank'||anchor.hasAttribute('download'))return;
+    var href=anchor.getAttribute('href')||'';
+    if(!href||href.charAt(0)==='#'||/^(mailto:|tel:|javascript:)/i.test(href))return;
     var url;
     try{url=new URL(anchor.href,location.href);}catch(err){return;}
     if(url.origin!==location.origin)return;
+    if(url.pathname===location.pathname&&url.search===location.search&&url.hash)return;
     e.preventDefault();
-    wipe.classList.add('active');
-    setTimeout(function(){location.href=url.href;},430);
+    routePending=true;
+    body.classList.add('route-leaving');
+    setTimeout(function(){location.href=url.href;},110);
+  });
+  addEventListener('pageshow',function(){
+    routePending=false;
+    body.classList.remove('route-leaving');
   });
 
   /* Command-K opens the private concierge from anywhere on the site. */
@@ -165,35 +159,12 @@
     motionNodes.forEach(function(node){node.classList.add('motion-in');});
   }
 
-  if(fine&&!reduce){
-    /* Restrained custom pointer: only a halo, never a replacement for the system cursor. */
-    var halo=document.createElement('div');
-    halo.className='kr-pointer-halo';
-    halo.setAttribute('aria-hidden','true');
-    body.appendChild(halo);
-    var px=-80,py=-80,hx=-80,hy=-80;
-    addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY;halo.classList.add('visible');},{passive:true});
-    addEventListener('pointerout',function(e){if(!e.relatedTarget)halo.classList.remove('visible');});
-    function follow(){
-      hx+=(px-hx)*.16;hy+=(py-hy)*.16;
-      halo.style.transform='translate3d('+(hx-18)+'px,'+(hy-18)+'px,0)';
-      requestAnimationFrame(follow);
-    }
-    follow();
-
-    /* Small magnetic response for primary controls. */
-    document.addEventListener('pointermove',function(e){
-      var target=e.target.closest&&e.target.closest('.btn,.nav-cta,.sbar .go');
-      if(!target)return;
-      var rect=target.getBoundingClientRect();
-      var x=(e.clientX-(rect.left+rect.width/2))*.08;
-      var y=(e.clientY-(rect.top+rect.height/2))*.12;
-      target.style.setProperty('--mag-x',x+'px');
-      target.style.setProperty('--mag-y',y+'px');
-    },{passive:true});
-    document.addEventListener('pointerout',function(e){
-      var target=e.target.closest&&e.target.closest('.btn,.nav-cta,.sbar .go');
-      if(target){target.style.removeProperty('--mag-x');target.style.removeProperty('--mag-y');}
-    },{passive:true});
+  /* Continuous decorative motion only runs while its section is visible. */
+  var ambientNodes=document.querySelectorAll('.kr-ticker,.adv-marquee');
+  if(!reduce&&'IntersectionObserver' in window){
+    var ambientObserver=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){entry.target.classList.toggle('is-motion-active',entry.isIntersecting);});
+    },{rootMargin:'120px 0px'});
+    ambientNodes.forEach(function(node){ambientObserver.observe(node);});
   }
 })();

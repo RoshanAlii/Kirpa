@@ -2001,3 +2001,85 @@ body .kc-foot{background:rgba(255,255,255,.46)}
   .residence-runway.is-entering .runway-visual,.residence-runway.is-entering .runway-copy>*{animation:none}
   .atlas-volume,.atlas-orbit,.lightbox-image{transition:none}
 }
+
+/* ============================================================
+   KIRPA MOTION PERFORMANCE
+   Motion UI-inspired choreography using native view transitions,
+   compositor-friendly transforms and visibility-aware ambience.
+   ============================================================ */
+@view-transition{navigation:auto}
+::view-transition-group(root){animation-duration:.42s;animation-timing-function:cubic-bezier(.16,1,.3,1)}
+::view-transition-image-pair(root){isolation:auto}
+::view-transition-old(root){
+  mix-blend-mode:normal;animation:kr-route-old .17s cubic-bezier(.4,0,1,1) both
+}
+::view-transition-new(root){
+  mix-blend-mode:normal;animation:kr-route-new .42s cubic-bezier(.16,1,.3,1) both
+}
+@keyframes kr-route-old{
+  to{opacity:.72;transform:translate3d(0,-5px,0) scale(.994)}
+}
+@keyframes kr-route-new{
+  from{opacity:0;transform:translate3d(0,18px,0) scale(.997)}
+  to{opacity:1;transform:none}
+}
+.kr-route-transition{position:fixed;inset:0;z-index:30000;pointer-events:none}
+.kr-route-transition i{
+  position:absolute;inset:0;background:#102239;opacity:0;transition:opacity .11s linear
+}
+.kr-route-transition span{
+  position:absolute;left:0;right:0;top:0;height:3px;transform:scaleX(0);transform-origin:left;
+  background:linear-gradient(90deg,#FF7049,#A98AF4 52%,#2CB7B0);
+  box-shadow:0 0 22px rgba(91,124,250,.45);transition:transform .24s cubic-bezier(.16,1,.3,1)
+}
+.route-leaving .kr-route-transition i{opacity:.08}
+.route-leaving .kr-route-transition span{transform:scaleX(1)}
+.kr-star-wipe,.kr-intro,.kr-pointer-halo{display:none!important}
+
+/* remove continuous repaint sources while retaining the visual character */
+body{
+  background:
+    radial-gradient(70rem 46rem at 82% 0%,rgba(91,124,250,.07),transparent 60%),
+    linear-gradient(180deg,#F7F4EF 0%,#EFEAE3 100%);
+  background-attachment:scroll
+}
+body::before{display:none}
+.hero .photo .ph-img{animation:none!important;will-change:auto;transform:scale(1.015)}
+.motion-node{
+  filter:none;transition:opacity .62s var(--ease-out),transform .62s var(--ease-out)
+}
+.motion-node.motion-in{filter:none}
+.pulse-dot{animation:none;box-shadow:0 0 0 5px rgba(120,199,155,.12)}
+.ph-img{transition:opacity .35s ease,transform .6s cubic-bezier(.2,.6,.2,1)}
+.ph-img.blurload{filter:none;opacity:.35;transform:scale(1.012)}
+.ph-img.blurload.loaded{filter:none;opacity:1}
+
+/* pause decorative loops when their sections leave the viewport */
+.kr-ticker-track,.adv-marquee .mq-track{animation-play-state:paused}
+.kr-ticker.is-motion-active .kr-ticker-track,.adv-marquee.is-motion-active .mq-track{animation-play-state:running}
+
+/* large below-fold surfaces are skipped until the visitor approaches */
+.home-page>section:not(.hero),.property-index .idx-grid,.property-detail .lp-grid,.similar,footer{
+  content-visibility:auto;contain-intrinsic-size:auto 720px
+}
+.load-more{
+  display:flex;align-items:center;justify-content:center;gap:12px;min-height:52px;margin:42px auto 0;padding:0 24px;
+  border:1px solid rgba(24,22,19,.12);border-radius:999px;background:rgba(255,255,255,.66);color:var(--espresso);
+  box-shadow:0 16px 36px -28px rgba(24,22,19,.45);font:500 9px/1 var(--body);letter-spacing:.13em;text-transform:uppercase;
+  transition:transform .25s var(--ease-out),background .25s,border-color .25s
+}
+.load-more:hover{transform:translateY(-3px);background:#fff;border-color:rgba(91,124,250,.30)}
+.load-more span{color:var(--sunset);font-size:14px}
+
+@media(max-width:700px){
+  .nav,.trust-rail,.property-index .fbar,.property-index .res-pad,.property-detail .side-card,
+  body .kc-panel,body .kc-launch{
+    backdrop-filter:blur(12px) saturate(120%)!important;
+    -webkit-backdrop-filter:blur(12px) saturate(120%)!important
+  }
+  .runway-next-preview,.home-page .private-edit .res-pad{backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+  .kr-route-transition{display:none}
+}
